@@ -1,0 +1,30 @@
+- model_class = Recipe
+.page-header
+  .row.text-center
+
+  %h1=t '.title', :default => title || model_class.model_name.human.titleize
+
+  .recipe-user
+    = @recipe.user_name
+    = l @recipe.created_at.to_date, format: :short
+
+.row
+  .col-md-4.col-md-push-8
+    %h4 Ingredients
+    %ul.list-unstyled.ingredients
+      - @recipe.ingredients.each do |ingredient|
+        %li= ingredient.value
+  .col-md-8.col-md-pull-4
+    .recipe-directions        
+      - @recipe.steps.each do |step|
+        %p
+          = step.description
+
+    - if @recipe.references.any?      
+      %h4 References
+      %ul.list-unstyled.references
+        - @recipe.references.each do |reference|
+          %li= link_to reference.location, reference.location.html_safe
+
+    = link_to 'Edit', edit_recipe_path(@recipe)
+    = link_to 'Delete', @recipe, method: :delete, data: { confirm: 'Are you sure?' }

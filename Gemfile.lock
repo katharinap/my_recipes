@@ -1,4 +1,13 @@
 GIT
+  remote: git://github.com/kesha-antonov/simple_form.git
+  revision: a1561c930f3be279f3580c2510f2555f2e67a4f4
+  branch: rails-5-0
+  specs:
+    simple_form (3.2.1)
+      actionpack (> 4, < 5.1)
+      activemodel (> 4, < 5.1)
+
+GIT
   remote: https://github.com/plataformatec/devise.git
   revision: 2b3799e6ceb315172d14a16103ab9fb1702f79fc
   specs:
@@ -70,6 +79,19 @@ GEM
     ffi (1.9.10)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    haml (4.0.7)
+      tilt
+    haml-rails (0.9.0)
+      actionpack (>= 4.0.1)
+      activesupport (>= 4.0.1)
+      haml (>= 4.0.6, < 5.0)
+      html2haml (>= 1.0.1)
+      railties (>= 4.0.1)
+    html2haml (2.0.0)
+      erubis (~> 2.7.0)
+      haml (~> 4.0.0)
+      nokogiri (~> 1.6.0)
+      ruby_parser (~> 3.5)
     i18n (0.7.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -93,6 +115,7 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
+    nested_form (0.3.2)
     nio4r (1.2.1)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -135,6 +158,8 @@ GEM
       ffi (>= 0.5.0)
     responders (2.1.2)
       railties (>= 4.2.0, < 5.1)
+    ruby_parser (3.8.1)
+      sexp_processor (~> 4.1)
     sass (3.4.22)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -142,6 +167,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sexp_processor (4.7.0)
     spring (1.6.4)
     spring-watcher-listen (2.0.0)
       listen (>= 2.7, < 4.0)
@@ -181,13 +207,16 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   devise!
+  haml-rails
   jbuilder (~> 2.0)
   jquery-rails
   listen (~> 3.0.5)
+  nested_form
   pg
   puma
   rails (>= 5.0.0.beta3, < 5.1)
   sass-rails (~> 5.0)
+  simple_form!
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5.x)

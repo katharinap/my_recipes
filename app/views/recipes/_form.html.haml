@@ -1,0 +1,37 @@
+= simple_nested_form_for @recipe do |f|
+  = f.input :name
+  = f.input :user_id, as: :hidden, input_html: { value: current_user_id }
+
+  %h2 Ingredients
+  #ingredients
+    = f.fields_for :ingredients, :wrapper => false do |i_form|
+      .row.form-group
+        .col-md-11
+          = i_form.input :value, label: false
+        .col-md-1
+          = render partial: 'remove_nested_field', locals: { form: i_form, tooltip: 'Remove this Ingredient' }  
+    = render partial: 'add_nested_field', locals: { form: f, tooltip: 'Add an Ingredient', target: :ingredients }
+        
+  %h2 Directions
+  #steps
+    = f.fields_for :steps do |d_form|
+      .row.form-group
+        .col-md-11
+          = d_form.input :description, label: false, input_html: { class: 'autoExpand' }
+        .col-md-1
+          = render partial: 'remove_nested_field', locals: { form: d_form, tooltip: 'Remove this Step' }  
+    = render partial: 'add_nested_field', locals: { form: f, tooltip: 'Add a Step', target: :steps }
+        
+  %h2 References
+  #references
+    = f.fields_for :references do |r_form|
+      .row.form-group
+        .col-md-11
+          = r_form.input :location, input_html: { placeholder: "Enter Location" }, label: false
+        .col-md-1
+          = render partial: 'remove_nested_field', locals: { form: r_form, tooltip: 'Remove this Reference' }
+    = render partial: 'add_nested_field', locals: { form: f, tooltip: 'Add a Reference', target: :references }
+
+  %br
+    
+  = f.button :submit, 'Update', title: 'Update this Recipe', data: { toggle: 'tooltip' }, class: 'btn btn-default'

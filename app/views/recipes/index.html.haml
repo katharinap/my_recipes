@@ -1,0 +1,18 @@
+%h1 All My Recipes
+
+%table.table-condensed.table-striped.table-hover#recipes
+  %thead
+    %tr
+      %th= Recipe.human_attribute_name :name
+      %th= User.human_attribute_name :email
+      %th
+  %tbody
+    - @recipes.each do |recipe|
+      %tr
+        %td= link_to recipe.name, recipe
+        %td= recipe.user_email
+        %td
+          = link_to 'Edit', edit_recipe_path(recipe)
+          = link_to 'Delete', recipe, method: :delete, data: { confirm: 'Are you sure?' }
+
+= link_to 'New Recipe', new_recipe_path
