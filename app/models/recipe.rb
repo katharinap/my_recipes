@@ -15,7 +15,7 @@ class Recipe < ApplicationRecord
   DEPENDENT_ATTRIBUTES = {
     ingredients: :value,
     steps: :description,
-    references: :url,
+    references: :location,
   }
 
   # FIXME - uniqueness still OK?

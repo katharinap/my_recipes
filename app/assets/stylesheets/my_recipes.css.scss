@@ -1,0 +1,93 @@
+html {
+  height:100%;
+  background-image: url(image-path("tablecloth-pattern-green.jpg"));
+}
+
+body {
+    /* min-height:100%; */
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+    background: white;
+    margin: 100px auto 20px auto;
+    width: 920px;
+    padding: 0 20px 20px 20px;
+    border-style: solid;
+    border-radius: 25px;
+    position: relative;
+    /* box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.5); */
+}
+
+@media (max-width: 768px) {
+    body {
+        line-height: 1.5;
+        background: red;
+        margin: 20px auto 20px auto;
+        width: 90%;
+        padding: 0 20px 20px 20px;
+        border-style: solid;
+        border-radius: 25px;
+        position: relative;
+    }
+}
+
+.ingredients {
+    font-family: courier;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 21px;
+}
+
+.references {
+    font-family: courier;
+}
+
+.recipe-link {
+    padding-top: 10px;
+    font-family: courier;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Gravitas One', cursive;
+}
+
+h1 {
+    text-align: center;
+}
+
+.recipe-directions p {
+    font-size: 15px;
+}
+
+.login-menu {
+    font-family: 'Open Sans', sans-serif;
+    float: right;
+}
+
+input[type="submit"]
+{
+    min-width: 50px;
+    height: 50px;
+    background:url(image_path("finished-icon.png"));
+    background-repeat: no-repeat;
+}
+
+.menu {
+    padding-top: 10px;
+    z-index:10;
+}
+
+
+/* bootstrap checkboxes get a float:left and margin-left:-20px to be
+on the left side of the label; compensate this shift by shifting the
+surrounding label tag to the right again to align the checkbox with
+other form elements */
+label.checkbox {
+    margin-left: 20px;
+}
+
+.recipe-user {
+    text-align: center;
+    color: #808080;
+    text-decoration: none;
+    font-family: courier;
+}
