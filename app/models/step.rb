@@ -11,5 +11,5 @@
 #
 
 class Step < ApplicationRecord
-  belongs_to :recipe, optional: true
+  belongs_to :recipe
 end
