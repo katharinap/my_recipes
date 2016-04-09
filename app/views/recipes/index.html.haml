@@ -10,7 +10,7 @@
     - @recipes.each do |recipe|
       %tr
         %td= link_to recipe.name, recipe
-        %td= recipe.user_email
+        %td= recipe.user_name
         %td
           = link_to 'Edit', edit_recipe_path(recipe)
           = link_to 'Delete', recipe, method: :delete, data: { confirm: 'Are you sure?' }
