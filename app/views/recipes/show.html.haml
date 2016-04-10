@@ -5,7 +5,9 @@
   %h1=t '.title', :default => title || model_class.model_name.human.titleize
 
   .recipe-user
+    = glyph :user
     = @recipe.user_name
+    = glyph :calendar
     = l @recipe.created_at.to_date, format: :short
 
 .row
