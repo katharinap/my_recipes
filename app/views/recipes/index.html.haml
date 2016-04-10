@@ -5,14 +5,17 @@
     %tr
       %th= Recipe.human_attribute_name :name
       %th= User.human_attribute_name :email
+      %th= User.human_attribute_name :created_at
       %th
   %tbody
     - @recipes.each do |recipe|
       %tr
         %td= link_to recipe.name, recipe
         %td= recipe.user_name
+        %td= l recipe.created_at, format: :short
         %td
-          = link_to 'Edit', edit_recipe_path(recipe)
-          = link_to 'Delete', recipe, method: :delete, data: { confirm: 'Are you sure?' }
+          - disabled = !(allow_edit? recipe)
+          = render partial: 'edit_btn', locals: { recipe: recipe, disabled: disabled }
+          = render partial: 'delete_btn', locals: { recipe: recipe, disabled: disabled }
 
 = link_to 'New Recipe', new_recipe_path

@@ -28,5 +28,6 @@
         - @recipe.references.each do |reference|
           %li= link_to reference.location, reference.location.html_safe
 
-    = link_to 'Edit', edit_recipe_path(@recipe)
-    = link_to 'Delete', @recipe, method: :delete, data: { confirm: 'Are you sure?' }
+    - if allow_edit? @recipe
+      = render partial: 'edit_btn', locals: { recipe: @recipe }
+      = render partial: 'delete_btn', locals: { recipe: @recipe }
