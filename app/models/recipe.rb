@@ -28,16 +28,9 @@ class Recipe < ApplicationRecord
                                   reject_if: -> (params) { params[attr].blank? }
   end
 
-  # has_many :ingredients, dependent: :destroy
-  # has_many :steps, dependent: :destroy
-  # has_many :references, dependent: :destroy
-
-  # accepts_nested_attributes_for :ingredients, allow_destroy: true
-  # accepts_nested_attributes_for :steps, allow_destroy: true
-  # accepts_nested_attributes_for :references, allow_destroy: true
-
   def user_name
-    user ? user.email : 'N/A'
+    return 'unknown' unless user
+    user.name || user.email
   end
 
   def prepare_recipe(params)
