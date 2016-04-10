@@ -37,4 +37,10 @@ module RecipesHelper
       end
     end
   end
+
+  def new_link
+    link_to new_recipe_path, title: 'Add a New Recipe', data: { toggle: 'tooltip' } do
+      image_tag('new-icon.png', alt: t('.new', default: t("helpers.links.new")))
+    end
+  end
 end

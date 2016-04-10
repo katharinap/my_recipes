@@ -5,7 +5,7 @@
     %tr
       %th= Recipe.human_attribute_name :name
       %th= User.human_attribute_name :email
-      %th= User.human_attribute_name :created_at
+      %th= Recipe.human_attribute_name :created_at
       %th
   %tbody
     - @recipes.each do |recipe|
@@ -17,4 +17,4 @@
           = edit_link(recipe)
           = destroy_link(recipe)
 
-= link_to 'New Recipe', new_recipe_path
+= new_link
