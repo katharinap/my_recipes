@@ -1,7 +1,0 @@
-- if disabled ||= false
-  = link_to '#', disabled: true do
-    = glyph :pencil
-- else
-  = link_to edit_recipe_path(recipe), title: t('.edit', default: t("helpers.links.edit")), data: { toggle: 'tooltip' } do
-    = glyph :pencil
-    

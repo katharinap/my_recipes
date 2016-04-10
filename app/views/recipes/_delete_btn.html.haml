@@ -1,6 +1,0 @@
-- if disabled ||= false
-  = link_to '#', data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true do
-    = glyph :trash
-- else
-  = link_to recipe_path(recipe), method: 'delete', data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')), toggle: 'tooltip' }, title: t('.destroy', default: t("helpers.links.destroy")) do
-    = glyph :trash

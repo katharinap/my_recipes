@@ -14,8 +14,7 @@
         %td= recipe.user_name
         %td= l recipe.created_at, format: :short
         %td
-          - disabled = !(allow_edit? recipe)
-          = render partial: 'edit_btn', locals: { recipe: recipe, disabled: disabled }
-          = render partial: 'delete_btn', locals: { recipe: recipe, disabled: disabled }
+          = edit_link(recipe)
+          = destroy_link(recipe)
 
 = link_to 'New Recipe', new_recipe_path

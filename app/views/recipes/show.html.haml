@@ -29,5 +29,5 @@
           %li= link_to reference.location, reference.location.html_safe
 
     - if allow_edit? @recipe
-      = render partial: 'edit_btn', locals: { recipe: @recipe }
-      = render partial: 'delete_btn', locals: { recipe: @recipe }
+      = edit_link(@recipe)
+      = destroy_link(@recipe)
