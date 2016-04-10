@@ -9,16 +9,35 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
   %body
     #content.container-fluid
-      .menu
-        .login-menu
-          - if user_signed_in?
-            = link_to image_tag('logout-icon.png', alt: 'Sign Out'), destroy_user_session_path, :method => :delete, title: 'Logout', data: { toggle: 'tooltip' }
-            = current_user.email
-          - else
-            = link_to image_tag('login-icon.png', alt: 'Sign In'), new_user_session_path, title: "You're not logged in yet...", data: { toggle: 'tooltip' }
-        .main-menu
-          = link_to image_tag('home-icon.png'), recipes_path, title: 'Recipe Overview', data: { toggle: 'tooltip' }
+      %nav.navbar
+        %ul.nav.navbar-nav
+          %li.nav-item
+            = link_to root_path, class: 'nav-link' do
+              = glyph 'home'
+        %ul.nav.navbar-nav.pull-right
+          %li.nav-item.dropdown
+            - if user_signed_in?
+              = link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }, role: 'button', aria: { haspopup: true, expanded: false } do
+                = glyph 'user'
+                = current_user.name || current_user.email
+              .dropdown-menu
+                = link_to edit_user_registration_path(current_user), class: 'dropdown-item' do
+                  = glyph 'cog'
+                  Account
+                = link_to destroy_user_session_path, :method => :delete, class: 'dropdown-item' do
+                  = glyph 'sign-out'
+                  Sign Out
+            - else
+              = link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }, role: 'button', aria: { haspopup: true, expanded: false } do
+                = glyph 'user'
+              .dropdown-menu
+                = link_to new_user_session_path, class: 'dropdown-item' do
+                  = glyph 'sign-in'
+                  Sign In
+                = link_to user_registration_path, class: 'dropdown-item' do
+                  = glyph 'user-plus'
+                  Sign Up
       .row
         .col-lg-12
           = bootstrap_flash
-          = yield
+      = yield
