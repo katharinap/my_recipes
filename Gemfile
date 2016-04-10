@@ -36,6 +36,7 @@ gem 'haml-rails'
 # FIXME: version 3.2.1 gives this error: https://github.com/plataformatec/simple_form/issues/1341
 gem 'simple_form', github: 'kesha-antonov/simple_form', branch: 'rails-5-0'
 gem "nested_form"
+gem 'local_time'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

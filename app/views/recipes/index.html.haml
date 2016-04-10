@@ -12,7 +12,7 @@
       %tr
         %td= link_to recipe.name, recipe
         %td= recipe.user_name
-        %td= l recipe.created_at, format: :short
+        %td= local_time recipe.created_at, :short
         %td
           = edit_link(recipe)
           = destroy_link(recipe)
