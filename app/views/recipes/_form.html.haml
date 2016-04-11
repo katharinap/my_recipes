@@ -3,7 +3,7 @@
   = f.input :user_id, as: :hidden, input_html: { value: current_user_id }
 
   %h2 Picture
-  = render partial: 'picture', locals: { form: f }
+  = render partial: 'form_picture', locals: { form: f }
 
   %h2 Ingredients
   #ingredients
@@ -18,7 +18,7 @@
   %h2 Directions
   #steps
     = f.fields_for :steps do |d_form|
-      = render partial: 'picture', locals: { form: d_form }
+      = render partial: 'form_picture', locals: { form: d_form }
       .row.form-group
         .col-md-11
           = d_form.input :description, label: false, input_html: { class: 'autoExpand' }

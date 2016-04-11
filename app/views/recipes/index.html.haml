@@ -3,6 +3,7 @@
 %table.table.table-condensed.table-hover#recipes
   %thead
     %tr
+      %th
       %th= Recipe.human_attribute_name :name
       %th= User.human_attribute_name :email
       %th= Recipe.human_attribute_name :created_at
@@ -10,6 +11,9 @@
   %tbody
     - @recipes.each do |recipe|
       %tr
+        %td
+           - if recipe.picture?
+             = link_to image_tag(recipe.picture_url :thumb), recipe_path(recipe)
         %td= link_to recipe.name, recipe
         %td= recipe.user_name
         %td= local_time recipe.created_at, :short

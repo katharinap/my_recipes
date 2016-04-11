@@ -15,5 +15,6 @@
 //= require turbolinks
 //= require tether/tether.min
 //= require bootstrap
+//= require bootstrap-filestyle.min
 //= require jquery_nested_form
 //= require_tree .

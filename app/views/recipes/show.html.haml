@@ -1,7 +1,8 @@
 - model_class = Recipe
 .page-header
-  .row.text-center
-    = image_tag(@recipe.picture_url) if @recipe.picture?
+  - if @recipe.picture?
+    .row
+      = image_tag @recipe.picture_url, class: 'center-block'
 
   %h1=t '.title', :default => title || model_class.model_name.human.titleize
 

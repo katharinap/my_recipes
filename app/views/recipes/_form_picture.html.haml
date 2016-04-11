@@ -1,0 +1,14 @@
+- if form.object.picture?
+  .row.form-group
+    = image_tag form.object.picture_url, class: 'center-block'
+.row.form-group
+  .col-md-6
+    = form.input :picture, label: false, as: :file, input_html: { class: 'filestyle', data: { iconName: 'fa fa-photo', buttonBefore: true } }
+  - if form.object.picture?
+    .col-md-6
+      = form.input :picture_cache, as: :hidden
+      - label_text = "Remove Current Picture"
+      = form.input :remove_picture, as: :boolean, label: false, inline_label: label_text, input_html: { class: 'checkbox checkbox-inline' }
+      %br
+
+
