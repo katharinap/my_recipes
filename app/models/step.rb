@@ -8,8 +8,13 @@
 #  description :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  picture     :string
 #
 
 class Step < ApplicationRecord
   belongs_to :recipe
+
+  include WithPicture
+  has_default_picture_size [200, 200]
+  has_thumb_picture_size [50, 50]
 end

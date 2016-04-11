@@ -37,6 +37,8 @@ gem 'haml-rails'
 gem 'simple_form', github: 'kesha-antonov/simple_form', branch: 'rails-5-0'
 gem "nested_form"
 gem 'local_time'
+gem 'carrierwave'
+gem 'mini_magick'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -1,6 +1,7 @@
 - model_class = Recipe
 .page-header
   .row.text-center
+    = image_tag(@recipe.picture_url) if @recipe.picture?
 
   %h1=t '.title', :default => title || model_class.model_name.human.titleize
 
@@ -20,6 +21,7 @@
     .recipe-directions        
       - @recipe.steps.each do |step|
         %p
+          = image_tag(step.picture_url) if step.picture?
           = step.description
 
     - if @recipe.references.any?      

@@ -7,10 +7,15 @@
 #  user_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  picture    :string
 #
 
 class Recipe < ApplicationRecord
   belongs_to :user
+
+  include WithPicture
+  has_default_picture_size [400, 400]
+  has_thumb_picture_size [50, 50]
 
   DEPENDENT_ATTRIBUTES = {
     ingredients: :value,
