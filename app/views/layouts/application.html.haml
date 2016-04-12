@@ -16,22 +16,22 @@
               = glyph 'bars fa-2x'
             .dropdown-menu
               = nav_link_to root_path do
-                = glyph 'home'
+                = glyph 'home fa-fw'
                 Home
               .dropdown-divider
               - if user_signed_in?
                 = nav_link_to edit_user_registration_path(current_user) do
-                  = glyph 'cog'
+                  = glyph 'cog fa-fw'
                   Your Account
                 = nav_link_to destroy_user_session_path, :method => :delete do
-                  = glyph 'sign-out'
+                  = glyph 'sign-out fa-fw'
                   Sign Out
               - else
                 = nav_link_to new_user_session_path do
-                  = glyph 'sign-in'
+                  = glyph 'sign-in fa-fw'
                   Sign In
                 = nav_link_to user_registration_path do
-                  = glyph 'user-plus'
+                  = glyph 'user-plus fa-fw'
                   Sign Up
       .row
         .col-lg-12
