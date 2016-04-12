@@ -9,32 +9,28 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
   %body
     #content.container-fluid
-      %nav.navbar
-        %ul.nav.navbar-nav
-          %li.nav-item
-            = link_to root_path, class: 'nav-link' do
-              = glyph 'home'
-        %ul.nav.navbar-nav.pull-right
+      %nav
+        %ul.nav
           %li.nav-item.dropdown
-            - if user_signed_in?
-              = link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }, role: 'button', aria: { haspopup: true, expanded: false } do
-                = glyph 'user'
-                = current_user.name || current_user.email
-              .dropdown-menu
-                = link_to edit_user_registration_path(current_user), class: 'dropdown-item' do
+            = link_to '#', class: 'nav-link', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: true, expanded: false } do
+              = glyph 'bars fa-2x'
+            .dropdown-menu
+              = link_to root_path, class: 'dropdown-item nav-link' do
+                = glyph 'home'
+                Home
+              .dropdown-divider
+              - if user_signed_in?
+                = link_to edit_user_registration_path(current_user), class: 'dropdown-item nav-link' do
                   = glyph 'cog'
-                  Account
-                = link_to destroy_user_session_path, :method => :delete, class: 'dropdown-item' do
+                  Your Account
+                = link_to destroy_user_session_path, :method => :delete, class: 'dropdown-item nav-link' do
                   = glyph 'sign-out'
                   Sign Out
-            - else
-              = link_to '#', class: 'nav-link dropdown-toggle', data: { toggle: 'dropdown' }, role: 'button', aria: { haspopup: true, expanded: false } do
-                = glyph 'user'
-              .dropdown-menu
-                = link_to new_user_session_path, class: 'dropdown-item' do
+              - else
+                = link_to new_user_session_path, class: 'dropdown-item nav-link' do
                   = glyph 'sign-in'
                   Sign In
-                = link_to user_registration_path, class: 'dropdown-item' do
+                = link_to user_registration_path, :method => :delete, class: 'dropdown-item nav-link' do
                   = glyph 'user-plus'
                   Sign Up
       .row

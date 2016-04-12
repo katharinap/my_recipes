@@ -12,11 +12,11 @@ module RecipesHelper
     if allow_edit?(recipe)
       tooltip = t('.edit', default: t("helpers.links.edit"))
       link_to edit_recipe_path(recipe), title: tooltip, data: { toggle: 'tooltip' } do
-        glyph :pencil
+        glyph 'pencil fa-lg'
       end
     else
       link_to '#', disabled: true do
-        glyph :pencil
+        glyph 'pencil fa-lg'
       end
     end
   end
@@ -29,11 +29,11 @@ module RecipesHelper
       }
       tooltip = t('.destroy', default: t("helpers.links.destroy"))
       link_to recipe_path(recipe), method: 'delete', data: data, title: tooltip do
-        glyph :trash
+        glyph 'trash fa-lg'
       end
     else
       link_to '#', data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true do
-        glyph :trash
+        glyph 'trash fa-lg'
       end
     end
   end

@@ -1,6 +1,6 @@
 html {
-  height:100%;
-  background-image: url(image-path("tablecloth-pattern-green.jpg"));
+    height:100%;
+    background-image: url(image-path("tablecloth-pattern-green.jpg"));
 }
 
 body {
@@ -55,10 +55,10 @@ h1 {
 }
 
 h2 {
-   padding-top: 15px;
-   padding-bottom: 5px;
+    padding-top: 15px;
+    padding-bottom: 5px;
 }
-   
+
 .recipe-directions p {
     font-size: 15px;
 }
@@ -98,5 +98,15 @@ label.checkbox {
 }
 
 a:visited {
-  color: gray;
+    color: gray;
+}
+
+a.nav-link {
+    color: green;
+}
+
+nav {
+    padding-top: 10px;
+    padding-bottom: 0px;
+    padding-left: 0px;
 }
