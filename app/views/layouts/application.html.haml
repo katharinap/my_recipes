@@ -15,22 +15,22 @@
             = link_to '#', class: 'nav-link', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: true, expanded: false } do
               = glyph 'bars fa-2x'
             .dropdown-menu
-              = link_to root_path, class: 'dropdown-item nav-link' do
+              = nav_link_to root_path do
                 = glyph 'home'
                 Home
               .dropdown-divider
               - if user_signed_in?
-                = link_to edit_user_registration_path(current_user), class: 'dropdown-item nav-link' do
+                = nav_link_to edit_user_registration_path(current_user) do
                   = glyph 'cog'
                   Your Account
-                = link_to destroy_user_session_path, :method => :delete, class: 'dropdown-item nav-link' do
+                = nav_link_to destroy_user_session_path, :method => :delete do
                   = glyph 'sign-out'
                   Sign Out
               - else
-                = link_to new_user_session_path, class: 'dropdown-item nav-link' do
+                = nav_link_to new_user_session_path do
                   = glyph 'sign-in'
                   Sign In
-                = link_to user_registration_path, :method => :delete, class: 'dropdown-item nav-link' do
+                = nav_link_to user_registration_path do
                   = glyph 'user-plus'
                   Sign Up
       .row
