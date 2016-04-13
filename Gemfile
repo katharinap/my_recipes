@@ -2,12 +2,13 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 5.0.0.beta3', '< 5.1'
+#gem 'rails', '>= 5.0.0.beta3', '< 5.1'
+gem 'rails', '4.2.6'
 # Use postgres as the database for Active Record
 gem 'pg'
 
 # Use Puma as the app server
-gem 'puma'
+#gem 'puma'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -20,7 +21,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5.x'
+#gem 'turbolinks', '~> 5.x'
+gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # Use Redis adapter to run Action Cable in production
@@ -29,12 +31,12 @@ gem 'jbuilder', '~> 2.0'
 # gem 'bcrypt', '~> 3.1.7'
 
 # the released gem does not support rails 5 yet
-gem 'devise', git: 'https://github.com/plataformatec/devise.git'
+gem 'devise' #, git: 'https://github.com/plataformatec/devise.git'
 
 gem 'annotate'
 gem 'haml-rails'
 # FIXME: version 3.2.1 gives this error: https://github.com/plataformatec/simple_form/issues/1341
-gem 'simple_form', github: 'kesha-antonov/simple_form', branch: 'rails-5-0'
+gem 'simple_form' #, github: 'kesha-antonov/simple_form', branch: 'rails-5-0'
 gem "nested_form"
 gem 'local_time'
 gem 'carrierwave'
@@ -50,12 +52,14 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 3.0'
-  gem 'listen', '~> 3.0.5'
+  # gem 'web-console', '~> 3.0'
+  # gem 'listen', '~> 3.0.5'
+  gem 'web-console', '~> 2.0'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
