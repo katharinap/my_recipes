@@ -15,7 +15,7 @@ module RecipesHelper
         glyph 'pencil fa-lg'
       end
     else
-      link_to '#', disabled: true do
+      link_to '#', disabled: true, class: 'disabled' do
         glyph 'pencil fa-lg'
       end
     end
@@ -32,15 +32,19 @@ module RecipesHelper
         glyph 'trash fa-lg'
       end
     else
-      link_to '#', data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true do
+      link_to '#', data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true, class: 'disabled' do
         glyph 'trash fa-lg'
       end
     end
   end
 
   def new_link
+    css_class = 'btn btn-success-outline btn-sm'
+    css_class << ' disabled' unless user_signed_in?
     link_to new_recipe_path do
-      content_tag :button, type: 'button', class: 'btn btn-success-outline btn-sm' do
+      attr = { type: 'button', class: css_class }
+      attr[:disabled] = true unless user_signed_in?
+      content_tag :button, attr do
         'Add Recipe'
       end
     end

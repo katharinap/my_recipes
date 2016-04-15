@@ -105,6 +105,10 @@ a.nav-link {
     color: green;
 }
 
+a.disabled {
+    cursor: not-allowed;
+}
+
 nav {
     padding-top: 10px;
     padding-bottom: 0px;
