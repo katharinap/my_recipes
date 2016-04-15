@@ -22,7 +22,7 @@
                 = nav_link_to edit_user_registration_path(current_user) do
                   = glyph 'cog fa-fw'
                   Your Account
-                = nav_link_to destroy_user_session_path, :method => :delete do
+                = nav_link_to destroy_user_session_path, method: :delete do
                   = glyph 'sign-out fa-fw'
                   Sign Out
               - else

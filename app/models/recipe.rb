@@ -10,7 +10,7 @@
 #  picture    :string
 #
 
-class Recipe < ApplicationRecord
+class Recipe < ActiveRecord::Base
   belongs_to :user
 
   include WithPicture

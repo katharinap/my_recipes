@@ -11,7 +11,7 @@
 #  picture     :string
 #
 
-class Step < ApplicationRecord
+class Step < ActiveRecord::Base
   belongs_to :recipe
 
   include WithPicture

@@ -9,6 +9,6 @@
 #  updated_at :datetime         not null
 #
 
-class Ingredient < ApplicationRecord
+class Ingredient < ActiveRecord::Base
   belongs_to :recipe
 end

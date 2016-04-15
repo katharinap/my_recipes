@@ -9,6 +9,6 @@
 #  updated_at :datetime         not null
 #
 
-class Reference < ApplicationRecord
+class Reference < ActiveRecord::Base
   belongs_to :recipe
 end
