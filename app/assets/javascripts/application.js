@@ -17,4 +17,5 @@
 //= require bootstrap
 //= require bootstrap-filestyle.min
 //= require jquery_nested_form
+//= require local_time
 //= require_tree .
