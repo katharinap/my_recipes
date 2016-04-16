@@ -51,6 +51,7 @@ h1, h2, h3, h4 {
 }
 
 h1 {
+    padding-top: 10px;
     text-align: center;
 }
 
@@ -113,4 +114,8 @@ nav {
     padding-top: 10px;
     padding-bottom: 0px;
     padding-left: 0px;
+}
+
+.right-side-icon {
+    padding-left: 10px;
 }
