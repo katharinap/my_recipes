@@ -54,3 +54,7 @@ group :development do
   gem 'spring'
 end
 
+group :test do
+  gem "minitest"
+  gem "minitest-rails"
+end
