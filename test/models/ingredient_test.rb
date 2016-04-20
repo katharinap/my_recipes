@@ -14,11 +14,11 @@ class IngredientTest < ActiveSupport::TestCase
 
   should belong_to :recipe
 
-  test 'is valid' do
-    assert ingredients(:kale).valid?
-  end
+  context 'validations' do
+    should validate_presence_of :value
 
-  test 'value is required' do
-    assert ingredients(:ingredient_without_value).invalid?, "'Value' is required"
+    should "be valid" do
+      assert ingredients(:kale).valid?, "Ingredient should be valid"
+    end
   end
 end

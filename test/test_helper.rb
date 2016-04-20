@@ -4,6 +4,8 @@ require "rails/test_help"
 require "minitest/rails"
 require 'minitest/rails/capybara'
 require 'minitest/autorun'
+require 'shoulda/context'
+require 'minitest/reporters'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -11,6 +13,7 @@ require 'minitest/autorun'
 
 # Uncomment for awesome colorful output
 # require "minitest/pride"
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
