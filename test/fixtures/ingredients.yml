@@ -1,0 +1,6 @@
+kale:
+ value: Kale
+ recipe: kale_chips
+
+ingredient_without_value:
+ recipe: kale_chips
