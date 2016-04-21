@@ -10,13 +10,17 @@
 #  updated_at  :datetime         not null
 #  picture     :string
 #
+require 'test_helper'
 
-class Step < ActiveRecord::Base
-  belongs_to :recipe
+class StepTest < ActiveSupport::TestCase
+  should belong_to :recipe
 
-  validates :description, presence: true
+  should 'be valid' do
+    assert steps(:step_1).valid?
+  end
 
-  include WithPicture
-  has_default_picture_size [200, 200]
-  has_thumb_picture_size [50, 50]
+  should 'be invalid without a description' do
+    steps(:step_1).description = nil
+    assert steps(:step_1).invalid?
+  end
 end

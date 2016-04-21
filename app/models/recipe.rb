@@ -25,14 +25,6 @@ class Recipe < ActiveRecord::Base
 
   # FIXME - uniqueness still OK?
   validates :name, uniqueness: true, presence: true
-
-  # has_many :ingredients, dependent: :destroy
-  # has_many :steps, dependent: :destroy
-  # has_many :references, dependent: :destroy
-  #
-  # accepts_nested_attributes_for :ingredients, allow_destroy: true, reject_if: -> (params) { params[value].blank? }
-  # accepts_nested_attributes_for :steps, allow_destroy: true, reject_if: -> (params) { params[description].blank? }
-  # accepts_nested_attributes_for :references, allow_destroy: true, reject_if: -> (params) { params[location].blank? }
   
   DEPENDENT_ATTRIBUTES.each do |dependent, attr|
     has_many dependent, dependent: :destroy
