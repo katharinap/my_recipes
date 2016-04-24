@@ -6,6 +6,7 @@ require 'minitest/rails/capybara'
 require 'minitest/autorun'
 require 'shoulda/context'
 require 'minitest/reporters'
+require 'mocha/mini_test'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 

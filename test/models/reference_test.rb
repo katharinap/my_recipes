@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #  location   :string
 #
-require 'test_helper'
+require File.expand_path("../../test_helper", __FILE__)
 
 class ReferenceTest < ActiveSupport::TestCase
   should belong_to :recipe
