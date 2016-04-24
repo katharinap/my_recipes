@@ -25,7 +25,7 @@ class Recipe < ActiveRecord::Base
 
   # FIXME - uniqueness still OK?
   validates :name, uniqueness: true, presence: true
-
+  
   DEPENDENT_ATTRIBUTES.each do |dependent, attr|
     has_many dependent, dependent: :destroy
     accepts_nested_attributes_for dependent,
@@ -38,6 +38,7 @@ class Recipe < ActiveRecord::Base
     user.name || user.email
   end
 
+  #FIXME: Should this be a static method?
   def prepare_recipe(params)
     self.name = params[:name].try(:strip)
     self.user_id = params[:user_id]

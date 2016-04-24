@@ -14,6 +14,8 @@
 class Step < ActiveRecord::Base
   belongs_to :recipe
 
+  validates :description, presence: true
+
   include WithPicture
   has_default_picture_size [200, 200]
   has_thumb_picture_size [50, 50]
