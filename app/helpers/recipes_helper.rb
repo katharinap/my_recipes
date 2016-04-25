@@ -1,4 +1,6 @@
 module RecipesHelper
+  include GlyphHelper
+
   def title
     @recipe.try :name
   end
