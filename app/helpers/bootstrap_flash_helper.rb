@@ -9,8 +9,7 @@ module BootstrapFlashHelper
 
       type = type.to_sym
       type = :success if type == :notice
-      type = :danger  if type == :alert
-      type = :danger  if type == :error
+      type = :danger  if [:alert, :error].include? type 
       next unless ALERT_TYPES.include?(type)
 
       Array(message).each do |msg|
