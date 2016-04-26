@@ -1,4 +1,6 @@
 module RecipesHelper
+  include GlyphHelper
+
   def title
     @recipe.try :name
   end
@@ -34,11 +36,11 @@ module RecipesHelper
         toggle: 'tooltip'
       }
       tooltip = t('.destroy', default: t("helpers.links.destroy"))
-      link_to recipe_path(recipe), method: 'delete', data: data, title: tooltip do
+      link_to recipe_path(recipe), method: 'delete', data: data, id: 'delete_link', title: tooltip do
         destroy_icon
       end
     else
-      link_to '#', data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true, class: 'disabled' do
+      link_to '#', data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true, id: 'delete_link', class: 'disabled' do
         destroy_icon
       end
     end
