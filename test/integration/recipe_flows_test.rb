@@ -55,18 +55,20 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
                            user: @user)
 
     visit "/recipes/#{recipe.id}"
- #   puts "#{page.html.inspect}"
 
     confirm_with(:ok) do
       find_by_id('delete_link').click
     end
 
+    assert page.has_content? "Recipe was successfully destroyed."
   end
 
   test "login and CRUD recipe" do
+
+    require_javascript_driver!
     do_login
     do_create_recipe
     do_edit_recipe
-   # do_destroy_recipe TODO
+    do_destroy_recipe
   end
 end
