@@ -7,6 +7,8 @@ require 'minitest/autorun'
 require 'shoulda/context'
 require 'minitest/reporters'
 require 'mocha/mini_test'
+require 'capybara/rails'
+require_relative 'browser/lib/dom_helper'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
@@ -19,4 +21,18 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+end
+
+Capybara.javascript_driver = :webkit
+
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+  include BrowserTests::DomHelper
+
+  # Reset sessions and driver between tests
+  # Use super wherever this method is redefined in your individual test classes
+  def teardown
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+  end
 end

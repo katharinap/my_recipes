@@ -2,6 +2,7 @@ class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:new, :edit, :destroy]
 
+  #TODO: Do we want to show all recipes here?
   def index
     @recipes = Recipe.all
   end
