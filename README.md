@@ -19,7 +19,7 @@ The site is built with [Ruby](https://www.ruby-lang.org) on [Rails](http://rubyo
 #### Troubleshooting
 
 * If you get error `PG::ObjectInUse: ERROR:  database is being accessed by other users` while trying to drop your database,
-run `rake kill_postgres_connections`.
+run `rake postgres:kill_postgres_connections`.
 reference: http://stackoverflow.com/questions/2369744/rails-postgres-drop-error-database-is-being-accessed-by-other-users
 * if you get error, `role "my_recipes" does not exist `createuser -s -r my_recipes`
 
