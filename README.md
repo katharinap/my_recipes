@@ -14,7 +14,7 @@ The site is built with [Ruby](https://www.ruby-lang.org) on [Rails](http://rubyo
 * Run `rake db:create`, `rake db:migrate` and `rake db:seed`.
 * To load the server, run `rails s`.
 * Optional: Start [guard](https://github.com/guard/guard) by running `bundle exec guard`. Code changes are detected automatically by guard and relevant tests are run
-* Navigate to `localhost:3000`
+* Navigate to `localhost:3000`. To login, use `seed_user@recipe.com` and `testing123`
 
 #### Troubleshooting
 

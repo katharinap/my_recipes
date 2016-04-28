@@ -1,4 +1,4 @@
-class CreateSteps < ActiveRecord::Migration[5.0]
+class CreateSteps < ActiveRecord::Migration
   def change
     create_table :steps do |t|
       t.integer :recipe_id

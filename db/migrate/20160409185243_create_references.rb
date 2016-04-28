@@ -1,4 +1,4 @@
-class CreateReferences < ActiveRecord::Migration[5.0]
+class CreateReferences < ActiveRecord::Migration
   def change
     create_table :references do |t|
       t.integer :recipe_id
