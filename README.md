@@ -16,6 +16,13 @@ The site is built with [Ruby](https://www.ruby-lang.org) on [Rails](http://rubyo
 * Optional: Start [guard](https://github.com/guard/guard) by running `bundle exec guard`. Code changes are detected automatically by guard and relevant tests are run
 * Navigate to `localhost:3000`
 
+#### Troubleshooting
+
+* If you get error `PG::ObjectInUse: ERROR:  database is being accessed by other users` while trying to drop your database,
+run `rake kill_postgres_connections`.
+reference: http://stackoverflow.com/questions/2369744/rails-postgres-drop-error-database-is-being-accessed-by-other-users
+* if you get error, `role "my_recipes" does not exist `createuser -s -r my_recipes`
+
 ## Contributing to the project
 * Assign yourself to an issue
 * Create a branch using the convention `[issue-number]-issue-description`. 'Example: 34-code-climate-issues'
