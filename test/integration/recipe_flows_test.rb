@@ -23,7 +23,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     fill_in "ingredients", with: "Ingredient 1\n Ingredient 2"
     fill_in "steps", with: "Step 1\n Step 2"
     fill_in "references", with: "www.myrecipe.com"
-    fill_in "tags", with: "veggie, snack, vegan"
+    fill_in "tag_list", with: "veggie, snack, vegan"
 
     click_button('Submit')
 

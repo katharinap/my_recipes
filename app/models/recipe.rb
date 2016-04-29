@@ -17,7 +17,7 @@ class Recipe < ActiveRecord::Base
   has_default_picture_size [400, 400]
   has_thumb_picture_size [50, 50]
 
-  acts_as_taggable
+  acts_as_ordered_taggable
 
   DEPENDENT_ATTRIBUTES = {
     ingredients: :value,
