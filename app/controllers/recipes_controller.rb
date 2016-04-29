@@ -19,6 +19,7 @@ class RecipesController < ApplicationController
 
   def create
     @recipe = new_recipe
+    
     if @recipe.save
       redirect_to @recipe, notice: 'Recipe was successfully created.'
     else

@@ -74,7 +74,8 @@ class RecipesControllerTest < ActionController::TestCase
                          user_id: 1,
                          ingredients: "ingredient one\ningredient two",
                          steps: "do something\n\ndo something else",
-                         references: "http://www.example.com/1\nhttp://www.example.com/2"}
+                         references: "http://www.example.com/1\nhttp://www.example.com/2",
+                         tag_list: "tag_1, tag_2"}
       @recipe = Recipe.new.prepare_recipe(@original_attrs)
       @recipe.save
     end
@@ -86,6 +87,15 @@ class RecipesControllerTest < ActionController::TestCase
         put :update, update_params
         @recipe.reload
         assert_equal "Updated Name", @recipe.name
+        assert_redirected_to recipe_path(@recipe)
+      end
+
+      should 'update tag_list' do
+        update_params = {id: @recipe.to_param, recipe:
+            @original_attrs.merge({tag_list: "Updated Tag"})}
+        put :update, update_params
+        @recipe.reload
+        assert_equal ["updated tag"], @recipe.tag_list #ActsAsTaggableOn.force_lowercase is set to 'true'
         assert_redirected_to recipe_path(@recipe)
       end
 

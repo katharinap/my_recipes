@@ -36,6 +36,9 @@
           = render partial: 'remove_nested_field', locals: { form: r_form }
     = render partial: 'add_nested_field', locals: { form: f, btn_text: 'Add a Reference', target: :references }
 
+  %h2 Tags(separated by commas)
+  = f.input :tag_list
+
   %br
     
   = f.button :submit, 'Update', title: 'Update this Recipe', data: { toggle: 'tooltip' }, class: 'btn btn-default'
