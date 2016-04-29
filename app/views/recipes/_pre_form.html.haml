@@ -11,5 +11,8 @@
   %h2 References
   = text_area_tag 'references', nil, class: 'form-control', rows: 2
 
+  %h2 Tags(separated by commas)
+  = text_field_tag 'tag_list'
+
   %br
   = submit_tag 'Submit'

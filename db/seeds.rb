@@ -14,6 +14,7 @@
     new_recipe.name = "seeded recipe"
     new_recipe.user = user
     new_recipe.picture = "some_picture.jpg"
+    new_recipe.tag_list = "seed_tag_1, seed_tag_2"
   end
 
 
@@ -33,3 +34,4 @@
     new_reference.recipe = recipe
     new_reference.location = "www.seed_reference.com"
   end
+

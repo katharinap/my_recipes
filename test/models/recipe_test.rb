@@ -54,6 +54,7 @@ class RecipeTest < ActiveSupport::TestCase
          name: "\t a new recipe\r\n ",
          user_id: 1,
          ingredients: "Kale\nSalt\t\nPepper",
+         tag_list: "Kale, Snack, Healthy",
          steps: "Sprinkle salt and pepper\nDrizzle oil\t\nBake in oven at 450c ",
          references: "www.goodfood.com\n\n www.foodforcause.in"
      }
@@ -61,11 +62,15 @@ class RecipeTest < ActiveSupport::TestCase
     end
 
     should "set name" do
-      assert "a new recipe", @recipe.name
+      assert_equal "a new recipe", @recipe.name
     end
 
     should "set user" do
-      assert @params[:user_id], @recipe.user_id
+      assert_equal @params[:user_id], @recipe.user_id
+    end
+
+    should "set tags" do
+      assert_equal %w(kale snack healthy), @recipe.tag_list, "tag_list is incorrect"
     end
 
     should "build_dependents" do

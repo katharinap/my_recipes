@@ -17,6 +17,8 @@ class Recipe < ActiveRecord::Base
   has_default_picture_size [400, 400]
   has_thumb_picture_size [50, 50]
 
+  acts_as_taggable
+
   DEPENDENT_ATTRIBUTES = {
     ingredients: :value,
     steps: :description,
@@ -42,6 +44,7 @@ class Recipe < ActiveRecord::Base
   def prepare_recipe(params)
     self.name = params[:name].try(:strip)
     self.user_id = params[:user_id]
+    self.tag_list = params[:tag_list]
     build_dependents(params)
 
     self

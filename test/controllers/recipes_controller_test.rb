@@ -41,6 +41,7 @@ class RecipesControllerTest < ActionController::TestCase
                         name: "my recipe",
                         ingredients: "Ingredient 1\nIngredient 2\n\n",
                         steps: "Step1 \n Step 2 \n\n",
+                        tag_list: 'veggie, snack, healthy',
                         references: "ref 1\n"
         }
         #The below is just cursory testing since the model tests this thoroughly
@@ -48,6 +49,8 @@ class RecipesControllerTest < ActionController::TestCase
         assert 2, recipe.ingredients.count
         assert 2, recipe.steps.count
         assert 1, recipe.references.count
+        assert 3, recipe.tags.count
+        assert "veggie, snack, healthy", recipe.tag_list
       end
       assert_equal "Recipe was successfully created.", flash[:notice]
       assert_redirected_to recipe_path(Recipe.last)

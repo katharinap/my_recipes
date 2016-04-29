@@ -23,6 +23,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     fill_in "ingredients", with: "Ingredient 1\n Ingredient 2"
     fill_in "steps", with: "Step 1\n Step 2"
     fill_in "references", with: "www.myrecipe.com"
+    fill_in "tags", with: "veggie, snack, vegan"
 
     click_button('Submit')
 
@@ -30,6 +31,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? "My Recipe"
     assert page.has_content? "Step 1"
     assert page.has_content? "Ingredient 1"
+    assert page.has_content? "veggie, snack, vegan"
     assert page.has_content? @user.email
   end
 

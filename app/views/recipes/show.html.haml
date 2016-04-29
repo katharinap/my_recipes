@@ -11,7 +11,8 @@
     = @recipe.user_name
     = glyph :calendar
     = local_time @recipe.created_at
-
+    %b Tagged as
+    = @recipe.tag_list
 .row
   .col-md-4.col-md-push-8
     %h4 Ingredients
@@ -19,6 +20,7 @@
       - @recipe.ingredients.each do |ingredient|
         %li= ingredient.value
   .col-md-8.col-md-pull-4
+    %h4 Directions
     .recipe-directions        
       - @recipe.steps.each do |step|
         %p
