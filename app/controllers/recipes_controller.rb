@@ -1,10 +1,10 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:new, :edit, :destroy]
+  before_action :authenticate_user!
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
-  #TODO: Do we want to show all recipes here?
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.for_user(current_user)
   end
 
   def show
@@ -42,6 +42,10 @@ class RecipesController < ApplicationController
   end
   
   private
+
+  def authorize_user
+    render nothing: true, status: :forbidden if (@recipe.user != current_user)
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_recipe
