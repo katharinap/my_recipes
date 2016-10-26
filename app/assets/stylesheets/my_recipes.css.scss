@@ -5,7 +5,7 @@ html {
 
 body {
     /* min-height:100%; */
-    font-family: 'Open Sans', sans-serif;
+    font-family: Geneva, Tahoma, Verdana, sans-serif;
     line-height: 1.5;
     background: white;
     margin: 100px auto 20px auto;
@@ -31,28 +31,23 @@ body {
 }
 
 .ingredients {
-    font-family: courier;
     font-size: 15px;
     font-weight: bold;
     line-height: 21px;
 }
 
 .references {
-    font-family: courier;
+    font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
 }
 
 .recipe-link {
     padding-top: 10px;
-    font-family: courier;
-}
-
-h1, h2, h3, h4 {
-    font-family: 'Gravitas One', cursive;
 }
 
 h1 {
     padding-top: 10px;
     text-align: center;
+    font-weight: 500;
 }
 
 h2 {
@@ -65,7 +60,7 @@ h2 {
 }
 
 .login-menu {
-    font-family: 'Open Sans', sans-serif;
+    font-family: Lucida Console, Lucida Sans Typewriter, monaco, Bitstream Vera Sans Mono, monospace;
     float: right;
 }
 
@@ -93,9 +88,11 @@ label.checkbox {
 
 .recipe-user {
     text-align: center;
-    color: #808080;
+    color: darkolivegreen;
     text-decoration: none;
-    font-family: courier;
+    font-size: small;
+    font-family: Andale Mono, AndaleMono, monospace;
+    padding-bottom: 10px;
 }
 
 a:visited {
@@ -118,4 +115,10 @@ nav {
 
 .right-side-icon {
     padding-left: 10px;
+}
+
+th {
+  font-weight: bold;
+  font-size: 20px;
+  font-family: Franklin Gothic Medium, Franklin Gothic, ITC Franklin Gothic, Arial, sans-serif;
 }
