@@ -9,7 +9,7 @@ body {
     line-height: 1.5;
     background: white;
     margin: 100px auto 20px auto;
-    width: 1020px;
+    width: 60%;
     padding: 0 20px 20px 20px;
     border-style: solid;
     border-radius: 25px;
@@ -17,17 +17,8 @@ body {
     /* box-shadow: 3px 3px 5px 6px rgba(0, 0, 0, 0.5); */
 }
 
-@media (max-width: 768px) {
-    body {
-        line-height: 1.5;
-        background: red;
-        margin: 20px auto 20px auto;
-        width: 90%;
-        padding: 0 20px 20px 20px;
-        border-style: solid;
-        border-radius: 25px;
-        position: relative;
-    }
+img {
+  max-width: 100%;
 }
 
 .ingredients {
@@ -51,7 +42,9 @@ h1 {
 }
 
 h2 {
-    padding-top: 15px;
+    padding-top: 20px;
+    font-weight: normal;
+    font-size: large;
     padding-bottom: 5px;
 }
 
@@ -121,4 +114,12 @@ th {
   font-weight: bold;
   font-size: 20px;
   font-family: Franklin Gothic Medium, Franklin Gothic, ITC Franklin Gothic, Arial, sans-serif;
+}
+
+.small-text-field {
+  width: 30%;
+}
+
+.medium-text-field {
+  width: 50%;
 }
