@@ -19,6 +19,8 @@ class Recipe < ActiveRecord::Base
 
   acts_as_ordered_taggable
 
+  scope :for_user, ->(user) { where(user_id: user.id) }
+
   DEPENDENT_ATTRIBUTES = {
     ingredients: :value,
     steps: :description,

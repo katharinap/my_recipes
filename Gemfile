@@ -28,6 +28,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use Unicorn as the app server
 # gem 'unicorn'
+gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -69,3 +70,9 @@ group :test do
   gem 'capybara-webkit'
   gem 'launchy'
 end
+
+group :production do
+  gem 'rails_12factor', group: :production
+end
+
+ruby '2.3.0'
