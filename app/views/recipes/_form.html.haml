@@ -5,6 +5,9 @@
   %h2 Picture
   = render partial: 'form_picture', locals: { form: f }
 
+  = f.input :active_time, label: 'Active Time (in Minutes)'
+  = f.input :total_time, label: 'Total Time (in Minutes)'
+  
   %h2 Ingredients
   #ingredients
     = f.fields_for :ingredients, :wrapper => false do |i_form|

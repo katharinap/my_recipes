@@ -56,7 +56,9 @@ class RecipeTest < ActiveSupport::TestCase
          ingredients: "Kale\nSalt\t\nPepper",
          tag_list: "Kale, Snack, Healthy",
          steps: "Sprinkle salt and pepper\nDrizzle oil\t\nBake in oven at 450c ",
-         references: "www.goodfood.com\n\n www.foodforcause.in"
+         references: "www.goodfood.com\n\n www.foodforcause.in",
+         active_time: 10,
+         total_time: 30
      }
      @recipe = Recipe.new.prepare_recipe(@params)
     end
@@ -77,6 +79,14 @@ class RecipeTest < ActiveSupport::TestCase
       assert_equal %w(Kale Salt Pepper), @recipe.ingredients.map(&:value)
       assert_equal ['Sprinkle salt and pepper', 'Drizzle oil', 'Bake in oven at 450c'], @recipe.steps.map(&:description)
       assert_equal %w(www.goodfood.com www.foodforcause.in), @recipe.references.map(&:location)
+    end
+
+    should 'set active time' do
+      assert_equal 10, @recipe.active_time
+    end
+
+    should 'set total time' do
+      assert_equal 30, @recipe.total_time
     end
   end
 end

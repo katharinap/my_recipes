@@ -7,12 +7,18 @@
   %h1=t '.title', :default => title || model_class.model_name.human.titleize
 
   .recipe-user
-    = glyph :user
-    = @recipe.user_name
-    = glyph :calendar
-    = local_time @recipe.created_at
-    %b Tagged as
-    = @recipe.tag_list
+    .row
+      = glyph :user
+      = @recipe.user_name
+      = glyph :calendar
+      = local_time @recipe.created_at
+      %b Tagged as
+      = @recipe.tag_list
+    .row
+      Active Time:
+      = duration_str(@recipe.active_time)
+      Total Time:
+      = duration_str(@recipe.total_time)
 .row
   .col-md-4.col-md-push-8
     %h4 Ingredients

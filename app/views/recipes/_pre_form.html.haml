@@ -1,7 +1,18 @@
 = form_tag recipes_path, method: :post, html: { class: 'form-horizontal' } do |f|
   = hidden_field_tag :user_id, current_user_id
-  = text_field_tag 'name'
-  
+  = text_field_tag 'name', nil, class: 'form-control'
+
+  %h3 Time
+  .row.form-group
+    .col-md-2
+      Active (in Minutes)
+    .col-md-4
+      = number_field_tag 'active_time', nil, class: 'form-control'
+    .col-md-2
+      Total (in Minutes)
+    .col-md-4
+      = number_field_tag 'total_time', nil, class: 'form-control'
+
   %h2 Ingredients
   = text_area_tag 'ingredients', nil, class: 'form-control', rows: 10
 

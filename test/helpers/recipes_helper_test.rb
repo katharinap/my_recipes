@@ -87,4 +87,28 @@ class RecipesHelperTest < ActionView::TestCase
     end
   end
 
+  context '.duration_str' do
+    should 'return minutes if the duration is less than an hour' do
+      assert_equal '1 minute', duration_str(1)
+      assert_equal '25 minutes', duration_str(25)
+      assert_equal '1m', duration_str(1, short: true)
+      assert_equal '25m', duration_str(25, short: true)
+    end
+
+    should 'return hours and minutes if the duration is more than one hour' do
+      assert_equal '1 hour 15 minutes', duration_str(75)
+      assert_equal '2 hours 30 minutes', duration_str(150)
+      assert_equal '2h 30m', duration_str(150, short: true)
+    end
+
+    should 'return hours if the duration is for full hours' do
+      assert_equal '1 hour', duration_str(60)
+      assert_equal '2 hours', duration_str(120)
+    end
+
+    should 'return N/A if the argument is not a number' do
+      assert_equal 'N/A', duration_str(nil)
+      assert_equal 'N/A', duration_str('123')
+    end
+  end
 end

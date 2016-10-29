@@ -65,6 +65,8 @@ class RecipesController < ApplicationController
       :remove_picture,
       :picture_cache,
       :tag_list,
+      :active_time,
+      :total_time,
       ingredients_attributes: [:id, :value, :_destroy],
       steps_attributes: [:id, :description, :picture, :remove_picture, :picture_cache, :_destroy],
       references_attributes: [:id, :location, :_destroy]
@@ -72,6 +74,6 @@ class RecipesController < ApplicationController
   end
 
   def new_params
-    params.permit(:name, :user_id, :ingredients, :steps, :tag_list)
+    params.permit(:name, :user_id, :ingredients, :steps, :tag_list, :active_time, :total_time)
   end
 end

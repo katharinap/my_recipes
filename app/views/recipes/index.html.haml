@@ -8,6 +8,8 @@
       %th= User.human_attribute_name :email
       %th= Recipe.human_attribute_name :created_at
       %th= Recipe.human_attribute_name :tag_list
+      %th= Recipe.human_attribute_name :active_time
+      %th= Recipe.human_attribute_name :total_time
       %th
   %tbody
     - @recipes.each do |recipe|
@@ -19,6 +21,8 @@
         %td= recipe.user_name
         %td= local_time recipe.created_at, :short
         %td= recipe.tag_list
+        %td= duration_str(recipe.active_time, short: true)
+        %td= duration_str(recipe.total_time, short: true)
         %td
           = edit_link(recipe)
           = destroy_link(recipe)
