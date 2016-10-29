@@ -8,13 +8,21 @@ class RecipesControllerTest < ActionController::TestCase
     sign_out @user
   end
 
+  test 'authentication' do
+    sign_out @user
+    get :index
+
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
   test 'GET index' do
     get :index
 
     assert_response :success
     assert_template :index
     assert Recipe.count > 0
-    assert_equal Recipe.all.to_a, assigns(:recipes)
+    assert_equal Recipe.for_user(@user).to_a, assigns(:recipes)
   end
 
   test 'GET show' do
@@ -75,7 +83,7 @@ class RecipesControllerTest < ActionController::TestCase
 
     setup do
       @original_attrs = {name: "recipe name",
-                         user_id: 1,
+                         user_id: @user.id,
                          ingredients: "ingredient one\ningredient two",
                          steps: "do something\n\ndo something else",
                          references: "http://www.example.com/1\nhttp://www.example.com/2",
@@ -255,8 +263,9 @@ class RecipesControllerTest < ActionController::TestCase
 
     should "redirect to 'new' with invalid data" do
       assert_no_difference 'Recipe.count' do
-        update_params = {id: @recipe.to_param, recipe:
-            @original_attrs.merge({name: ""})}
+        update_params = {id: @recipe.to_param,
+                         recipe: @original_attrs.merge({name: ""}),
+                         user_id: @user.id}
         put :update, update_params
       end
 
@@ -265,6 +274,15 @@ class RecipesControllerTest < ActionController::TestCase
       assert_template :edit
     end
 
+    should "not allow editing of another user's recipe" do
+      assert_no_difference 'Recipe.count' do
+        update_params = {id: @recipe.to_param,
+                         recipe: @original_attrs,
+                         user_id: @user.id + 1}
+        put :update, update_params
+        assert_response 302
+      end
+    end
   end
 
   test "DELETE destroy should delete recipe" do

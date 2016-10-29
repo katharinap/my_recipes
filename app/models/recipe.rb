@@ -19,6 +19,8 @@ class Recipe < ActiveRecord::Base
 
   acts_as_ordered_taggable
 
+  scope :for_user, ->(user) { where(user_id: user.id) }
+
   DEPENDENT_ATTRIBUTES = {
     ingredients: :value,
     steps: :description,
@@ -27,7 +29,10 @@ class Recipe < ActiveRecord::Base
 
   # FIXME - uniqueness still OK?
   validates :name, uniqueness: true, presence: true
-  
+
+  scope :by_name, -> { order("name") }
+  scope :by_most_recent, -> { order("created_at DESC") }
+
   DEPENDENT_ATTRIBUTES.each do |dependent, attr|
     has_many dependent, dependent: :destroy
     accepts_nested_attributes_for dependent,

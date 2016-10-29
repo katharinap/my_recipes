@@ -89,5 +89,17 @@ class RecipeTest < ActiveSupport::TestCase
       assert_equal 30, @recipe.total_time
     end
   end
+
+  context 'by name scope' do
+    setup do
+      @user = User.new(name: 'test_name', email: 'test@email.com')
+    end
+
+    should "sort by name" do
+      recipes = Recipe.by_name
+      assert_equal 2, recipes.count
+      assert_equal [recipes(:ice_cream).name, recipes(:kale_chips).name], recipes.collect(&:name)
+    end
+  end
 end
 
