@@ -42,6 +42,9 @@ gem 'local_time'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'acts-as-taggable-on'
+gem 'rmagick'
+gem 'rtesseract'
+gem 'ingreedy'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,6 +59,7 @@ group :development do
   gem 'spring'
   gem 'guard'
   gem 'guard-minitest'
+  gem 'pry'
 end
 
 group :test do

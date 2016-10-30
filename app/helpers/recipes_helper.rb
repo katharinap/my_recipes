@@ -53,13 +53,26 @@ module RecipesHelper
   end
 
   def new_link
-    css_class = 'btn btn-success-outline btn-sm'
+    css_class = 'btn btn-primary-outline btn-sm'
     css_class << ' disabled' unless user_signed_in?
     link_to new_recipe_path do
       attr = { type: 'button', class: css_class }
       attr[:disabled] = true unless user_signed_in?
       content_tag :button, attr do
         'Add Recipe'
+      end
+    end
+  end
+
+
+  def import_link
+    css_class = 'btn btn-primary-outline btn-sm'
+    css_class << ' disabled' unless user_signed_in?
+    link_to new_import_path do
+      attr = { type: 'button', class: css_class }
+      attr[:disabled] = true unless user_signed_in?
+      content_tag :button, attr do
+        'Import Recipe'
       end
     end
   end

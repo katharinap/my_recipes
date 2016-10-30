@@ -1,0 +1,8 @@
+.page-header
+  %h1='Import from image'
+
+  .row
+    .col-xs-6
+      = simple_format @imported_recipe
+    .col-xs-6
+      = render :partial => 'recipes/pre_form'
