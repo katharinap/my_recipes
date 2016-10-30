@@ -63,18 +63,4 @@ module RecipesHelper
       end
     end
   end
-
-  def duration_str(minutes, short: false)
-    return 'N/A' unless minutes.is_a? Numeric
-    hours, add_mins = minutes.divmod(60)
-    str_elements = []
-    if short
-      str_elements << "#{hours}h" unless hours.zero?
-      str_elements << "#{add_mins}m" unless add_mins.zero?
-    else
-      str_elements << "#{hours} #{'hour'.pluralize(hours)}" unless hours.zero?
-      str_elements << "#{add_mins} #{'minute'.pluralize(add_mins)}" unless add_mins.zero?
-    end
-    str_elements.join(' ')
-  end
 end

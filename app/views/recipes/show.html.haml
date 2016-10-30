@@ -15,10 +15,10 @@
       %strong Tagged as
       = @recipe.tag_list
     .row
-      Active Time:
-      = duration_str(@recipe.active_time)
-      Total Time:
-      = duration_str(@recipe.total_time)
+      %strong Active Time:
+      = minutes_in_words(@recipe.active_time)
+      %strong Total Time:
+      = minutes_in_words(@recipe.total_time)
 .row
   .col-md-4.col-md-push-8
     %h4 Ingredients

@@ -22,8 +22,8 @@
           %td= recipe.user_name
           %td= local_time recipe.created_at, :short
           %td= recipe.tag_list
-          %td= duration_str(recipe.active_time, short: true)
-          %td= duration_str(recipe.total_time, short: true)
+          %td= minutes_in_words(recipe.active_time, short: true)
+          %td= minutes_in_words(recipe.total_time, short: true)
           %td
             = edit_link(recipe)
             = destroy_link(recipe)
