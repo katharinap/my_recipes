@@ -329,7 +329,8 @@
 		return this;
 	};
 
-	$(function() {
+	var ready;		// support turbolinks
+	ready =  function() {
 		$('.filestyle').each(function() {
 			var $this = $(this), options = {
 
@@ -347,5 +348,9 @@
 
 			$this.filestyle(options);
 		});
-	});
+	};
+	$(document).ready(ready); // support turbolinks
+	$(document).on('page:load', ready); // support turbolinks
+	$(document).on('turbolinks:load', ready); // support turbolinks
+
 })(window.jQuery);

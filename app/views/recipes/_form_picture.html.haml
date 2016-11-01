@@ -3,12 +3,10 @@
     = image_tag form.object.picture_url, class: 'center-block'
 .row.form-group
   .col-md-6
-    = form.input :picture, label: false, as: :file, input_html: { class: 'filestyle',
-                                                                  data: {buttonBefore: true } }
+    = form.input :picture, label: false, as: :file, input_html: { class: 'filestyle', data: { buttonName: 'btn-secondary', buttonBefore: true, placeholder: 'None', iconName: 'fa fa-folder' } }
   - if form.object.picture?
     .col-md-6
       = form.input :picture_cache, as: :hidden
       - label_text = "Remove Current Picture"
       = form.input :remove_picture, as: :boolean, label: false, inline_label: label_text, input_html: { class: 'checkbox checkbox-inline' }
       %br
-
