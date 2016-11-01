@@ -30,7 +30,10 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? "Recipe was successfully created."
     assert page.has_content? "My Recipe"
     assert page.has_content? "Step 1"
+    assert page.has_content? "Step 2"
     assert page.has_content? "Ingredient 1"
+    assert page.has_content? "Ingredient 2"
+    assert page.has_content? "www.myrecipe.com"
     assert page.has_content? "veggie, snack, vegan"
     assert page.has_content? @user.email
   end
