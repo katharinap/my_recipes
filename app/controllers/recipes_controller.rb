@@ -78,6 +78,6 @@ class RecipesController < ApplicationController
   end
 
   def new_params
-    params.permit(:name, :user_id, :ingredients, :steps, :tag_list, :active_time, :total_time)
+    params.permit(:name, :user_id, :ingredients, :steps, :references, :tag_list, :active_time, :total_time)
   end
 end
