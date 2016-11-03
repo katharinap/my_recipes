@@ -87,4 +87,10 @@ class RecipesHelperTest < ActionView::TestCase
     end
   end
 
+  context '.short_time_attribute_description' do
+    should 'return a short description string for the set time attributes of the given recipe' do
+      expected_str = 'Active: 5m, Total: 45m'
+      assert_equal expected_str, short_time_attribute_description(@recipe)
+    end
+  end
 end

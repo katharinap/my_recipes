@@ -2,6 +2,8 @@ kale_chips:
  name: Kale Chips
  picture: a_picture.jpg
  user: kat
+ active_time: 5
+ total_time: 45
 
 ice_cream:
  name: Ice Cream

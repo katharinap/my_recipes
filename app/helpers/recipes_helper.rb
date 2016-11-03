@@ -1,6 +1,7 @@
 module RecipesHelper
   include GlyphHelper
-
+  include DurationHelper
+  
   def title
     @recipe.try :name
   end
@@ -62,5 +63,14 @@ module RecipesHelper
         'Add Recipe'
       end
     end
+  end
+
+  # this is only a short term solution until we can think of a
+  # better way to display this information in recipes#index
+  def short_time_attribute_description(recipe)
+    Recipe::TIME_ATTRIBUTES.map do |time_attr|
+      next unless recipe.send time_attr
+      "#{time_attr.to_s.sub('_time', '').capitalize}: #{minutes_in_words(recipe.send(time_attr), short: true)}"
+    end.compact.join(', ')
   end
 end

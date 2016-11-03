@@ -7,12 +7,18 @@
   %h1=t '.title', :default => title || model_class.model_name.human.titleize
 
   .recipe-user
-    = glyph :user
-    = @recipe.user_name
-    = glyph :calendar
-    = local_time @recipe.created_at
-    %strong Tagged as
-    = @recipe.tag_list
+    .row
+      = glyph :user
+      = @recipe.user_name
+      = glyph :calendar
+      = local_time @recipe.created_at
+      %strong Tagged as
+      = @recipe.tag_list
+    .row
+      - Recipe::TIME_ATTRIBUTES.each do |time_attribute|
+        - next unless @recipe.send time_attribute
+        %strong= "#{Recipe.human_attribute_name time_attribute}:"
+        = minutes_in_words(@recipe.send time_attribute)
 .row
   .col-md-4.col-md-push-8
     %h4 Ingredients

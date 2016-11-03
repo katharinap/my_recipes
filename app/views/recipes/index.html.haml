@@ -9,6 +9,7 @@
         %th= User.human_attribute_name :email
         %th= Recipe.human_attribute_name :created_at
         %th= Recipe.human_attribute_name :tag_list
+        %th Times
         %th
     %tbody
       - @recipes.each do |recipe|
@@ -20,6 +21,8 @@
           %td= recipe.user_name
           %td= local_time recipe.created_at, :short
           %td= recipe.tag_list
+          -# super ugly, should be replaced if we can come up with a better solution...
+          %td= short_time_attribute_description(recipe)
           %td
             = edit_link(recipe)
             = destroy_link(recipe)

@@ -50,7 +50,11 @@ class RecipesControllerTest < ActionController::TestCase
                         ingredients: "Ingredient 1\nIngredient 2\n\n",
                         steps: "Step1 \n Step 2 \n\n",
                         tag_list: 'veggie, snack, healthy',
-                        references: "ref 1\n"
+                        references: "ref 1\n",
+                        active_time: 20,
+                        prep_time: 15,
+                        cook_time: 45,
+                        total_time: 60
         }
         #The below is just cursory testing since the model tests this thoroughly
         recipe = Recipe.last
@@ -58,6 +62,10 @@ class RecipesControllerTest < ActionController::TestCase
         assert 2, recipe.steps.count
         assert 1, recipe.references.count
         assert 3, recipe.tags.count
+        assert_equal 20, recipe.active_time
+        assert_equal 15, recipe.prep_time
+        assert_equal 45, recipe.cook_time
+        assert_equal 60, recipe.total_time
         assert "veggie, snack, healthy", recipe.tag_list
       end
       assert_equal "Recipe was successfully created.", flash[:notice]
@@ -83,7 +91,11 @@ class RecipesControllerTest < ActionController::TestCase
                          ingredients: "ingredient one\ningredient two",
                          steps: "do something\n\ndo something else",
                          references: "http://www.example.com/1\nhttp://www.example.com/2",
-                         tag_list: "tag_1, tag_2"}
+                         tag_list: "tag_1, tag_2",
+                         active_time: 10,
+                         prep_time: 5,
+                         cook_time: 40,
+                         total_time: 45}
       @recipe = Recipe.new.prepare_recipe(@original_attrs)
       @recipe.save
     end
@@ -143,6 +155,51 @@ class RecipesControllerTest < ActionController::TestCase
         put :update, update_params
         @recipe.reload
         assert_equal "Updated Reference", @recipe.references.first.location
+        assert_redirected_to recipe_path(@recipe)
+      end
+
+      should 'update active time' do
+        update_params = {id: @recipe.to_param, recipe:
+            @original_attrs.merge({active_time: 15})}
+        put :update, update_params
+        @recipe.reload
+        assert_equal 15, @recipe.active_time
+        assert_redirected_to recipe_path(@recipe)
+      end
+
+      should 'unset active time if field is left blank' do
+        update_params = {id: @recipe.to_param, recipe:
+            @original_attrs.merge({active_time: ''})}
+        put :update, update_params
+        @recipe.reload
+        assert_equal nil, @recipe.active_time
+        assert_redirected_to recipe_path(@recipe)
+      end
+
+      should 'update prep time' do
+        update_params = {id: @recipe.to_param, recipe:
+            @original_attrs.merge({prep_time: 10})}
+        put :update, update_params
+        @recipe.reload
+        assert_equal 10, @recipe.prep_time
+        assert_redirected_to recipe_path(@recipe)
+      end
+
+      should 'update cook time' do
+        update_params = {id: @recipe.to_param, recipe:
+            @original_attrs.merge({cook_time: 60})}
+        put :update, update_params
+        @recipe.reload
+        assert_equal 60, @recipe.cook_time
+        assert_redirected_to recipe_path(@recipe)
+      end
+
+      should 'update total time' do
+        update_params = {id: @recipe.to_param, recipe:
+            @original_attrs.merge({total_time: 60})}
+        put :update, update_params
+        @recipe.reload
+        assert_equal 60, @recipe.total_time
         assert_redirected_to recipe_path(@recipe)
       end
 

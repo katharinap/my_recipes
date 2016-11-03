@@ -24,6 +24,8 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     fill_in "steps", with: "Step 1\n Step 2"
     fill_in "references", with: "www.myrecipe.com"
     fill_in "tag_list", with: "veggie, snack, vegan"
+    fill_in "active_time", with: 15
+    fill_in "total_time", with: 90
 
     click_button('Submit')
 
@@ -35,9 +37,14 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? "Ingredient 2"
     assert page.has_content? "www.myrecipe.com"
     assert page.has_content? "veggie, snack, vegan"
+    assert page.has_content? "Active time"
+    assert page.has_content? "15 minutes"
+    assert page.has_content? "Total time"
+    assert page.has_content? "1 hour 30 minutes"
     assert page.has_content? @user.email
   end
 
+  # TODO: test references
   def do_edit_recipe
     recipe = Recipe.last
     visit "/recipes/#{recipe.id}/edit"
@@ -45,12 +52,23 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content?("Picture")
 
     fill_in "recipe[name]", with: "new_#{recipe.name}"
+    fill_in "recipe[active_time]", with: ''
+    fill_in "recipe[prep_time]", with: 10
+    fill_in "recipe[cook_time]", with: 120
+    fill_in "recipe[total_time]", with: 130
     click_button "Update"
 
     assert page.has_content? "Recipe was successfully updated."
     assert page.has_content? recipe.steps.first.description
     assert page.has_content? recipe.ingredients.first.value
     assert page.has_content? @user.email #This should be recipe.user.email. FIXME issue 36
+    assert page.has_no_content? "Active time"
+    assert page.has_content? "Prep time"
+    assert page.has_content? "10 minutes"
+    assert page.has_content? "Cook time"
+    assert page.has_content? "2 hours"
+    assert page.has_content? "Total time"
+    assert page.has_content? "2 hours 10 minutes"
   end
 
   def do_destroy_recipe
