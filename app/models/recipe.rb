@@ -27,6 +27,8 @@ class Recipe < ActiveRecord::Base
     references: :location,
   }
 
+  TIME_ATTRIBUTES = %i(prep_time active_time cook_time total_time)
+  
   # FIXME - uniqueness still OK?
   validates :name, uniqueness: true, presence: true
 
@@ -50,8 +52,9 @@ class Recipe < ActiveRecord::Base
     self.name = params[:name].try(:strip)
     self.user_id = params[:user_id]
     self.tag_list = params[:tag_list]
-    self.active_time = params[:active_time]
-    self.total_time = params[:total_time]
+    TIME_ATTRIBUTES.each do |time_attribute|
+      self.send "#{time_attribute}=", params[time_attribute]
+    end
     build_dependents(params)
 
     self

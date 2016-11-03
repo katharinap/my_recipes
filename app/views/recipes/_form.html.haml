@@ -5,8 +5,8 @@
   %h2 Picture
   = render partial: 'form_picture', locals: { form: f }
 
-  = f.input :active_time, label: 'Active Time (in Minutes)'
-  = f.input :total_time, label: 'Total Time (in Minutes)'
+  - Recipe::TIME_ATTRIBUTES.each do |time_attribute|
+    = f.input time_attribute, label: "#{Recipe.human_attribute_name time_attribute} (in Minutes)"
   
   %h2 Ingredients
   #ingredients

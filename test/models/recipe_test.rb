@@ -58,6 +58,8 @@ class RecipeTest < ActiveSupport::TestCase
          steps: "Sprinkle salt and pepper\nDrizzle oil\t\nBake in oven at 450c ",
          references: "www.goodfood.com\n\n www.foodforcause.in",
          active_time: 10,
+         prep_time: 10,
+         cook_time: 20,
          total_time: 30
      }
      @recipe = Recipe.new.prepare_recipe(@params)
@@ -83,6 +85,14 @@ class RecipeTest < ActiveSupport::TestCase
 
     should 'set active time' do
       assert_equal 10, @recipe.active_time
+    end
+
+    should 'set prep time' do
+      assert_equal 10, @recipe.prep_time
+    end
+
+    should 'set cook time' do
+      assert_equal 20, @recipe.cook_time
     end
 
     should 'set total time' do

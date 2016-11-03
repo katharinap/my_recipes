@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161029204544) do
+ActiveRecord::Schema.define(version: 20161102145552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,9 +37,13 @@ ActiveRecord::Schema.define(version: 20161029204544) do
     t.string   "picture"
     t.integer  "active_time"
     t.integer  "total_time"
+    t.integer  "prep_time"
+    t.integer  "cook_time"
   end
 
   add_index "recipes", ["active_time"], name: "index_recipes_on_active_time", using: :btree
+  add_index "recipes", ["cook_time"], name: "index_recipes_on_cook_time", using: :btree
+  add_index "recipes", ["prep_time"], name: "index_recipes_on_prep_time", using: :btree
   add_index "recipes", ["total_time"], name: "index_recipes_on_total_time", using: :btree
 
   create_table "references", force: :cascade do |t|
@@ -68,8 +72,15 @@ ActiveRecord::Schema.define(version: 20161029204544) do
     t.datetime "created_at"
   end
 
+  add_index "taggings", ["context"], name: "index_taggings_on_context", using: :btree
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy", using: :btree
+  add_index "taggings", ["taggable_id"], name: "index_taggings_on_taggable_id", using: :btree
+  add_index "taggings", ["taggable_type"], name: "index_taggings_on_taggable_type", using: :btree
+  add_index "taggings", ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type", using: :btree
+  add_index "taggings", ["tagger_id"], name: "index_taggings_on_tagger_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string  "name"
