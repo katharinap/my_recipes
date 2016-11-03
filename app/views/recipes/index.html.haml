@@ -9,7 +9,7 @@
         %th= User.human_attribute_name :email
         %th= Recipe.human_attribute_name :created_at
         %th= Recipe.human_attribute_name :tag_list
-        %th= glyph('clock-o')
+        %th Times
         %th
     %tbody
       - @recipes.each do |recipe|
