@@ -65,7 +65,7 @@ module RecipesHelper
     end
   end
 
-  # TODO - this is only a short term solution until we can think of a
+  # this is only a short term solution until we can think of a
   # better way to display this information in recipes#index
   def short_time_attribute_description(recipe)
     Recipe::TIME_ATTRIBUTES.map do |time_attr|

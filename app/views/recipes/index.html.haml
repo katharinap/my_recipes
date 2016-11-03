@@ -21,7 +21,7 @@
           %td= recipe.user_name
           %td= local_time recipe.created_at, :short
           %td= recipe.tag_list
-          -# TODO: super ugly...
+          -# super ugly, should be replaced if we can come up with a better solution...
           %td= short_time_attribute_description(recipe)
           %td
             = edit_link(recipe)
