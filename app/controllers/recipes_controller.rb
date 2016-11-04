@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: recipes
+#
+#  id          :integer          not null, primary key
+#  name        :string
+#  user_id     :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  picture     :string
+#  active_time :integer
+#  total_time  :integer
+#  prep_time   :integer
+#  cook_time   :integer
+#
+
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!

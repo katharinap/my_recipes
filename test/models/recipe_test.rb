@@ -2,13 +2,18 @@
 #
 # Table name: recipes
 #
-#  id         :integer          not null, primary key
-#  name       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  picture    :string
-#  user_id    :integer
+#  id          :integer          not null, primary key
+#  name        :string
+#  user_id     :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  picture     :string
+#  active_time :integer
+#  total_time  :integer
+#  prep_time   :integer
+#  cook_time   :integer
 #
+
 require File.expand_path("../../test_helper", __FILE__)
 
 class RecipeTest < ActiveSupport::TestCase
