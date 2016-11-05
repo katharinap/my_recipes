@@ -7,7 +7,10 @@
   - Recipe::TIME_ATTRIBUTES.each do |time_attribute|
     %h3= Recipe.human_attribute_name time_attribute
     = number_field_tag time_attribute, nil, class: 'form-control'
-    
+
+  %h2 Notes
+  = text_area_tag 'notes', nil, class: 'form-control', rows: 10
+
   %h2 Ingredients
   = text_area_tag 'ingredients', nil, class: 'form-control', rows: 10
 

@@ -8,6 +8,9 @@
   - Recipe::TIME_ATTRIBUTES.each do |time_attribute|
     = f.input time_attribute, label: "#{Recipe.human_attribute_name time_attribute} (in Minutes)"
   
+  %h2 Notes
+  = f.input :notes, label: false
+  
   %h2 Ingredients
   #ingredients
     = f.fields_for :ingredients, :wrapper => false do |i_form|

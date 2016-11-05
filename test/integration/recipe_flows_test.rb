@@ -26,6 +26,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     fill_in "tag_list", with: "veggie, snack, vegan"
     fill_in "active_time", with: 15
     fill_in "total_time", with: 90
+    fill_in "notes", with: 'Be careful with something'
 
     click_button('Submit')
 
@@ -42,6 +43,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? "Total time"
     assert page.has_content? "1 hour 30 minutes"
     assert page.has_content? @user.email
+    assert page.has_content? 'Be careful with something'
   end
 
   # TODO: test references
@@ -56,6 +58,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     fill_in "recipe[prep_time]", with: 10
     fill_in "recipe[cook_time]", with: 120
     fill_in "recipe[total_time]", with: 130
+    fill_in "recipe[notes]", with: 'Make sure to do something before something else'
     click_button "Update"
 
     assert page.has_content? "Recipe was successfully updated."
@@ -69,6 +72,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? "2 hours"
     assert page.has_content? "Total time"
     assert page.has_content? "2 hours 10 minutes"
+    assert page.has_content? 'Make sure to do something before something else'
   end
 
   def do_destroy_recipe

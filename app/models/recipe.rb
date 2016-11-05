@@ -52,6 +52,7 @@ class Recipe < ActiveRecord::Base
     self.name = params[:name].try(:strip)
     self.user_id = params[:user_id]
     self.tag_list = params[:tag_list]
+    self.notes = params[:notes]
     TIME_ATTRIBUTES.each do |time_attribute|
       self.send "#{time_attribute}=", params[time_attribute]
     end

@@ -54,7 +54,8 @@ class RecipesControllerTest < ActionController::TestCase
                         active_time: 20,
                         prep_time: 15,
                         cook_time: 45,
-                        total_time: 60
+                        total_time: 60,
+                        notes: "If you can't get ingredient 2, you can use ingredient 3 instead"
         }
         #The below is just cursory testing since the model tests this thoroughly
         recipe = Recipe.last
@@ -67,6 +68,7 @@ class RecipesControllerTest < ActionController::TestCase
         assert_equal 45, recipe.cook_time
         assert_equal 60, recipe.total_time
         assert "veggie, snack, healthy", recipe.tag_list
+        refute_nil recipe.notes
       end
       assert_equal "Recipe was successfully created.", flash[:notice]
       assert_redirected_to recipe_path(Recipe.last)
@@ -95,7 +97,8 @@ class RecipesControllerTest < ActionController::TestCase
                          active_time: 10,
                          prep_time: 5,
                          cook_time: 40,
-                         total_time: 45}
+                         total_time: 45,
+                         notes: "Some notes"}
       @recipe = Recipe.new.prepare_recipe(@original_attrs)
       @recipe.save
     end
@@ -200,6 +203,15 @@ class RecipesControllerTest < ActionController::TestCase
         put :update, update_params
         @recipe.reload
         assert_equal 60, @recipe.total_time
+        assert_redirected_to recipe_path(@recipe)
+      end
+
+      should 'update notes' do
+        update_params = {id: @recipe.to_param, recipe:
+            @original_attrs.merge({notes: 'Updated notes'})}
+        put :update, update_params
+        @recipe.reload
+        assert_equal 'Updated notes', @recipe.notes
         assert_redirected_to recipe_path(@recipe)
       end
 

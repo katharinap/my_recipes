@@ -26,6 +26,11 @@
       - @recipe.ingredients.each do |ingredient|
         %li= ingredient.value
   .col-md-8.col-md-pull-4
+    - if @recipe.notes
+      %h4 Notes
+      .recipe-notes
+        = simple_format @recipe.notes
+      
     %h4 Directions
     .recipe-directions        
       - @recipe.steps.each do |step|

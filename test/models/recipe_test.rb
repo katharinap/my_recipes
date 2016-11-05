@@ -60,7 +60,8 @@ class RecipeTest < ActiveSupport::TestCase
          active_time: 10,
          prep_time: 10,
          cook_time: 20,
-         total_time: 30
+         total_time: 30,
+         notes: 'You can replace something with something else.'
      }
      @recipe = Recipe.new.prepare_recipe(@params)
     end
@@ -97,6 +98,10 @@ class RecipeTest < ActiveSupport::TestCase
 
     should 'set total time' do
       assert_equal 30, @recipe.total_time
+    end
+
+    should 'set notes' do
+      assert_equal 'You can replace something with something else.', @recipe.notes
     end
   end
 
