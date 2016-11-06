@@ -1,13 +1,13 @@
 - model_class = Recipe
 .page-header
   - if @recipe.picture?
-    .row
+    .row.hidden-print
       = image_tag @recipe.picture_url, class: 'center-block'
 
   %h1=t '.title', :default => title || model_class.model_name.human.titleize
 
   .recipe-user
-    .row
+    .row.hidden-print
       = glyph :user
       = @recipe.user_name
       = glyph :calendar
@@ -20,12 +20,12 @@
         %strong= "#{Recipe.human_attribute_name time_attribute}:"
         = minutes_in_words(@recipe.send time_attribute)
 .row
-  .col-md-4.col-md-push-8
+  .col-lg-4.col-lg-push-8
     %h4 Ingredients
     %ul.list-unstyled.ingredients
       - @recipe.ingredients.each do |ingredient|
         %li= ingredient.value
-  .col-md-8.col-md-pull-4
+  .col-lg-8.col-lg-pull-4
     %h4 Directions
     .recipe-directions        
       - @recipe.steps.each do |step|

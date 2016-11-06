@@ -1,0 +1,16 @@
+@media print {
+    body {
+	width: 100%;
+	border: none;
+	margin: auto;
+	padding: auto;
+    }
+    
+    .ingredients {
+    	font-weight: normal;
+    }
+
+    .recipe-user {
+	color: black;
+    }
+}
