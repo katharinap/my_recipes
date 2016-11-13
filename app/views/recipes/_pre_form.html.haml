@@ -8,14 +8,14 @@
     %h3= Recipe.human_attribute_name time_attribute
     = number_field_tag time_attribute, nil, class: 'form-control'
 
-  %h2 Notes
-  = text_area_tag 'notes', nil, class: 'form-control', rows: 10
-
   %h2 Ingredients
   = text_area_tag 'ingredients', nil, class: 'form-control', rows: 10
 
   %h2 Directions
   = text_area_tag 'steps', nil, class: 'form-control', rows: 10
+
+  %h2 Notes
+  = text_area_tag 'notes', nil, class: 'form-control', rows: 10
 
   %h2 References
   = text_area_tag 'references', nil, class: 'form-control', rows: 2
