@@ -33,6 +33,11 @@
           = image_tag(step.picture_url) if step.picture?
           = step.description
 
+    - if @recipe.notes
+      %h4 Notes
+      .recipe-notes
+        = simple_format @recipe.notes
+      
     - if @recipe.references.any?      
       %h4 References
       %ul.list-unstyled.references

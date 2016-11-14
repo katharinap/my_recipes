@@ -29,6 +29,9 @@
           = render partial: 'remove_nested_field', locals: { form: d_form }  
     = render partial: 'add_nested_field', locals: { form: f, btn_text: 'Add a Step', target: :steps }
         
+  %h2 Notes
+  = f.input :notes, label: false
+  
   %h2 References
   #references
     = f.fields_for :references do |r_form|
