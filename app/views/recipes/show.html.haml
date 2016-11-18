@@ -28,7 +28,7 @@
   .col-md-8.col-md-pull-4
     %h4 Directions
     .recipe-directions        
-      - @recipe.directions.to_s.split("\n").each do |step|
+      - @recipe.steps.each do |step|
         %p= step
 
     - if @recipe.notes

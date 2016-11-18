@@ -6,7 +6,7 @@ class AddDirectionsToRecipes < ActiveRecord::Migration
 
     Recipe.all.each do |recipe|
       steps = Step.where(recipe_id: recipe.id)
-      recipe.update(directions: steps.map(&:description).join("\n"))
+      recipe.update(directions: steps.map(&:description).join("\n\n"))
     end
 
     drop_table :steps
@@ -22,7 +22,8 @@ class AddDirectionsToRecipes < ActiveRecord::Migration
     end
     
     Recipe.all.each do |recipe|
-      recipe.directions.to_s.split("\n").each_with_index do |description, idx|
+      recipe.directions.to_s.split("\n").map(&:strip).each_with_index do |description, idx|
+        next if description.blank?
         Step.create(recipe_id: recipe.id, description: description, idx: idx + 1)
       end
     end

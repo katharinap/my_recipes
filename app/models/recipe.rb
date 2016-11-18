@@ -59,6 +59,10 @@ class Recipe < ActiveRecord::Base
     user.name || user.email
   end
 
+  def steps
+    directions.to_s.split("\n").map(&:strip).reject(&:blank?)
+  end
+  
   #FIXME: Should this be a static method?
   def prepare_recipe(params)
     self.name = params[:name].try(:strip)

@@ -120,5 +120,15 @@ class RecipeTest < ActiveSupport::TestCase
       assert_equal [recipes(:ice_cream).name, recipes(:kale_chips).name], recipes.collect(&:name)
     end
   end
+
+  context '.steps' do
+    setup do
+      @recipe = Recipe.new(directions: "Sprinkle salt and pepper\n\tDrizzle oil\n\n Bake in oven at 450c ")
+    end
+
+    should "return an array of single steps without leading or trailing whitespace" do
+      assert_equal ['Sprinkle salt and pepper', 'Drizzle oil', 'Bake in oven at 450c'], @recipe.steps
+    end
+  end
 end
 
