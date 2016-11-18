@@ -19,15 +19,7 @@
     = render partial: 'add_nested_field', locals: { form: f, btn_text: 'Add an Ingredient', target: :ingredients }
         
   %h2 Directions
-  #steps
-    = f.fields_for :steps do |d_form|
-      = render partial: 'form_picture', locals: { form: d_form }
-      .row.form-group
-        .col-md-10
-          = d_form.input :description, label: false, input_html: { class: 'autoExpand' }
-        .col-md-2
-          = render partial: 'remove_nested_field', locals: { form: d_form }  
-    = render partial: 'add_nested_field', locals: { form: f, btn_text: 'Add a Step', target: :steps }
+  = f.input :directions, label: false
         
   %h2 Notes
   = f.input :notes, label: false

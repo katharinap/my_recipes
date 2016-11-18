@@ -65,7 +65,7 @@ class RecipesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_recipe
-    @recipe = Recipe.includes(:ingredients, :steps, :references).find(params[:id])
+    @recipe = Recipe.includes(:ingredients, :references).find(params[:id])
   end
 
   def new_recipe
@@ -81,6 +81,7 @@ class RecipesController < ApplicationController
     params.require(:recipe).permit(
       :name,
       :user_id,
+      :directions,
       :picture,
       :remove_picture,
       :picture_cache,
@@ -91,12 +92,11 @@ class RecipesController < ApplicationController
       :total_time,
       :notes,
       ingredients_attributes: [:id, :value, :_destroy],
-      steps_attributes: [:id, :description, :picture, :remove_picture, :picture_cache, :_destroy],
       references_attributes: [:id, :location, :_destroy]
     )
   end
 
   def new_params
-    params.permit(:name, :user_id, :ingredients, :steps, :references, :tag_list, :prep_time, :active_time, :cook_time, :total_time, :notes)
+    params.permit(:name, :user_id, :ingredients, :directions, :references, :tag_list, :prep_time, :active_time, :cook_time, :total_time, :notes)
   end
 end

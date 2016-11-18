@@ -15,14 +15,18 @@
 #
 
 kale_chips:
- name: Kale Chips
- picture: a_picture.jpg
- user: kat
- active_time: 5
- total_time: 45
+  name: Kale Chips
+  directions: |
+    Do something with something.
+    Do something else with the remaining ingredients.
+  picture: a_picture.jpg
+  user: kat
+  active_time: 5
+  total_time: 45
 
 ice_cream:
- name: Ice Cream
- user: kat
- picture: ice_cream.jpg
- notes: Keep it cold
+  name: Ice Cream
+  directions: Put everything into a blender and then freeze it.
+  user: kat
+  picture: ice_cream.jpg
+  notes: Keep it cold

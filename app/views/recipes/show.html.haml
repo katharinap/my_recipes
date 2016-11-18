@@ -28,10 +28,8 @@
   .col-md-8.col-md-pull-4
     %h4 Directions
     .recipe-directions        
-      - @recipe.steps.each do |step|
-        %p
-          = image_tag(step.picture_url) if step.picture?
-          = step.description
+      - @recipe.directions.to_s.split("\n").each do |step|
+        %p= step
 
     - if @recipe.notes
       %h4 Notes

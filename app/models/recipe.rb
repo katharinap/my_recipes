@@ -12,6 +12,15 @@
 #  total_time  :integer
 #  prep_time   :integer
 #  cook_time   :integer
+#  notes       :text
+#  directions  :text
+#
+# Indexes
+#
+#  index_recipes_on_active_time  (active_time)
+#  index_recipes_on_cook_time    (cook_time)
+#  index_recipes_on_prep_time    (prep_time)
+#  index_recipes_on_total_time   (total_time)
 #
 
 class Recipe < ActiveRecord::Base
@@ -27,7 +36,6 @@ class Recipe < ActiveRecord::Base
 
   DEPENDENT_ATTRIBUTES = {
     ingredients: :value,
-    steps: :description,
     references: :location,
   }
 
@@ -56,6 +64,7 @@ class Recipe < ActiveRecord::Base
     self.name = params[:name].try(:strip)
     self.user_id = params[:user_id]
     self.tag_list = params[:tag_list]
+    self.directions = params[:directions]
     self.notes = params[:notes]
     TIME_ATTRIBUTES.each do |time_attribute|
       self.send "#{time_attribute}=", params[time_attribute]
@@ -65,8 +74,7 @@ class Recipe < ActiveRecord::Base
     self
   end
 
-  # builds ingredients, steps and references if specified in params
-  # hash
+  # builds ingredients and references if specified in params hash
   def build_dependents(params)
     DEPENDENT_ATTRIBUTES.each do |dependent, attr|
       next if params[dependent].blank?

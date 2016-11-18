@@ -24,7 +24,6 @@ class RecipeTest < ActiveSupport::TestCase
     should validate_presence_of :name
     should validate_uniqueness_of :name
     should have_many :ingredients
-    should have_many :steps
     should have_many :references
 
     should "be valid" do
@@ -60,7 +59,7 @@ class RecipeTest < ActiveSupport::TestCase
          user_id: 1,
          ingredients: "Kale\nSalt\t\nPepper",
          tag_list: "Kale, Snack, Healthy",
-         steps: "Sprinkle salt and pepper\nDrizzle oil\t\nBake in oven at 450c ",
+         directions: "Sprinkle salt and pepper\nDrizzle oil\nBake in oven at 450c",
          references: "www.goodfood.com\n\n www.foodforcause.in",
          active_time: 10,
          prep_time: 10,
@@ -85,7 +84,7 @@ class RecipeTest < ActiveSupport::TestCase
 
     should "build_dependents" do
       assert_equal %w(Kale Salt Pepper), @recipe.ingredients.map(&:value)
-      assert_equal ['Sprinkle salt and pepper', 'Drizzle oil', 'Bake in oven at 450c'], @recipe.steps.map(&:description)
+      assert_equal "Sprinkle salt and pepper\nDrizzle oil\nBake in oven at 450c", @recipe.directions
       assert_equal %w(www.goodfood.com www.foodforcause.in), @recipe.references.map(&:location)
     end
 

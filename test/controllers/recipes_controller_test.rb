@@ -64,7 +64,7 @@ class RecipesControllerTest < ActionController::TestCase
         post :create, { user_id: @user.id,
                         name: "my recipe",
                         ingredients: "Ingredient 1\nIngredient 2\n\n",
-                        steps: "Step1 \n Step 2 \n\n",
+                        directions: "Step1 \n Step 2 \n\n",
                         tag_list: 'veggie, snack, healthy',
                         references: "ref 1\n",
                         active_time: 20,
@@ -76,7 +76,7 @@ class RecipesControllerTest < ActionController::TestCase
         #The below is just cursory testing since the model tests this thoroughly
         recipe = Recipe.last
         assert 2, recipe.ingredients.count
-        assert 2, recipe.steps.count
+        refute_nil recipe.directions
         assert 1, recipe.references.count
         assert 3, recipe.tags.count
         assert_equal 20, recipe.active_time
@@ -107,7 +107,7 @@ class RecipesControllerTest < ActionController::TestCase
       @original_attrs = {name: "recipe name",
                          user_id: @user.id,
                          ingredients: "ingredient one\ningredient two",
-                         steps: "do something\n\ndo something else",
+                         directions: "do something\n\ndo something else",
                          references: "http://www.example.com/1\nhttp://www.example.com/2",
                          tag_list: "tag_1, tag_2",
                          active_time: 10,
@@ -151,16 +151,14 @@ class RecipesControllerTest < ActionController::TestCase
         assert_redirected_to recipe_path(@recipe)
       end
 
-      should "update step" do
-        step = @recipe.steps.first
+      should "update directions" do
+        new_directions = "Do something different\nAnd then something else different"
         update_params =
             {id: @recipe.to_param,
-             recipe: @original_attrs.merge(
-                 { steps_attributes: {step.id.to_s => {id: step.id.to_s,
-                                                       description: "Updated Step"}} })}
+             recipe: @original_attrs.merge({ directions: new_directions })}
         put :update, update_params
         @recipe.reload
-        assert_equal "Updated Step", @recipe.steps.first.description
+        assert_equal new_directions, @recipe.directions
         assert_redirected_to recipe_path(@recipe)
       end
 
@@ -249,20 +247,6 @@ class RecipesControllerTest < ActionController::TestCase
         assert_redirected_to recipe_path(@recipe)
       end
 
-      should "add step" do
-        assert_difference "Step.count", 1 do
-          add_step_params =
-              {id: @recipe.to_param,
-               recipe: @original_attrs.merge(
-                   steps_attributes: {"7575576587"=>{"description"=>"New Step"}})}
-          put :update, add_step_params
-        end
-
-        @recipe.reload
-        assert_equal "New Step", Step.last.description
-        assert_redirected_to recipe_path(@recipe)
-      end
-
       should "add references" do
         assert_difference "Reference.count", 1 do
           add_reference_params =
@@ -289,18 +273,6 @@ class RecipesControllerTest < ActionController::TestCase
                recipe: @original_attrs.merge(
                    ingredients_attributes: {ingredient.id.to_s => {"_destroy"=>"1", "id"=> ingredient.id.to_s }})}
           put :update, delete_ingredient_params
-        end
-        assert_redirected_to recipe_path(@recipe)
-      end
-
-      should "destroy step" do
-        step = @recipe.steps.first
-        assert_difference "Step.count", -1 do
-          delete_step_params =
-              {id: @recipe.to_param,
-               recipe: @original_attrs.merge(
-                   steps_attributes: {step.id.to_s=>{"_destroy"=>"1", id: step.id.to_s}})}
-          put :update, delete_step_params
         end
         assert_redirected_to recipe_path(@recipe)
       end
