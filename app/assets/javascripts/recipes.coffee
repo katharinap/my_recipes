@@ -1,7 +1,5 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
+# auto-resize textarea fields (taken from
+# http://stackoverflow.com/questions/454202/creating-a-textarea-with-auto-resize)
 ready = ->
   $('textarea').each(->
     @setAttribute 'style', 'height:' + @scrollHeight + 'px;overflow-y:hidden;'
