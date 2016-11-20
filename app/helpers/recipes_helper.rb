@@ -93,6 +93,17 @@ module RecipesHelper
     end
   end
 
+  def recipe_image(recipe)
+    return unless recipe.picture?
+    content_tag :div, class: 'row' do
+      if params[:format] == 'pdf'
+        wicked_pdf_image_tag @recipe.picture_url, class: 'center-block'
+      else
+        image_tag @recipe.picture_url, class: 'center-block'
+      end
+    end
+  end
+  
   # this is only a short term solution until we can think of a
   # better way to display this information in recipes#index
   def short_time_attribute_description(recipe)
