@@ -17,7 +17,8 @@ class AddDirectionsToRecipes < ActiveRecord::Migration
       t.integer :recipe_id
       t.integer :idx
       t.text :description
-
+      t.string   :picture
+      
       t.timestamps
     end
     
