@@ -69,6 +69,18 @@ module RecipesHelper
     end
   end
 
+  def pdf_link(recipe)
+    link_to recipe_path(recipe, format: :pdf), title: 'PDF', data: { toggle: 'tooltip' } do
+      pdf_icon
+    end
+  end
+  
+  def pdf_icon
+    content_tag :span, class: 'right-side-icon' do
+      glyph 'file-pdf-o fa-lg'
+    end
+  end
+
   def new_link
     css_class = 'btn btn-success-outline btn-sm'
     css_class << ' disabled' unless user_signed_in?

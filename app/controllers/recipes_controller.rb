@@ -24,6 +24,12 @@ class RecipesController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: 'my_recipe', template: 'recipes/show.html.haml', layout: 'pdf', encoding: 'UTF-8'
+      end
+    end
   end
 
   def edit
