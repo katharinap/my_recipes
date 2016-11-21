@@ -23,8 +23,6 @@ class RecipeTest < ActiveSupport::TestCase
   context 'validations' do
     should validate_presence_of :name
     should validate_uniqueness_of :name
-    should have_many :ingredients
-    should have_many :references
 
     should "be valid" do
       assert recipes(:kale_chips).valid?
@@ -83,9 +81,9 @@ class RecipeTest < ActiveSupport::TestCase
     end
 
     should "build_dependents" do
-      assert_equal %w(Kale Salt Pepper), @recipe.ingredients.map(&:value)
+      assert_equal "Kale\nSalt\t\nPepper", @recipe.ingredients
       assert_equal "Sprinkle salt and pepper\nDrizzle oil\nBake in oven at 450c", @recipe.directions
-      assert_equal %w(www.goodfood.com www.foodforcause.in), @recipe.references.map(&:location)
+      assert_equal "www.goodfood.com\n\n www.foodforcause.in", @recipe.references
     end
 
     should 'set active time' do

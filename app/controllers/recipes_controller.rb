@@ -65,7 +65,7 @@ class RecipesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_recipe
-    @recipe = Recipe.includes(:ingredients, :references).find(params[:id])
+    @recipe = Recipe.find(params[:id])
   end
 
   def new_recipe
@@ -91,8 +91,8 @@ class RecipesController < ApplicationController
       :cook_time,
       :total_time,
       :notes,
-      ingredients_attributes: [:id, :value, :_destroy],
-      references_attributes: [:id, :location, :_destroy]
+      :ingredients,
+      :references
     )
   end
 

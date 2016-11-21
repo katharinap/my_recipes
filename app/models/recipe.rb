@@ -35,8 +35,6 @@ class Recipe < ActiveRecord::Base
   scope :for_user, ->(user) { where(user_id: user.id) }
 
   DEPENDENT_ATTRIBUTES = {
-    ingredients: :value,
-    references: :location,
   }
 
   TIME_ATTRIBUTES = %i(prep_time active_time cook_time total_time)
@@ -63,12 +61,22 @@ class Recipe < ActiveRecord::Base
     directions.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
   
+  def ingredient_list
+    ingredients.to_s.split("\n").map(&:strip).reject(&:blank?)
+  end
+  
+  def reference_list
+    references.to_s.split("\n").map(&:strip).reject(&:blank?)
+  end
+  
   #FIXME: Should this be a static method?
   def prepare_recipe(params)
     self.name = params[:name].try(:strip)
     self.user_id = params[:user_id]
     self.tag_list = params[:tag_list]
+    self.ingredients = params[:ingredients]
     self.directions = params[:directions]
+    self.references = params[:references]
     self.notes = params[:notes]
     TIME_ATTRIBUTES.each do |time_attribute|
       self.send "#{time_attribute}=", params[time_attribute]

@@ -11,19 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161117145117) do
+ActiveRecord::Schema.define(version: 20161121013325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "ar_internal_metadata", primary_key: "key", force: :cascade do |t|
-    t.string   "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "ingredients", force: :cascade do |t|
-    t.integer  "recipe_id"
     t.string   "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,19 +34,14 @@ ActiveRecord::Schema.define(version: 20161117145117) do
     t.integer  "cook_time"
     t.text     "notes"
     t.text     "directions"
+    t.text     "ingredients"
+    t.text     "references"
   end
 
   add_index "recipes", ["active_time"], name: "index_recipes_on_active_time", using: :btree
   add_index "recipes", ["cook_time"], name: "index_recipes_on_cook_time", using: :btree
   add_index "recipes", ["prep_time"], name: "index_recipes_on_prep_time", using: :btree
   add_index "recipes", ["total_time"], name: "index_recipes_on_total_time", using: :btree
-
-  create_table "references", force: :cascade do |t|
-    t.integer  "recipe_id"
-    t.string   "location"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

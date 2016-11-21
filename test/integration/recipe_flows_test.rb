@@ -63,7 +63,8 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
 
     assert page.has_content? "Recipe was successfully updated."
     assert page.has_content? recipe.directions
-    assert page.has_content? recipe.ingredients.first.value
+    assert page.has_content? recipe.ingredients
+    assert page.has_content? recipe.references
     assert page.has_content? @user.email #This should be recipe.user.email. FIXME issue 36
     assert page.has_no_content? "Active time"
     assert page.has_content? "Prep time"
@@ -77,7 +78,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
 
   def do_destroy_recipe
     recipe = Recipe.create(name: "recipe #{rand(800000)}",
-                           ingredients: [Ingredient.new(value: "This is an ingredient")],
+                           ingredients: "This is an ingredient",
                            directions: "This is a step",
                            user: @user)
 

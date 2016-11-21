@@ -23,8 +23,8 @@
   .col-md-4.col-md-push-8
     %h4 Ingredients
     %ul.list-unstyled.ingredients
-      - @recipe.ingredients.each do |ingredient|
-        %li= ingredient.value
+      - @recipe.ingredient_list.each do |ingredient|
+        %li= ingredient
   .col-md-8.col-md-pull-4
     %h4 Directions
     .recipe-directions        
@@ -36,11 +36,11 @@
       .recipe-notes
         = simple_format @recipe.notes
       
-    - if @recipe.references.any?      
+    - unless @recipe.references.blank?      
       %h4 References
       %ul.list-unstyled.references
-        - @recipe.references.each do |reference|
-          %li= link_to reference.location, reference.location.html_safe
+        - @recipe.reference_list.each do |reference|
+          %li= link_to reference, reference.html_safe
 
     - if allow_edit? @recipe
       = edit_link(@recipe)

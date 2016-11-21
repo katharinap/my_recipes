@@ -16,9 +16,14 @@
 
 kale_chips:
   name: Kale Chips
+  ingredients: |
+    1 bunch kale
+    2 tb olive oil
+    seasalt
   directions: |
     Do something with something.
     Do something else with the remaining ingredients.
+  references: http://www.foodnetwork.com/recipes/melissa-darabian/crispy-kale-chips-recipe.html
   picture: a_picture.jpg
   user: kat
   active_time: 5
