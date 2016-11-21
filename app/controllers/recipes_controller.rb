@@ -34,12 +34,11 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = new_recipe
+    @recipe = Recipe.new(recipe_params)
     
     if @recipe.save
       redirect_to @recipe, notice: 'Recipe was successfully created.'
     else
-      @render_final_form = true
       render :new
     end
   end
@@ -68,15 +67,6 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
   end
 
-  def new_recipe
-    if new_params.empty?
-      # after re-display of new, with final form
-      Recipe.new(recipe_params)
-    else
-      Recipe.new.prepare_recipe(new_params)
-    end
-  end
-
   def recipe_params
     params.require(:recipe).permit(
       :name,
@@ -94,9 +84,5 @@ class RecipesController < ApplicationController
       :ingredients,
       :references
     )
-  end
-
-  def new_params
-    params.permit(:name, :user_id, :ingredients, :directions, :references, :tag_list, :prep_time, :active_time, :cook_time, :total_time, :notes)
   end
 end

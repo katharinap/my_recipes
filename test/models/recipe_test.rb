@@ -50,63 +50,6 @@ class RecipeTest < ActiveSupport::TestCase
     end
   end
 
-  context '.prepare_recipe ' do
-    setup do
-     @params = {
-         name: "\t a new recipe\r\n ",
-         user_id: 1,
-         ingredients: "Kale\nSalt\t\nPepper",
-         tag_list: "Kale, Snack, Healthy",
-         directions: "Sprinkle salt and pepper\nDrizzle oil\nBake in oven at 450c",
-         references: "www.goodfood.com\n\n www.foodforcause.in",
-         active_time: 10,
-         prep_time: 10,
-         cook_time: 20,
-         total_time: 30,
-         notes: 'You can replace something with something else.'
-     }
-     @recipe = Recipe.new.prepare_recipe(@params)
-    end
-
-    should "set name" do
-      assert_equal "a new recipe", @recipe.name
-    end
-
-    should "set user" do
-      assert_equal @params[:user_id], @recipe.user_id
-    end
-
-    should "set tags" do
-      assert_equal %w(kale snack healthy), @recipe.tag_list, "tag_list is incorrect"
-    end
-
-    should "build_dependents" do
-      assert_equal "Kale\nSalt\t\nPepper", @recipe.ingredients
-      assert_equal "Sprinkle salt and pepper\nDrizzle oil\nBake in oven at 450c", @recipe.directions
-      assert_equal "www.goodfood.com\n\n www.foodforcause.in", @recipe.references
-    end
-
-    should 'set active time' do
-      assert_equal 10, @recipe.active_time
-    end
-
-    should 'set prep time' do
-      assert_equal 10, @recipe.prep_time
-    end
-
-    should 'set cook time' do
-      assert_equal 20, @recipe.cook_time
-    end
-
-    should 'set total time' do
-      assert_equal 30, @recipe.total_time
-    end
-
-    should 'set notes' do
-      assert_equal 'You can replace something with something else.', @recipe.notes
-    end
-  end
-
   context 'by name scope' do
     setup do
       @user = User.new(name: 'test_name', email: 'test@email.com')

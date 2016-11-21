@@ -61,18 +61,21 @@ class RecipesControllerTest < ActionController::TestCase
   context 'POST create' do
     should "create a  recipe with valid data" do
       assert_difference 'Recipe.count', 1 do
-        post :create, { user_id: @user.id,
-                        name: "my recipe",
-                        ingredients: "Ingredient 1\nIngredient 2\n\n",
-                        directions: "Step1 \n Step 2 \n\n",
-                        tag_list: 'veggie, snack, healthy',
-                        references: "ref 1\n",
-                        active_time: 20,
-                        prep_time: 15,
-                        cook_time: 45,
-                        total_time: 60,
-                        notes: "If you can't get ingredient 2, you can use ingredient 3 instead"
-        }
+        post :create, { recipe:
+                          {
+                            user_id: @user.id,
+                            name: "my recipe",
+                            ingredients: "Ingredient 1\nIngredient 2\n\n",
+                            directions: "Step1 \n Step 2 \n\n",
+                            tag_list: 'veggie, snack, healthy',
+                            references: "ref 1\n",
+                            active_time: 20,
+                            prep_time: 15,
+                            cook_time: 45,
+                            total_time: 60,
+                            notes: "If you can't get ingredient 2, you can use ingredient 3 instead"
+                          }
+                      }
         #The below is just cursory testing since the model tests this thoroughly
         recipe = Recipe.last
         refute_nil recipe.ingredients
@@ -92,7 +95,7 @@ class RecipesControllerTest < ActionController::TestCase
 
     should "redirect to 'new' with invalid data" do
       assert_no_difference 'Recipe.count' do
-        post :create, { user_id: @user.id}
+        post :create, { user_id: @user.id, recipe: { ingredients: 'some ingredient' }}
       end
       assert_instance_of Recipe, assigns(:recipe)
       assert assigns(:recipe).new_record?
@@ -115,7 +118,7 @@ class RecipesControllerTest < ActionController::TestCase
                          cook_time: 40,
                          total_time: 45,
                          notes: "Some notes"}
-      @recipe = Recipe.new.prepare_recipe(@original_attrs)
+      @recipe = Recipe.create(@original_attrs)
       @recipe.save
     end
 
