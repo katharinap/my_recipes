@@ -23,9 +23,6 @@ class RecipeTest < ActiveSupport::TestCase
   context 'validations' do
     should validate_presence_of :name
     should validate_uniqueness_of :name
-    should have_many :ingredients
-    should have_many :steps
-    should have_many :references
 
     should "be valid" do
       assert recipes(:kale_chips).valid?
@@ -53,63 +50,6 @@ class RecipeTest < ActiveSupport::TestCase
     end
   end
 
-  context '.prepare_recipe ' do
-    setup do
-     @params = {
-         name: "\t a new recipe\r\n ",
-         user_id: 1,
-         ingredients: "Kale\nSalt\t\nPepper",
-         tag_list: "Kale, Snack, Healthy",
-         steps: "Sprinkle salt and pepper\nDrizzle oil\t\nBake in oven at 450c ",
-         references: "www.goodfood.com\n\n www.foodforcause.in",
-         active_time: 10,
-         prep_time: 10,
-         cook_time: 20,
-         total_time: 30,
-         notes: 'You can replace something with something else.'
-     }
-     @recipe = Recipe.new.prepare_recipe(@params)
-    end
-
-    should "set name" do
-      assert_equal "a new recipe", @recipe.name
-    end
-
-    should "set user" do
-      assert_equal @params[:user_id], @recipe.user_id
-    end
-
-    should "set tags" do
-      assert_equal %w(kale snack healthy), @recipe.tag_list, "tag_list is incorrect"
-    end
-
-    should "build_dependents" do
-      assert_equal %w(Kale Salt Pepper), @recipe.ingredients.map(&:value)
-      assert_equal ['Sprinkle salt and pepper', 'Drizzle oil', 'Bake in oven at 450c'], @recipe.steps.map(&:description)
-      assert_equal %w(www.goodfood.com www.foodforcause.in), @recipe.references.map(&:location)
-    end
-
-    should 'set active time' do
-      assert_equal 10, @recipe.active_time
-    end
-
-    should 'set prep time' do
-      assert_equal 10, @recipe.prep_time
-    end
-
-    should 'set cook time' do
-      assert_equal 20, @recipe.cook_time
-    end
-
-    should 'set total time' do
-      assert_equal 30, @recipe.total_time
-    end
-
-    should 'set notes' do
-      assert_equal 'You can replace something with something else.', @recipe.notes
-    end
-  end
-
   context 'by name scope' do
     setup do
       @user = User.new(name: 'test_name', email: 'test@email.com')
@@ -119,6 +59,16 @@ class RecipeTest < ActiveSupport::TestCase
       recipes = Recipe.by_name
       assert_equal 2, recipes.count
       assert_equal [recipes(:ice_cream).name, recipes(:kale_chips).name], recipes.collect(&:name)
+    end
+  end
+
+  context '.steps' do
+    setup do
+      @recipe = Recipe.new(directions: "Sprinkle salt and pepper\n\tDrizzle oil\n\n Bake in oven at 450c ")
+    end
+
+    should "return an array of single steps without leading or trailing whitespace" do
+      assert_equal ['Sprinkle salt and pepper', 'Drizzle oil', 'Bake in oven at 450c'], @recipe.steps
     end
   end
 end

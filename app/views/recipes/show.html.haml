@@ -5,7 +5,7 @@
   %h1=t '.title', :default => title || model_class.model_name.human.titleize
 
   .recipe-user
-    .row
+    .row.hidden-print
       = glyph :user
       = @recipe.user_name
       = glyph :calendar
@@ -18,29 +18,27 @@
         %strong= "#{Recipe.human_attribute_name time_attribute}:"
         = minutes_in_words(@recipe.send time_attribute)
 .row
-  .col-md-4.col-md-push-8
+  .col-lg-4.col-lg-push-8
     %h4 Ingredients
     %ul.list-unstyled.ingredients
-      - @recipe.ingredients.each do |ingredient|
-        %li= ingredient.value
+      - @recipe.ingredient_list.each do |ingredient|
+        %li= ingredient
   .col-md-8.col-md-pull-4
     %h4 Directions
     .recipe-directions        
       - @recipe.steps.each do |step|
-        %p
-          = image_tag(step.picture_url) if step.picture?
-          = step.description
+        %p= step
 
     - if @recipe.notes
       %h4 Notes
       .recipe-notes
         = simple_format @recipe.notes
       
-    - if @recipe.references.any?      
+    - unless @recipe.references.blank?      
       %h4 References
       %ul.list-unstyled.references
-        - @recipe.references.each do |reference|
-          %li= link_to reference.location, reference.location.html_safe
+        - @recipe.reference_list.each do |reference|
+          %li= display_reference(reference)
 
     - if allow_edit? @recipe
       = edit_link(@recipe)

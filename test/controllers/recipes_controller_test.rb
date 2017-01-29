@@ -61,23 +61,26 @@ class RecipesControllerTest < ActionController::TestCase
   context 'POST create' do
     should "create a  recipe with valid data" do
       assert_difference 'Recipe.count', 1 do
-        post :create, { user_id: @user.id,
-                        name: "my recipe",
-                        ingredients: "Ingredient 1\nIngredient 2\n\n",
-                        steps: "Step1 \n Step 2 \n\n",
-                        tag_list: 'veggie, snack, healthy',
-                        references: "ref 1\n",
-                        active_time: 20,
-                        prep_time: 15,
-                        cook_time: 45,
-                        total_time: 60,
-                        notes: "If you can't get ingredient 2, you can use ingredient 3 instead"
-        }
+        post :create, { recipe:
+                          {
+                            user_id: @user.id,
+                            name: "my recipe",
+                            ingredients: "Ingredient 1\nIngredient 2\n\n",
+                            directions: "Step1 \n Step 2 \n\n",
+                            tag_list: 'veggie, snack, healthy',
+                            references: "ref 1\n",
+                            active_time: 20,
+                            prep_time: 15,
+                            cook_time: 45,
+                            total_time: 60,
+                            notes: "If you can't get ingredient 2, you can use ingredient 3 instead"
+                          }
+                      }
         #The below is just cursory testing since the model tests this thoroughly
         recipe = Recipe.last
-        assert 2, recipe.ingredients.count
-        assert 2, recipe.steps.count
-        assert 1, recipe.references.count
+        refute_nil recipe.ingredients
+        refute_nil recipe.directions
+        refute_nil recipe.references
         assert 3, recipe.tags.count
         assert_equal 20, recipe.active_time
         assert_equal 15, recipe.prep_time
@@ -92,7 +95,7 @@ class RecipesControllerTest < ActionController::TestCase
 
     should "redirect to 'new' with invalid data" do
       assert_no_difference 'Recipe.count' do
-        post :create, { user_id: @user.id}
+        post :create, { user_id: @user.id, recipe: { ingredients: 'some ingredient' }}
       end
       assert_instance_of Recipe, assigns(:recipe)
       assert assigns(:recipe).new_record?
@@ -107,7 +110,7 @@ class RecipesControllerTest < ActionController::TestCase
       @original_attrs = {name: "recipe name",
                          user_id: @user.id,
                          ingredients: "ingredient one\ningredient two",
-                         steps: "do something\n\ndo something else",
+                         directions: "do something\n\ndo something else",
                          references: "http://www.example.com/1\nhttp://www.example.com/2",
                          tag_list: "tag_1, tag_2",
                          active_time: 10,
@@ -115,7 +118,7 @@ class RecipesControllerTest < ActionController::TestCase
                          cook_time: 40,
                          total_time: 45,
                          notes: "Some notes"}
-      @recipe = Recipe.new.prepare_recipe(@original_attrs)
+      @recipe = Recipe.create(@original_attrs)
       @recipe.save
     end
 
@@ -139,41 +142,37 @@ class RecipesControllerTest < ActionController::TestCase
       end
 
       should "update ingredient" do
-        ingredient = @recipe.ingredients.first
+        new_ingredients = @recipe.ingredients + "\n2 tb soy sauce\n"
         update_params =
             {id: @recipe.to_param,
              recipe: @original_attrs.merge(
-                  { ingredients_attributes: {ingredient.id.to_s => {id: ingredient.id.to_s,
-                                                                    value: "Updated Ingredient"}} })}
+                  { ingredients: new_ingredients })}
         put :update, update_params
         @recipe.reload
-        assert_equal "Updated Ingredient", @recipe.ingredients.first.value
+        assert_equal new_ingredients, @recipe.ingredients
         assert_redirected_to recipe_path(@recipe)
       end
 
-      should "update step" do
-        step = @recipe.steps.first
+      should "update directions" do
+        new_directions = "Do something different\nAnd then something else different"
         update_params =
             {id: @recipe.to_param,
-             recipe: @original_attrs.merge(
-                 { steps_attributes: {step.id.to_s => {id: step.id.to_s,
-                                                       description: "Updated Step"}} })}
+             recipe: @original_attrs.merge({ directions: new_directions })}
         put :update, update_params
         @recipe.reload
-        assert_equal "Updated Step", @recipe.steps.first.description
+        assert_equal new_directions, @recipe.directions
         assert_redirected_to recipe_path(@recipe)
       end
 
       should "update references" do
-        reference = @recipe.references.first
+        new_reference = 'Best Cookbook ever, page 42'
         update_params =
             {id: @recipe.to_param,
              recipe: @original_attrs.merge(
-                 { references_attributes: {reference.id.to_s => {id: reference.id.to_s,
-                                                                 location: "Updated Reference"}} })}
+                 { references: new_reference })}
         put :update, update_params
         @recipe.reload
-        assert_equal "Updated Reference", @recipe.references.first.location
+        assert_equal new_reference, @recipe.references
         assert_redirected_to recipe_path(@recipe)
       end
 
@@ -235,90 +234,12 @@ class RecipesControllerTest < ActionController::TestCase
         #TODO
       end
 
-      should "add ingredient" do
-        assert_difference "Ingredient.count", 1 do
-          add_ingredient_params =
-            {id: @recipe.to_param,
-             recipe: @original_attrs.merge(
-                    ingredients_attributes: {"7575576587"=>{"value"=>"New Ingredient"}})}
-          put :update, add_ingredient_params
-        end
-
-        @recipe.reload
-        assert_equal "New Ingredient", Ingredient.last.value
-        assert_redirected_to recipe_path(@recipe)
-      end
-
-      should "add step" do
-        assert_difference "Step.count", 1 do
-          add_step_params =
-              {id: @recipe.to_param,
-               recipe: @original_attrs.merge(
-                   steps_attributes: {"7575576587"=>{"description"=>"New Step"}})}
-          put :update, add_step_params
-        end
-
-        @recipe.reload
-        assert_equal "New Step", Step.last.description
-        assert_redirected_to recipe_path(@recipe)
-      end
-
-      should "add references" do
-        assert_difference "Reference.count", 1 do
-          add_reference_params =
-              {id: @recipe.to_param,
-               recipe: @original_attrs.merge(
-                   references_attributes: {"7575576587"=>{"location"=>"www.newref.com"}})}
-          put :update, add_reference_params
-        end
-
-        @recipe.reload
-        assert_equal "www.newref.com", Reference.last.location
-        assert_redirected_to recipe_path(@recipe)
-      end
-
       should "add picture" do
           #TODO
       end
 
-      should "destroy ingredient" do
-        ingredient = @recipe.ingredients.first
-        assert_difference "Ingredient.count", -1 do
-          delete_ingredient_params =
-              {id: @recipe.to_param,
-               recipe: @original_attrs.merge(
-                   ingredients_attributes: {ingredient.id.to_s => {"_destroy"=>"1", "id"=> ingredient.id.to_s }})}
-          put :update, delete_ingredient_params
-        end
-        assert_redirected_to recipe_path(@recipe)
-      end
-
-      should "destroy step" do
-        step = @recipe.steps.first
-        assert_difference "Step.count", -1 do
-          delete_step_params =
-              {id: @recipe.to_param,
-               recipe: @original_attrs.merge(
-                   steps_attributes: {step.id.to_s=>{"_destroy"=>"1", id: step.id.to_s}})}
-          put :update, delete_step_params
-        end
-        assert_redirected_to recipe_path(@recipe)
-      end
-
       should "destroy picture" do
         #TODO
-      end
-
-      should "destroy references" do
-        reference = @recipe.references.first
-        assert_difference "Reference.count", -1 do
-          delete_reference_params =
-              {id: @recipe.to_param,
-               recipe: @original_attrs.merge(
-                   references_attributes: {reference.id.to_s=>{"_destroy"=>"1", id: reference.id.to_s}})}
-          put :update, delete_reference_params
-        end
-        assert_redirected_to recipe_path(@recipe)
       end
     end
 

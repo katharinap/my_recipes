@@ -1,7 +1,4 @@
 .page-header
   %h1=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => Recipe.model_name.human.titleize
 
-- if @render_final_form
-  = render :partial => 'form'
-- else
-  = render :partial => 'pre_form'
+= render :partial => 'form'

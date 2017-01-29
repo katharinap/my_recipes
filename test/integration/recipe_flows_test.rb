@@ -19,16 +19,16 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     # click_button('Add Recipe') #TODO Why is this an issue?
     visit "/recipes/new"
     assert page.has_content?("New Recipe"), "Should be on 'New Recipe' page"
-    fill_in "name", with: "My Recipe"
-    fill_in "ingredients", with: "Ingredient 1\n Ingredient 2"
-    fill_in "steps", with: "Step 1\n Step 2"
-    fill_in "references", with: "www.myrecipe.com"
-    fill_in "tag_list", with: "veggie, snack, vegan"
-    fill_in "active_time", with: 15
-    fill_in "total_time", with: 90
-    fill_in "notes", with: 'Be careful with something'
+    fill_in "recipe[name]", with: "My Recipe"
+    fill_in "recipe[ingredients]", with: "Ingredient 1\n Ingredient 2"
+    fill_in "recipe[directions]", with: "Step 1\n Step 2"
+    fill_in "recipe[references]", with: "www.myrecipe.com"
+    fill_in "recipe[tag_list]", with: "veggie, snack, vegan"
+    fill_in "recipe[active_time]", with: 15
+    fill_in "recipe[total_time]", with: 90
+    fill_in "recipe[notes]", with: 'Be careful with something'
 
-    click_button('Submit')
+    click_button('Update')
 
     assert page.has_content? "Recipe was successfully created."
     assert page.has_content? "My Recipe"
@@ -62,8 +62,9 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     click_button "Update"
 
     assert page.has_content? "Recipe was successfully updated."
-    assert page.has_content? recipe.steps.first.description
-    assert page.has_content? recipe.ingredients.first.value
+    assert page.has_content? recipe.directions
+    assert page.has_content? recipe.ingredients
+    assert page.has_content? recipe.references
     assert page.has_content? @user.email #This should be recipe.user.email. FIXME issue 36
     assert page.has_no_content? "Active time"
     assert page.has_content? "Prep time"
@@ -77,8 +78,8 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
 
   def do_destroy_recipe
     recipe = Recipe.create(name: "recipe #{rand(800000)}",
-                           ingredients: [Ingredient.new(value: "This is an ingredient")],
-                           steps: [Step.new(description: "This is a step")],
+                           ingredients: "This is an ingredient",
+                           directions: "This is a step",
                            user: @user)
 
     visit "/recipes/#{recipe.id}"
