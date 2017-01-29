@@ -43,10 +43,10 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'acts-as-taggable-on'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-heroku'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
   gem 'byebug'
 end
 
@@ -74,7 +74,8 @@ group :test do
 end
 
 group :production do
-  gem 'rails_12factor', group: :production
+  gem 'wkhtmltopdf-heroku'
+  gem 'rails_12factor'
 end
 
 ruby '2.3.0'
