@@ -69,6 +69,18 @@ module RecipesHelper
     end
   end
 
+  def pdf_link(recipe)
+    link_to recipe_path(recipe, format: :pdf), title: 'PDF', data: { toggle: 'tooltip' } do
+      pdf_icon
+    end
+  end
+  
+  def pdf_icon
+    content_tag :span, class: 'right-side-icon' do
+      glyph 'file-pdf-o fa-lg'
+    end
+  end
+
   def new_link
     css_class = 'btn btn-success-outline btn-sm hidden-print'
     css_class << ' disabled' unless user_signed_in?
@@ -81,6 +93,17 @@ module RecipesHelper
     end
   end
 
+  def recipe_image(recipe)
+    return unless recipe.picture?
+    content_tag :div, class: 'row' do
+      if params[:format] == 'pdf'
+        wicked_pdf_image_tag @recipe.picture_url, class: 'center-block'
+      else
+        image_tag @recipe.picture_url, class: 'center-block'
+      end
+    end
+  end
+  
   # this is only a short term solution until we can think of a
   # better way to display this information in recipes#index
   def short_time_attribute_description(recipe)
