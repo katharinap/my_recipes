@@ -12,6 +12,17 @@
 #  total_time  :integer
 #  prep_time   :integer
 #  cook_time   :integer
+#  notes       :text
+#  directions  :text
+#  ingredients :text
+#  references  :text
+#
+# Indexes
+#
+#  index_recipes_on_active_time  (active_time)
+#  index_recipes_on_cook_time    (cook_time)
+#  index_recipes_on_prep_time    (prep_time)
+#  index_recipes_on_total_time   (total_time)
 #
 
 class Recipe < ActiveRecord::Base
@@ -25,12 +36,6 @@ class Recipe < ActiveRecord::Base
 
   scope :for_user, ->(user) { where(user_id: user.id) }
 
-  DEPENDENT_ATTRIBUTES = {
-    ingredients: :value,
-    steps: :description,
-    references: :location,
-  }
-
   TIME_ATTRIBUTES = %i(prep_time active_time cook_time total_time)
   
   # FIXME - uniqueness still OK?
@@ -39,42 +44,20 @@ class Recipe < ActiveRecord::Base
   scope :by_name, -> { order("name") }
   scope :by_most_recent, -> { order("created_at DESC") }
 
-  DEPENDENT_ATTRIBUTES.each do |dependent, attr|
-    has_many dependent, dependent: :destroy
-    accepts_nested_attributes_for dependent,
-                                  allow_destroy: true,
-                                  reject_if: -> (params) { params[attr].blank? }
-  end
-
   def user_name
     return 'unknown' unless user
     user.name || user.email
   end
 
-  #FIXME: Should this be a static method?
-  def prepare_recipe(params)
-    self.name = params[:name].try(:strip)
-    self.user_id = params[:user_id]
-    self.tag_list = params[:tag_list]
-    self.notes = params[:notes]
-    TIME_ATTRIBUTES.each do |time_attribute|
-      self.send "#{time_attribute}=", params[time_attribute]
-    end
-    build_dependents(params)
-
-    self
+  def steps
+    directions.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
-
-  # builds ingredients, steps and references if specified in params
-  # hash
-  def build_dependents(params)
-    DEPENDENT_ATTRIBUTES.each do |dependent, attr|
-      next if params[dependent].blank?
-      params[dependent].split("\n").map(&:strip).each do |str|
-        next if str.blank?
-        # e.g. ingredients.build(value: 'something ingredient')
-        (send dependent).build(attr => str)
-      end
-    end
+  
+  def ingredient_list
+    ingredients.to_s.split("\n").map(&:strip).reject(&:blank?)
+  end
+  
+  def reference_list
+    references.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
 end

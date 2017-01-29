@@ -34,12 +34,11 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = new_recipe
+    @recipe = Recipe.new(recipe_params)
     
     if @recipe.save
       redirect_to @recipe, notice: 'Recipe was successfully created.'
     else
-      @render_final_form = true
       render :new
     end
   end
@@ -65,22 +64,14 @@ class RecipesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_recipe
-    @recipe = Recipe.includes(:ingredients, :steps, :references).find(params[:id])
-  end
-
-  def new_recipe
-    if new_params.empty?
-      # after re-display of new, with final form
-      Recipe.new(recipe_params)
-    else
-      Recipe.new.prepare_recipe(new_params)
-    end
+    @recipe = Recipe.find(params[:id])
   end
 
   def recipe_params
     params.require(:recipe).permit(
       :name,
       :user_id,
+      :directions,
       :picture,
       :remove_picture,
       :picture_cache,
@@ -90,13 +81,8 @@ class RecipesController < ApplicationController
       :cook_time,
       :total_time,
       :notes,
-      ingredients_attributes: [:id, :value, :_destroy],
-      steps_attributes: [:id, :description, :picture, :remove_picture, :picture_cache, :_destroy],
-      references_attributes: [:id, :location, :_destroy]
+      :ingredients,
+      :references
     )
-  end
-
-  def new_params
-    params.permit(:name, :user_id, :ingredients, :steps, :references, :tag_list, :prep_time, :active_time, :cook_time, :total_time, :notes)
   end
 end
