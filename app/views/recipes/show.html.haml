@@ -40,7 +40,7 @@
       %h4 References
       %ul.list-unstyled.references
         - @recipe.reference_list.each do |reference|
-          %li= link_to reference, reference.html_safe
+          %li= display_reference(reference)
 
     - if allow_edit? @recipe
       = edit_link(@recipe)
