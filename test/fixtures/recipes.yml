@@ -1,11 +1,37 @@
+# == Schema Information
+#
+# Table name: recipes
+#
+#  id          :integer          not null, primary key
+#  name        :string
+#  user_id     :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  picture     :string
+#  active_time :integer
+#  total_time  :integer
+#  prep_time   :integer
+#  cook_time   :integer
+#
+
 kale_chips:
- name: Kale Chips
- picture: a_picture.jpg
- user: kat
- active_time: 5
- total_time: 45
+  name: Kale Chips
+  ingredients: |
+    1 bunch kale
+    2 tb olive oil
+    seasalt
+  directions: |
+    Do something with something.
+    Do something else with the remaining ingredients.
+  references: http://www.foodnetwork.com/recipes/melissa-darabian/crispy-kale-chips-recipe.html
+  picture: a_picture.jpg
+  user: kat
+  active_time: 5
+  total_time: 45
 
 ice_cream:
- name: Ice Cream
- user: kat
- picture: ice_cream.jpg
+  name: Ice Cream
+  directions: Put everything into a blender and then freeze it.
+  user: kat
+  picture: ice_cream.jpg
+  notes: Keep it cold
