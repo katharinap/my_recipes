@@ -12,3 +12,8 @@
 goodfood:
   location: wwww.goodfood.com
   recipe: kale_chips
+
+book_reference:
+  location: Favorite Cookbook p. 77
+  recipe: ice_cream
+  
