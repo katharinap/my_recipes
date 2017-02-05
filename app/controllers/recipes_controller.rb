@@ -29,6 +29,9 @@ class RecipesController < ApplicationController
       format.pdf do
         render pdf: 'my_recipe', template: 'recipes/show.html.haml', layout: 'pdf', encoding: 'UTF-8'
       end
+      format.json do
+        render json: @recipe
+      end
     end
   end
 

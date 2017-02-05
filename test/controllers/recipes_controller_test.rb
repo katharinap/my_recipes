@@ -50,6 +50,21 @@ class RecipesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test 'GET show json' do
+    recipe = recipes(:kale_chips)
+    get :show, {:id => recipe.to_param, format: :json}
+
+    assert_equal recipe,  assigns(:recipe)
+    assert_response :success
+    json = JSON.parse(@response.body)
+    assert_equal 'Kale Chips', json['name']
+    ingredients = "1 bunch kale\n2 tb olive oil\nseasalt\n"
+    assert_equal ingredients, json['ingredients']
+    directions = "Do something with something.\nDo something else with the remaining ingredients.\n"
+    assert_equal directions, json['directions']
+    puts json.inspect
+  end
+
   test 'GET new' do
     get :new
 
