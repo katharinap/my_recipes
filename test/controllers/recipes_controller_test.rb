@@ -12,6 +12,17 @@
 #  total_time  :integer
 #  prep_time   :integer
 #  cook_time   :integer
+#  notes       :text
+#  directions  :text
+#  ingredients :text
+#  references  :text
+#
+# Indexes
+#
+#  index_recipes_on_active_time  (active_time)
+#  index_recipes_on_cook_time    (cook_time)
+#  index_recipes_on_prep_time    (prep_time)
+#  index_recipes_on_total_time   (total_time)
 #
 
 class RecipesControllerTest < ActionController::TestCase
@@ -32,6 +43,27 @@ class RecipesControllerTest < ActionController::TestCase
     assert_redirected_to new_user_session_path
   end
 
+  test 'valid token authentication' do
+    sign_out @user
+    recipe = recipes(:kale_chips)
+    get :show, { :id => recipe.to_param, user_email: @user.email, user_token: @user.authentication_token, format: 'json' }
+    assert_response :success
+  end
+
+  test 'invalid token authentication' do
+    sign_out @user
+    recipe = recipes(:kale_chips)
+    get :show, { :id => recipe.to_param, user_email: @user.email, user_token: 'invalidtoken123', format: 'json' }
+    assert_response 401
+  end
+
+  test 'valid token for non-json request' do
+    sign_out @user
+    recipe = recipes(:kale_chips)
+    get :show, { :id => recipe.to_param, user_email: @user.email, user_token: @user.authentication_token }
+    assert_response :redirect
+   end
+  
   test 'GET index' do
     get :index
 
