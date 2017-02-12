@@ -36,13 +36,13 @@ class Recipe < ActiveRecord::Base
 
   scope :for_user, ->(user) { where(user_id: user.id) }
 
-  TIME_ATTRIBUTES = %i(prep_time active_time cook_time total_time)
-  
-  # FIXME - uniqueness still OK?
+  TIME_ATTRIBUTES = %i(prep_time active_time cook_time total_time).freeze
+
+  # FIXME: - uniqueness still OK?
   validates :name, uniqueness: true, presence: true
 
-  scope :by_name, -> { order("name") }
-  scope :by_most_recent, -> { order("created_at DESC") }
+  scope :by_name, -> { order('name') }
+  scope :by_most_recent, -> { order('created_at DESC') }
 
   def user_name
     return 'unknown' unless user
@@ -52,11 +52,11 @@ class Recipe < ActiveRecord::Base
   def steps
     directions.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
-  
+
   def ingredient_list
     ingredients.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
-  
+
   def reference_list
     references.to_s.split("\n").map(&:strip).reject(&:blank?)
   end

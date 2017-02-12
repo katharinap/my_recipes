@@ -36,6 +36,6 @@ class PictureUploader < CarrierWave::Uploader::Base
   end
 
   def dynamic_resize_to_fit(size)
-    resize_to_fit(*(model.class.send("#{size}_picture_size")))
+    resize_to_fit(*model.class.send("#{size}_picture_size"))
   end
 end

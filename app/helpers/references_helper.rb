@@ -9,6 +9,8 @@ module ReferencesHelper
 
   def url?(reference)
     # http://www.regexguru.com/2008/11/detecting-urls-in-a-block-of-text/
+    # rubocop:disable Metrics/LineLength
     reference =~ %r{(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])}i
+    # rubocop:enable Metrics/LineLength
   end
 end

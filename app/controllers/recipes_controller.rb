@@ -19,6 +19,8 @@ class RecipesController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user, only: [:edit, :update, :destroy]
 
+  PDF_OPTS = { layout: 'pdf', encoding: 'UTF-8' }.freeze
+
   def index
     @recipes = Recipe.for_user(current_user)
   end
@@ -27,7 +29,8 @@ class RecipesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: 'my_recipe', template: 'recipes/show.html.haml', layout: 'pdf', encoding: 'UTF-8'
+        render({ pdf: 'my_recipe',
+                 template: 'recipes/show.html.haml' }.merge(PDF_OPTS))
       end
       format.json do
         render json: @recipe
@@ -37,14 +40,14 @@ class RecipesController < ApplicationController
 
   def edit
   end
-  
+
   def new
     @recipe = Recipe.new
   end
 
   def create
     @recipe = Recipe.new(recipe_params)
-    
+
     if @recipe.save
       redirect_to @recipe, notice: 'Recipe was successfully created.'
     else
@@ -64,11 +67,11 @@ class RecipesController < ApplicationController
     @recipe.destroy
     redirect_to recipes_url, notice: 'Recipe was successfully destroyed.'
   end
-  
+
   private
 
   def authorize_user
-    render nothing: true, status: :forbidden if (@recipe.user != current_user)
+    render nothing: true, status: :forbidden if @recipe.user != current_user
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -76,6 +79,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
   end
 
+  # rubocop:disable Metrics/MethodLength
   def recipe_params
     params.require(:recipe).permit(
       :name,
@@ -94,4 +98,5 @@ class RecipesController < ApplicationController
       :references
     )
   end
+  # rubocop:enable Metrics/MethodLength
 end

@@ -17,11 +17,11 @@
 module RecipesHelper
   include GlyphHelper
   include DurationHelper
-  
+
   def title
     @recipe.try :name
   end
-  
+
   def allow_edit?(recipe)
     return false unless user_signed_in?
     recipe.user_id == current_user.id
@@ -29,14 +29,23 @@ module RecipesHelper
 
   def edit_link(recipe)
     if allow_edit?(recipe)
-      tooltip = t('.edit', default: t("helpers.links.edit"))
-      link_to edit_recipe_path(recipe), title: tooltip, class: 'hidden-print', data: { toggle: 'tooltip' } do
-        edit_icon
-      end
+      enabled_edit_link(recipe)
     else
-      link_to '#', disabled: true, class: 'disabled hidden-print' do
-        edit_icon
-      end
+      disabled_edit_link(recipe)
+    end
+  end
+
+  def enabled_edit_link(recipe)
+    tooltip = t('.edit', default: t('helpers.links.edit'))
+    opt = { title: tooltip, class: 'hidden-print', data: { toggle: 'tooltip' } }
+    link_to edit_recipe_path(recipe), opt do
+      edit_icon
+    end
+  end
+
+  def disabled_edit_link(_recipe)
+    link_to '#', disabled: true, class: 'disabled hidden-print' do
+      edit_icon
     end
   end
 
@@ -45,23 +54,35 @@ module RecipesHelper
       glyph 'pencil fa-lg'
     end
   end
-  
+
   def destroy_link(recipe)
     if allow_edit?(recipe)
-      data = {
-        confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')),
-        toggle: 'tooltip'
-      }
-      tooltip = t('.destroy', default: t("helpers.links.destroy"))
-      link_to recipe_path(recipe), method: 'delete', class: 'hidden-print',data: data, id: 'delete_link', title: tooltip do
-        destroy_icon
-      end
+      enabled_destroy_link(recipe)
     else
-      link_to '#', data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true, id: 'delete_link', class: 'disabled hidden-print' do
-        destroy_icon
-      end
+      disabled_destroy_link(recipe)
     end
   end
+
+  # rubocop:disable Metrics/LineLength
+  def enabled_destroy_link(recipe)
+    data = {
+      confirm: t('.confirm', default: t('helpers.links.confirm', default: 'Are you sure?')),
+      toggle: 'tooltip'
+    }
+    tooltip = t('.destroy', default: t('helpers.links.destroy'))
+    opts = { method: 'delete', class: 'hidden-print', data: data, id: 'delete_link', title: tooltip }
+    link_to recipe_path(recipe), opts do
+      destroy_icon
+    end
+  end
+
+  def disabled_destroy_link(_recipe)
+    opts = { data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true, id: 'delete_link', class: 'disabled hidden-print' }
+    link_to '#', opts do
+      destroy_icon
+    end
+  end
+  # rubocop:enable Metrics/LineLength
 
   def destroy_icon
     content_tag :span, class: 'right-side-icon' do
@@ -70,11 +91,12 @@ module RecipesHelper
   end
 
   def pdf_link(recipe)
-    link_to recipe_path(recipe, format: :pdf), title: 'PDF', data: { toggle: 'tooltip' } do
+    opts = { title: 'PDF', data: { toggle: 'tooltip' } }
+    link_to recipe_path(recipe, format: :pdf), opts do
       pdf_icon
     end
   end
-  
+
   def pdf_icon
     content_tag :span, class: 'right-side-icon' do
       glyph 'file-pdf-o fa-lg'
@@ -103,13 +125,15 @@ module RecipesHelper
       end
     end
   end
-  
+
   # this is only a short term solution until we can think of a
   # better way to display this information in recipes#index
   def short_time_attribute_description(recipe)
     Recipe::TIME_ATTRIBUTES.map do |time_attr|
       next unless recipe.send time_attr
-      "#{time_attr.to_s.sub('_time', '').capitalize}: #{minutes_in_words(recipe.send(time_attr), short: true)}"
+      name = time_attr.to_s.sub('_time', '').capitalize
+      value = minutes_in_words(recipe.send(time_attr), short: true)
+      "#{name}: #{value}"
     end.compact.join(', ')
   end
 end
