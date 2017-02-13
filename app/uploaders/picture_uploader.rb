@@ -6,7 +6,7 @@ class PictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   def cache_dir
-    "#{Rails.root}/tmp/uploads"
+    Rails.root.join('tmp', 'uploads')
   end
 
   # Override the directory where uploaded files will be stored.

@@ -17,3 +17,8 @@ Metrics/LineLength:
     - Guardfile
     - Gemfile
     
+# Offense count: 1
+# Configuration parameters: CountComments, ExcludedMethods.
+Metrics/BlockLength:
+  Exclude:
+    - 'lib/tasks/auto_annotate_models.rake'
