@@ -16,10 +16,3 @@ Metrics/ModuleLength:
 Rails/OutputSafety:
   Exclude:
     - 'app/helpers/references_helper.rb'
-
-# Offense count: 25
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: when_needed, always
-Style/FrozenStringLiteralComment:
-  Enabled: false

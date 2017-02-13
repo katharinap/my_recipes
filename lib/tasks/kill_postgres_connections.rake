@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :postgres do
   desc 'kill running postgres connections'
   task kill_postgres_connections: :environment do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module GlyphHelper
   def glyph(name)
     name = name.to_s.tr('_', '-')

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module DurationHelper
   def minutes_in_words(number, short: false)
     return 'N/A' unless number.is_a? Numeric

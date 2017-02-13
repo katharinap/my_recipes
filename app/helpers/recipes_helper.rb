@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: recipes
@@ -105,7 +106,8 @@ module RecipesHelper
 
   def new_link
     css_class = 'btn btn-success-outline btn-sm hidden-print'
-    css_class << ' disabled' unless user_signed_in?
+    css_class += ' disabled' unless user_signed_in?
+
     link_to new_recipe_path do
       attr = { type: 'button', class: css_class }
       attr[:disabled] = true unless user_signed_in?

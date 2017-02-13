@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # usage:
 # migration:
 # rails generate migration add_picture_to_<model> picture:string
