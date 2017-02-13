@@ -58,6 +58,7 @@ group :development do
   gem 'spring'
   gem 'guard'
   gem 'guard-minitest'
+  gem 'rubocop'
 end
 
 group :test do
