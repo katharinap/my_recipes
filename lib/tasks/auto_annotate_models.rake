@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # NOTE: only doing this in development as some production environments (Heroku)
 # NOTE: are sensitive to local FS writes, and besides -- it's just not proper
 # NOTE: to have a dev-mode tool do its thing in production.
@@ -39,7 +40,7 @@ if Rails.env.development?
       'force'                   => 'false',
       'trace'                   => 'false',
       'wrapper_open'            => nil,
-      'wrapper_close'           => nil,
+      'wrapper_close'           => nil
     )
   end
 

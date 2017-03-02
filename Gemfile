@@ -1,5 +1,5 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
-
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
@@ -33,22 +33,22 @@ gem 'puma'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'devise'
-gem 'simple_token_authentication', '~> 1.0'
-gem 'annotate'
-gem 'haml-rails'
-gem 'simple_form'
-gem "nested_form"
-gem 'local_time'
-gem 'carrierwave'
-gem 'mini_magick'
 gem 'acts-as-taggable-on'
+gem 'annotate'
+gem 'carrierwave'
+gem 'devise'
+gem 'haml-rails'
+gem 'local_time'
+gem 'mini_magick'
+gem 'nested_form'
+gem 'simple_form'
+gem 'simple_token_authentication', '~> 1.0'
 gem 'wicked_pdf'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
   gem 'byebug'
+  gem 'wkhtmltopdf-binary-edge', '~> 0.12.4.0'
 end
 
 group :development do
@@ -56,27 +56,28 @@ group :development do
   gem 'web-console', '~> 2.0'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
   gem 'guard'
   gem 'guard-minitest'
+  gem 'rubocop'
+  gem 'spring'
 end
 
 group :test do
-  gem 'minitest'
-  gem "minitest-rails"
-  gem 'minitest-rails-capybara'
-  gem 'minitest-reporters'
-  gem 'shoulda', '~> 3.5'
-  gem 'shoulda-matchers', '~> 2.0'
-  gem 'mocha'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'launchy'
+  gem 'minitest'
+  gem 'minitest-rails'
+  gem 'minitest-rails-capybara'
+  gem 'minitest-reporters'
+  gem 'mocha'
+  gem 'shoulda', '~> 3.5'
+  gem 'shoulda-matchers', '~> 2.0'
 end
 
 group :production do
-  gem 'wkhtmltopdf-heroku'
   gem 'rails_12factor'
+  gem 'wkhtmltopdf-heroku'
 end
 
 ruby '2.3.0'

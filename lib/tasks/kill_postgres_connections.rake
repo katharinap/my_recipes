@@ -1,6 +1,7 @@
-namespace  :postgres do
-  desc "kill running postgres connections"
-  task :kill_postgres_connections => :environment do
+# frozen_string_literal: true
+namespace :postgres do
+  desc 'kill running postgres connections'
+  task kill_postgres_connections: :environment do
     db_name = "#{File.basename(Rails.root)}_#{Rails.env}"
     sh = <<EOF
 ps xa \

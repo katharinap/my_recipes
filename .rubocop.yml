@@ -1,0 +1,24 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'bin/**/*'
+    - 'test/**/*'
+    - 'db/**/*'
+    - 'app/helpers/bootstrap_flash_helper.rb'
+    - 'config/initializers/*'
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:    
+  Exclude:
+    - 'config/**/*'
+    - Guardfile
+    - Gemfile
+    
+# Offense count: 1
+# Configuration parameters: CountComments, ExcludedMethods.
+Metrics/BlockLength:
+  Exclude:
+    - 'lib/tasks/auto_annotate_models.rake'

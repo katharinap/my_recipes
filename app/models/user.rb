@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: users
@@ -32,7 +33,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  #acts_as_tagger #TODO Use this in round 2
+  # acts_as_tagger #TODO Use this in round 2
 
   def reset_authentication_token!
     # make sure that the record has changed so that the before_save
@@ -45,6 +46,6 @@ class User < ActiveRecord::Base
       ensure_authentication_token
     end
     save # automatically generates a new authentication token
-    authentication_token 
+    authentication_token
   end
 end

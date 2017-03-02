@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'users/registrations' }
   resources :recipes
@@ -5,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [] do
     resource :authentication_token, only: %(update)
-  end  
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   # Serve websocket cable requests in-process

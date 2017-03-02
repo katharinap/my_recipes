@@ -1,11 +1,12 @@
 # encoding: utf-8
+# frozen_string_literal: true
 class PictureUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
   def cache_dir
-    "#{Rails.root}/tmp/uploads"
+    Rails.root.join('tmp', 'uploads')
   end
 
   # Override the directory where uploaded files will be stored.
@@ -36,6 +37,6 @@ class PictureUploader < CarrierWave::Uploader::Base
   end
 
   def dynamic_resize_to_fit(size)
-    resize_to_fit(*(model.class.send("#{size}_picture_size")))
+    resize_to_fit(*model.class.send("#{size}_picture_size"))
   end
 end
