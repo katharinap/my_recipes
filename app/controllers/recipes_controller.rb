@@ -13,6 +13,17 @@
 #  total_time  :integer
 #  prep_time   :integer
 #  cook_time   :integer
+#  notes       :text
+#  directions  :text
+#  ingredients :text
+#  references  :text
+#
+# Indexes
+#
+#  index_recipes_on_active_time  (active_time)
+#  index_recipes_on_cook_time    (cook_time)
+#  index_recipes_on_prep_time    (prep_time)
+#  index_recipes_on_total_time   (total_time)
 #
 
 class RecipesController < ApplicationController

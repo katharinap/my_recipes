@@ -42,6 +42,7 @@ gem 'local_time'
 gem 'mini_magick'
 gem 'nested_form'
 gem 'simple_form'
+gem 'simple_token_authentication', '~> 1.0'
 gem 'wicked_pdf'
 
 group :development, :test do
