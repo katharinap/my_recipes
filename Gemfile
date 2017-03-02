@@ -34,6 +34,7 @@ gem 'puma'
 # gem 'capistrano-rails', group: :development
 
 gem 'devise'
+gem 'simple_token_authentication', '~> 1.0'
 gem 'annotate'
 gem 'haml-rails'
 gem 'simple_form'
