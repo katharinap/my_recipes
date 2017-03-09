@@ -36,14 +36,14 @@ class RecipeTest < ActiveSupport::TestCase
     should validate_uniqueness_of :name
 
     should "be valid" do
-      assert recipes(:kale_chips).valid?
+      assert create(:kale_chips).valid?
     end
   end
 
   context '.user_name' do
     setup do
-      @user = User.new(name: 'test_name', email: 'test@email.com')
-      @recipe = Recipe.new(user: @user)
+      @user = build(:user, name: 'test_name', email: 'test@email.com')
+      @recipe = build(:recipe, user: @user)
     end
 
     should "return 'unknown' if there is no user" do
@@ -62,17 +62,15 @@ class RecipeTest < ActiveSupport::TestCase
   end
 
   context 'by name scope' do
-    setup do
-      @user = User.new(name: 'test_name', email: 'test@email.com')
-    end
-
     should "sort by name" do
+      recipe1 = create(:kale_chips)
+      recipe2 = create(:ice_cream)
       recipes = Recipe.by_name
       assert_equal 2, recipes.count
-      assert_equal [recipes(:ice_cream).name, recipes(:kale_chips).name], recipes.collect(&:name)
+      assert_equal [recipe2, recipe1].collect(&:name), recipes.collect(&:name)
     end
   end
-
+  
   context '.steps' do
     setup do
       @recipe = Recipe.new(directions: "Sprinkle salt and pepper\n\tDrizzle oil\n\n Bake in oven at 450c ")

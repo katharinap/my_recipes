@@ -29,9 +29,9 @@ require File.expand_path("../../test_helper", __FILE__)
 
 class UserTest < ActiveSupport::TestCase
   should 'be valid' do
-    assert users(:kat).valid?
+    assert create(:user).valid?
   end
-
+  
   context '.reset_authentication_token!' do
     should 'reset the authentication token' do
       user = User.new(name: 'me', email: 'me@email.com', authentication_token: 'abcdefgh12345678')

@@ -25,7 +25,11 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-kat:
-  name: Katharina Peter
-  email: myemail@kat.com
-  authentication_token: abcd1234
+FactoryGirl.define do
+  factory :user do
+    name 'Jane Doe'
+    sequence(:email) { |n| "jane#{n}@example.com" }
+    sequence(:password) { |n| "supersecretpassword#{n}" }
+    sequence(:authentication_token) { |n| "abcd1234#{n}" }
+  end
+end
