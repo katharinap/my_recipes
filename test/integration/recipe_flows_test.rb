@@ -53,6 +53,15 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content?("Edit Recipe"), "Should be on 'Edit Recipe' page"
     assert page.has_content?("Picture")
 
+    assert_equal 'My Recipe', find_field('recipe_name').value
+    assert_equal "Ingredient 1\n Ingredient 2", find_field('recipe_ingredients').value
+    assert_equal "Step 1\n Step 2", find_field('recipe_directions').value
+    assert_equal 'www.myrecipe.com', find_field('recipe_references').value
+    assert_equal 'veggie, snack, vegan', find_field('Tag list').value
+    assert_equal '15', find_field('recipe_active_time').value
+    assert_equal '90', find_field('recipe_total_time').value
+    assert_equal 'Be careful with something', find_field('recipe_notes').value
+
     fill_in "recipe[name]", with: "new_#{recipe.name}"
     fill_in "recipe[active_time]", with: ''
     fill_in "recipe[prep_time]", with: 10
