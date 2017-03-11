@@ -61,4 +61,21 @@ class Recipe < ActiveRecord::Base
   def reference_list
     references.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
+
+  class << self
+    def search(search)
+      # not very elegant...  we can't only use a joins statement with
+      # recipes.name etc. because that ignores recipes without tags
+      (search_recipes(search) + search_by_tags(search)).uniq
+    end
+
+    def search_recipes(search)
+      condition = 'name ILIKE :search OR ingredients ILIKE :search'
+      where(condition, search: "%#{search}%")
+    end
+
+    def search_by_tags(search)
+      joins(:tags).where('tags.name ILIKE :search', search: "%#{search}%")
+    end
+  end
 end

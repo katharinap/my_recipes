@@ -80,5 +80,27 @@ class RecipeTest < ActiveSupport::TestCase
       assert_equal ['Sprinkle salt and pepper', 'Drizzle oil', 'Bake in oven at 450c'], @recipe.steps
     end
   end
+
+  context '#search' do
+    setup do
+      tag = create(:tag, name: 'quick')
+      @recipe1 = create(:recipe, name: 'Quinoa Bowl', ingredients: "1 cup quinoa\n1 cup brown lentils\ntahini\bunch of greens", tags: [tag])
+      @recipe2 = create(:recipe, name: 'Ice Cream', ingredients: "1 can coconut milk\n2 tb corn starch\n1/2 cup agave nectar\nvanilla extract")
+      @recipe3 = create(:recipe, name: 'Cold Brewed Iced Coffee', ingredients: 'coffee', tags: [tag])
+    end
+    
+    should "search the name" do
+      assert_equal [@recipe3, @recipe2], Recipe.search('ice').sort_by(&:name)
+    end
+    
+
+    should "search the ingredients" do
+      assert_equal [@recipe1], Recipe.search('lentils')
+    end
+
+    should 'search the tags' do
+      assert_equal [@recipe3, @recipe1], Recipe.search('quick').sort_by(&:name)
+    end
+  end
 end
 
