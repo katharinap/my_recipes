@@ -27,7 +27,7 @@
 
 class RecipesControllerTest < ActionController::TestCase
   setup do
-    @user = users(:kat)
+    @user = create(:user)
     sign_in @user
   end
 
@@ -45,26 +45,28 @@ class RecipesControllerTest < ActionController::TestCase
 
   test 'valid token authentication' do
     sign_out @user
-    recipe = recipes(:kale_chips)
+    recipe = create(:kale_chips, user: @user)
     get :show, { :id => recipe.to_param, user_email: @user.email, user_token: @user.authentication_token, format: 'json' }
     assert_response :success
   end
 
   test 'invalid token authentication' do
     sign_out @user
-    recipe = recipes(:kale_chips)
+    recipe = create(:kale_chips, user: @user)
     get :show, { :id => recipe.to_param, user_email: @user.email, user_token: 'invalidtoken123', format: 'json' }
     assert_response 401
   end
 
   test 'valid token for non-json request' do
     sign_out @user
-    recipe = recipes(:kale_chips)
+    recipe = create(:kale_chips, user: @user)
     get :show, { :id => recipe.to_param, user_email: @user.email, user_token: @user.authentication_token }
     assert_response :redirect
    end
   
   test 'GET index' do
+    create(:kale_chips, user: @user)
+    create(:ice_cream, user: @user)
     get :index
 
     assert_response :success
@@ -74,7 +76,7 @@ class RecipesControllerTest < ActionController::TestCase
   end
 
   test 'GET show' do
-    recipe = recipes(:kale_chips)
+    recipe = create(:kale_chips, user: @user)
     get :show, {:id => recipe.to_param}
 
     assert_equal recipe,  assigns(:recipe)
@@ -83,16 +85,16 @@ class RecipesControllerTest < ActionController::TestCase
   end
 
   test 'GET show json' do
-    recipe = recipes(:kale_chips)
+    recipe = create(:kale_chips, user: @user)
     get :show, {:id => recipe.to_param, format: :json}
 
     assert_equal recipe,  assigns(:recipe)
     assert_response :success
     json = JSON.parse(@response.body)
     assert_equal 'Kale Chips', json['name']
-    ingredients = "1 bunch kale\n2 tb olive oil\nseasalt\n"
+    ingredients = "1 bunch kale\n2 tb olive oil\nseasalt"
     assert_equal ingredients, json['ingredients']
-    directions = "Do something with something.\nDo something else with the remaining ingredients.\n"
+    directions = "Do something with something.\nDo something else with the remaining ingredients."
     assert_equal directions, json['directions']
     puts json.inspect
   end
@@ -315,7 +317,7 @@ class RecipesControllerTest < ActionController::TestCase
   end
 
   test "DELETE destroy should delete recipe" do
-    recipe = recipes(:kale_chips)
+    recipe = create(:kale_chips, user: @user)
     assert_difference 'Recipe.count', -1 do
       delete :destroy, {id: recipe.to_param}
     end

@@ -11,12 +11,19 @@ require 'capybara/rails'
 require_relative 'browser/lib/dom_helper'
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+DatabaseCleaner.strategy = :transaction
+class Minitest::Spec
+  before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    DatabaseCleaner.clean
+  end
+end
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  fixtures :all
-
-  # Add more helper methods to be used by all tests here...
+  include FactoryGirl::Syntax::Methods
 end
 
 class ActionController::TestCase

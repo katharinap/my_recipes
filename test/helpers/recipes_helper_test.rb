@@ -3,8 +3,8 @@ require File.expand_path("../../test_helper", __FILE__)
 class RecipesHelperTest < ActionView::TestCase
 
   setup do
-    @recipe = recipes(:kale_chips)
-    @user = @recipe.user
+    @user = create(:user)
+    @recipe = create(:kale_chips, user: @user)
     stubs(:current_user).returns(@user)
   end
 
@@ -49,7 +49,7 @@ class RecipesHelperTest < ActionView::TestCase
       stubs(:allow_edit?).returns(true)
       instance_variable_set(:@virtual_path, "en")
       expected_markup =
-       "<a title=\"Edit\" class=\"hidden-print\" data-toggle=\"tooltip\" href=\"/recipes/598873390/edit\"><span><i class=\"fa fa-pencil fa-lg\" aria-hidden=\"true\"></i></span></a>"
+       "<a title=\"Edit\" class=\"hidden-print\" data-toggle=\"tooltip\" href=\"/recipes/#{@recipe.id}/edit\"><span><i class=\"fa fa-pencil fa-lg\" aria-hidden=\"true\"></i></span></a>"
       assert_equal expected_markup, edit_link(@recipe)
     end
   end
