@@ -34,7 +34,11 @@ class RecipesController < ApplicationController
   PDF_OPTS = { layout: 'pdf', encoding: 'UTF-8' }.freeze
 
   def index
-    @recipes = Recipe.for_user(current_user)
+    if params[:search]
+      @recipes = Recipe.for_user(current_user).search(params[:search])
+    else
+      @recipes = Recipe.for_user(current_user)
+    end
   end
 
   def show

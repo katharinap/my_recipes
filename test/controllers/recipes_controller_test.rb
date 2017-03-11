@@ -71,8 +71,17 @@ class RecipesControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_template :index
-    assert Recipe.count > 0
     assert_equal Recipe.for_user(@user).to_a, assigns(:recipes)
+  end
+
+  test 'GET index with search' do
+    recipe = create(:kale_chips, user: @user)
+    create(:ice_cream, user: @user)
+    get :index, { search: 'kale' }
+
+    assert_response :success
+    assert_template :index
+    assert_equal [recipe], assigns(:recipes)
   end
 
   test 'GET show' do
