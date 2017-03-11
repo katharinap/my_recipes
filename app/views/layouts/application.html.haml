@@ -10,7 +10,7 @@
   %body
     #content.container-fluid
       %nav.hidden-print
-        %ul.nav
+        %ul.nav.navbar-nav
           %li.nav-item.dropdown
             = link_to '#', class: 'nav-link', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: true, expanded: false } do
               = glyph 'bars fa-2x'
@@ -33,6 +33,12 @@
                 = nav_link_to user_registration_path, method: :post do
                   = glyph 'user-plus fa-fw'
                   Sign Up
+          .pull-right
+            %li.nav-item
+              .search-form
+                = form_tag recipes_path, method: 'get', class: 'form-inline' do |form|
+                  = text_field_tag :search, params[:search], placeholder: "Search Recipes"
+            %li.nav-item= new_link
       .row.hidden-print
         .col-lg-12
           = bootstrap_flash
