@@ -23,6 +23,7 @@
 #  index_recipes_on_cook_time    (cook_time)
 #  index_recipes_on_prep_time    (prep_time)
 #  index_recipes_on_total_time   (total_time)
+#  index_recipes_on_user_id      (user_id)
 #
 
 class RecipesControllerTest < ActionController::TestCase
