@@ -41,7 +41,7 @@ class RecipesHelperTest < ActionView::TestCase
     should 'return proper markup when allow_edit? == false' do
       stubs(:allow_edit?).returns(false)
       expected_markup =
-          "<a disabled=\"disabled\" class=\"disabled hidden-print\" href=\"#\"><span><i class=\"fa fa-pencil fa-lg\" aria-hidden=\"true\"></i></span></a>"
+          "<a disabled=\"disabled\" class=\"action-link disabled hidden-print\" href=\"#\"><span><i class=\"fa fa-pencil fa-lg\" aria-hidden=\"true\"></i></span></a>"
       assert_equal expected_markup, edit_link(@recipe)
     end
 
@@ -49,7 +49,7 @@ class RecipesHelperTest < ActionView::TestCase
       stubs(:allow_edit?).returns(true)
       instance_variable_set(:@virtual_path, "en")
       expected_markup =
-       "<a title=\"Edit\" class=\"hidden-print\" data-toggle=\"tooltip\" href=\"/recipes/#{@recipe.id}/edit\"><span><i class=\"fa fa-pencil fa-lg\" aria-hidden=\"true\"></i></span></a>"
+       "<a title=\"Edit\" class=\"action-link hidden-print\" data-toggle=\"tooltip\" href=\"/recipes/#{@recipe.id}/edit\"><span><i class=\"fa fa-pencil fa-lg\" aria-hidden=\"true\"></i></span></a>"
       assert_equal expected_markup, edit_link(@recipe)
     end
   end
@@ -58,7 +58,7 @@ class RecipesHelperTest < ActionView::TestCase
     should 'return proper markup when allow_edit? == false' do
       stubs(:allow_edit?).returns(false)
       expected_markup =
-          "<a data-toggle=\"tooltip\" title=\"Nope...\" disabled=\"disabled\" id=\"delete_link\" class=\"disabled hidden-print\" href=\"#\"><span class=\"right-side-icon\"><i class=\"fa fa-trash fa-lg\" aria-hidden=\"true\"></i></span></a>"
+          "<a data-toggle=\"tooltip\" title=\"Nope...\" disabled=\"disabled\" id=\"delete_link\" class=\"action-link disabled hidden-print\" href=\"#\"><span class=\"right-side-icon\"><i class=\"fa fa-trash fa-lg\" aria-hidden=\"true\"></i></span></a>"
       assert_equal expected_markup, destroy_link(@recipe)
     end
 
@@ -66,7 +66,7 @@ class RecipesHelperTest < ActionView::TestCase
       stubs(:allow_edit?).returns(true)
       instance_variable_set(:@virtual_path, "en")
       expected_markup =
-          "<a class=\"hidden-print\" data-confirm=\"Are you sure?\" data-toggle=\"tooltip\" id=\"delete_link\" title=\"Delete\" rel=\"nofollow\" data-method=\"delete\" href=\"/recipes/#{@recipe.id}\"><span class=\"right-side-icon\"><i class=\"fa fa-trash fa-lg\" aria-hidden=\"true\"></i></span></a>"
+          "<a class=\"action-link hidden-print\" data-confirm=\"Are you sure?\" data-toggle=\"tooltip\" id=\"delete_link\" title=\"Delete\" rel=\"nofollow\" data-method=\"delete\" href=\"/recipes/#{@recipe.id}\"><span class=\"right-side-icon\"><i class=\"fa fa-trash fa-lg\" aria-hidden=\"true\"></i></span></a>"
       assert_equal expected_markup, destroy_link(@recipe)
     end
   end

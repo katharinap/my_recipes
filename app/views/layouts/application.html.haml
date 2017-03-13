@@ -7,39 +7,22 @@
     = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
+    = favicon_link_tag
   %body
-    #content.container-fluid
-      %nav.hidden-print
+    .container-fluid
+      = bootstrap_flash(class: 'flash')
+      %nav.navbar.navbar-light.bg-faded.hidden-print{ style: "background-color: white; border: 5px solid #e5e5e5; border-radius: 25px; margin-top: 0px; margin-bottom: 10px;" }
         %ul.nav.navbar-nav
-          %li.nav-item.dropdown
-            = link_to '#', class: 'nav-link', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: true, expanded: false } do
-              = glyph 'bars fa-2x'
-            .dropdown-menu
-              = nav_link_to root_path do
-                = glyph 'home fa-fw'
-                Home
-              .dropdown-divider
-              - if user_signed_in?
-                = nav_link_to edit_user_registration_path(current_user) do
-                  = glyph 'cog fa-fw'
-                  Your Account
-                = nav_link_to destroy_user_session_path, method: :delete do
-                  = glyph 'sign-out fa-fw'
-                  Sign Out
-              - else
-                = nav_link_to new_user_session_path do
-                  = glyph 'sign-in fa-fw'
-                  Sign In
-                = nav_link_to user_registration_path, method: :post do
-                  = glyph 'user-plus fa-fw'
-                  Sign Up
+          = link_to '#', class: 'navbar-brand' do
+            = image_tag('cooking-pot-32.png')
+          = nav_link_to(root_path, :home, 'Home')
+          = nav_link_to(new_recipe_path, :plus, 'Add Recipe')
+          %li.nav-item
+            .search-form
+              = form_tag recipes_path, method: 'get', class: 'form-inline' do |form|
+                = text_field_tag :search, params[:search], placeholder: "Search Recipes", class: 'form-control mr-sm-2'
           .pull-right
-            %li.nav-item
-              .search-form
-                = form_tag recipes_path, method: 'get', class: 'form-inline' do |form|
-                  = text_field_tag :search, params[:search], placeholder: "Search Recipes"
-            %li.nav-item= new_link
-      .row.hidden-print
-        .col-lg-12
-          = bootstrap_flash
+            - if user_signed_in?
+              = nav_link_to(edit_user_registration_path(current_user), :cog, 'Account')
+              = nav_link_to(destroy_user_session_path, 'sign-out', 'Sign-out', method: :delete)
       = yield
