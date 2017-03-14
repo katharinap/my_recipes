@@ -16,6 +16,5 @@
 //= require tether/tether.min
 //= require bootstrap
 //= require bootstrap-filestyle
-//= require jquery_nested_form
 //= require local_time
 //= require_tree .

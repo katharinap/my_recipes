@@ -22,7 +22,7 @@ module WithPicture
 
   # class methods
   module ClassMethods
-    %i(default thumb).each do |pic_size|
+    %i(default thumb mid).each do |pic_size|
       # * has_default_picture_size(size)
       # * has_thumb_picture_size(size)
       define_method "has_#{pic_size}_picture_size" do |size|

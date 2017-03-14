@@ -1,46 +1,60 @@
-- model_class = Recipe
-.page-header
+.card.recipe
   = recipe_image(@recipe)
+  .card-block
+    %h1.card-title= @recipe.name
+    %p
+      .hidden-print.pull-right
+        - if allow_edit? @recipe
+          = edit_link(@recipe)
+          = destroy_link(@recipe)
+        = pdf_link(@recipe)
 
-  %h1=t '.title', :default => title || model_class.model_name.human.titleize
+    - if @recipe.time_attributes?
+      %p
+        %h6.card-subtitle.mb-2.text-muted
+          = glyph(:'clock-o')
+          - Recipe::TIME_ATTRIBUTES.each do |time_attribute|
+            - next unless @recipe.send time_attribute
+            - name = time_attribute.to_s.sub('_time', '').capitalize
+            %strong= "#{name}:"
+            = minutes_in_words(@recipe.send time_attribute)
 
-  .recipe-user
-    .row.hidden-print
-      = glyph :user
-      = @recipe.user_name
-      = glyph :calendar
-      = local_time @recipe.created_at
-      %strong Tagged as
-      = @recipe.tag_list
+    - if @recipe.tags.any?
+      %p
+        %h6.card-subtitle.mb-2.text-muted
+          = glyph(:tags)
+          = @recipe.tag_list
+
     .row
-      - Recipe::TIME_ATTRIBUTES.each do |time_attribute|
-        - next unless @recipe.send time_attribute
-        %strong= "#{Recipe.human_attribute_name time_attribute}:"
-        = minutes_in_words(@recipe.send time_attribute)
-.row
-  .col-lg-4.col-lg-push-8
-    %h4 Ingredients
-    %ul.list-unstyled.ingredients
-      - @recipe.ingredient_list.each do |ingredient|
-        %li= ingredient
-  .col-md-8.col-md-pull-4
-    %h4 Directions
-    .recipe-directions        
-      - @recipe.steps.each do |step|
-        %p= step
+      .col-lg-4.col-lg-push-8
+        .card.card-no-outline
+          .card-block
+            %h4.card-title Ingredients
+            %p.card-text
+              %ul.list-unstyled.ingredients
+                - @recipe.ingredient_list.each do |ingredient|
+                  %li= ingredient
+      .col-lg-8.col-lg-pull-4
+        .card.card-no-outline
+          .card-block
+            %h4.card-title Directions
+            %p.card-text
+              .recipe-directions        
+                - @recipe.steps.each do |step|
+                  %p= step
 
-    - if @recipe.notes
-      %h4 Notes
-      .recipe-notes
-        = simple_format @recipe.notes
-      
-    - unless @recipe.references.blank?      
-      %h4 References
-      %ul.list-unstyled.references
-        - @recipe.reference_list.each do |reference|
-          %li= display_reference(reference)
+        - if @recipe.notes?
+          .card.card-no-outline
+            .card-block
+              %h4.card-title Notes
+              %p.card-text
+                = simple_format @recipe.notes
 
-    - if allow_edit? @recipe
-      = edit_link(@recipe)
-      = destroy_link(@recipe)
-    = pdf_link(@recipe)
+        - unless @recipe.references.blank?      
+          .card.card-no-outline
+            .card-block
+              %h4.card-title References
+              %p.card-text
+                %ul.list-unstyled.references
+                  - @recipe.reference_list.each do |reference|
+                    %li= display_reference(reference)

@@ -50,14 +50,15 @@ module RecipesHelper
 
   def enabled_edit_link(recipe)
     tooltip = t('.edit', default: t('helpers.links.edit'))
-    opt = { title: tooltip, class: 'hidden-print', data: { toggle: 'tooltip' } }
+    classes = 'action-link hidden-print'
+    opt = { title: tooltip, class: classes, data: { toggle: 'tooltip' } }
     link_to edit_recipe_path(recipe), opt do
       edit_icon
     end
   end
 
   def disabled_edit_link(_recipe)
-    link_to '#', disabled: true, class: 'disabled hidden-print' do
+    link_to '#', disabled: true, class: 'action-link disabled hidden-print' do
       edit_icon
     end
   end
@@ -83,14 +84,14 @@ module RecipesHelper
       toggle: 'tooltip'
     }
     tooltip = t('.destroy', default: t('helpers.links.destroy'))
-    opts = { method: 'delete', class: 'hidden-print', data: data, id: 'delete_link', title: tooltip }
+    opts = { method: 'delete', class: 'action-link hidden-print', data: data, id: 'delete_link', title: tooltip }
     link_to recipe_path(recipe), opts do
       destroy_icon
     end
   end
 
   def disabled_destroy_link(_recipe)
-    opts = { data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true, id: 'delete_link', class: 'disabled hidden-print' }
+    opts = { data: { toggle: 'tooltip' }, title: 'Nope...', disabled: true, id: 'delete_link', class: 'action-link disabled hidden-print' }
     link_to '#', opts do
       destroy_icon
     end
@@ -104,7 +105,7 @@ module RecipesHelper
   end
 
   def pdf_link(recipe)
-    opts = { title: 'PDF', data: { toggle: 'tooltip' } }
+    opts = { title: 'PDF', data: { toggle: 'tooltip' }, class: 'action-link' }
     link_to recipe_path(recipe, format: :pdf), opts do
       pdf_icon
     end
@@ -135,7 +136,7 @@ module RecipesHelper
       if params[:format] == 'pdf'
         wicked_pdf_image_tag @recipe.picture_url, class: 'center-block'
       else
-        image_tag @recipe.picture_url, class: 'center-block'
+        image_tag @recipe.picture_url, class: 'center-block card-img-top'
       end
     end
   end

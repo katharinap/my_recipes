@@ -1,28 +1,56 @@
-= simple_nested_form_for @recipe do |f|
-  = f.input :name
+= simple_form_for @recipe do |f|
+  .card
+    .card-header
+      Name
+    .card-block
+      = f.input :name, label: false
+      
   = f.input :user_id, as: :hidden, input_html: { value: current_user_id }
 
-  %h2 Picture
   = render partial: 'form_picture', locals: { form: f }
-
-  - Recipe::TIME_ATTRIBUTES.each do |time_attribute|
-    = f.input time_attribute, label: "#{Recipe.human_attribute_name time_attribute} (in Minutes)"
   
-  %h2 Ingredients
-  = f.input :ingredients, label: false
+  .card
+    .card-header
+      Cooking Times in Minutes
+    .card-block
+      .row
+        - Recipe::TIME_ATTRIBUTES.each do |time_attribute|
+          .col-md-3
+            .row
+              .col-sm-4
+                - label = time_attribute.to_s.sub('_time', '').capitalize
+                %label= label
+              .col-sm-8
+                = f.input time_attribute, label: false, input_html: { class: 'form-control-sm' }
+
+  .card
+    .card-header
+      Ingredients
+    .card-block
+      = f.input :ingredients, label: false
+
+  .card
+    .card-header
+      Directions
+    .card-block
+      = f.input :directions, label: false
         
-  %h2 Directions
-  = f.input :directions, label: false
-        
-  %h2 Notes
-  = f.input :notes, label: false
+  .card
+    .card-header
+      Notes
+    .card-block
+      = f.input :notes, label: false
   
-  %h2 References
-  = f.input :references, label: false
+  .card
+    .card-header
+      References
+    .card-block
+      = f.input :references, label: false
 
-  %h2 Tags(separated by commas)
-  = f.input :tag_list, input_html: {value: f.object.tag_list.to_s}
-
-  %br
+  .card
+    .card-header
+      Tags(separated by commas)
+    .card-block
+      = f.input :tag_list, label: false, input_html: {value: f.object.tag_list.to_s}
     
   = f.button :submit, 'Update', title: 'Update this Recipe', data: { toggle: 'tooltip' }, class: 'btn btn-default'

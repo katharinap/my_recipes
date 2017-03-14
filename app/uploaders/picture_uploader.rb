@@ -15,15 +15,14 @@ class PictureUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  # # Provide a default URL as a default if there hasn't been a file uploaded:
-  # def default_url
-  #   "/assets/fallback/" + [version_name, "default.gif"].compact.join('_')
-  # end
-
   process dynamic_resize_to_fit: :default
 
   version :thumb, if: :create_thumb? do
     process dynamic_resize_to_fit: :thumb
+  end
+
+  version :mid, if: :create_mid? do
+    process dynamic_resize_to_fit: :mid
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
@@ -36,7 +35,16 @@ class PictureUploader < CarrierWave::Uploader::Base
     !model.class.thumb_picture_size.nil?
   end
 
+  def create_mid?(_arg)
+    !model.class.mid_picture_size.nil?
+  end
+
   def dynamic_resize_to_fit(size)
     resize_to_fit(*model.class.send("#{size}_picture_size"))
+  end
+
+  def default_url(*_args)
+    file_name = "#{version_name}_recipe-default-img.png"
+    ActionController::Base.helpers.image_path(file_name)
   end
 end

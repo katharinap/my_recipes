@@ -12,7 +12,6 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
 
     assert_equal "/", current_path
     assert page.has_content?("Signed in successfully."), "Should display 'Signed In Successfully' message"
-    assert page.has_content?("All My Recipes"), "Should show the list of all recipes"
   end
 
   def do_create_recipe
@@ -38,11 +37,10 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? "Ingredient 2"
     assert page.has_content? "www.myrecipe.com"
     assert page.has_content? "veggie, snack, vegan"
-    assert page.has_content? "Active time"
+    assert page.has_content? "Active"
     assert page.has_content? "15 minutes"
-    assert page.has_content? "Total time"
+    assert page.has_content? "Total"
     assert page.has_content? "1 hour 30 minutes"
-    assert page.has_content? @user.email
     assert page.has_content? 'Be careful with something'
   end
 
@@ -50,14 +48,13 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
   def do_edit_recipe
     recipe = Recipe.last
     visit "/recipes/#{recipe.id}/edit"
-    assert page.has_content?("Edit Recipe"), "Should be on 'Edit Recipe' page"
     assert page.has_content?("Picture")
 
     assert_equal 'My Recipe', find_field('recipe_name').value
     assert_equal "Ingredient 1\n Ingredient 2", find_field('recipe_ingredients').value
     assert_equal "Step 1\n Step 2", find_field('recipe_directions').value
     assert_equal 'www.myrecipe.com', find_field('recipe_references').value
-    assert_equal 'veggie, snack, vegan', find_field('Tag list').value
+    assert_equal 'veggie, snack, vegan', find_field('recipe_tag_list').value
     assert_equal '15', find_field('recipe_active_time').value
     assert_equal '90', find_field('recipe_total_time').value
     assert_equal 'Be careful with something', find_field('recipe_notes').value
@@ -74,13 +71,12 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? recipe.directions
     assert page.has_content? recipe.ingredients
     assert page.has_content? recipe.references
-    assert page.has_content? @user.email #This should be recipe.user.email. FIXME issue 36
-    assert page.has_no_content? "Active time"
-    assert page.has_content? "Prep time"
+    assert page.has_no_content? "Active"
+    assert page.has_content? "Prep"
     assert page.has_content? "10 minutes"
-    assert page.has_content? "Cook time"
+    assert page.has_content? "Cook"
     assert page.has_content? "2 hours"
-    assert page.has_content? "Total time"
+    assert page.has_content? "Total"
     assert page.has_content? "2 hours 10 minutes"
     assert page.has_content? 'Make sure to do something before something else'
   end
@@ -94,7 +90,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     visit "/recipes/#{recipe.id}"
 
     confirm_with(:ok) do
-      find_by_id('delete_link').click
+      find_by_id('delete_link').trigger('click')
     end
 
     assert page.has_content? "Recipe was successfully destroyed."

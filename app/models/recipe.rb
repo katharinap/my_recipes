@@ -33,6 +33,7 @@ class Recipe < ActiveRecord::Base
   include WithPicture
   has_default_picture_size [400, 400]
   has_thumb_picture_size [50, 50]
+  has_mid_picture_size [152, 152]
 
   acts_as_ordered_taggable
 
@@ -59,14 +60,29 @@ class Recipe < ActiveRecord::Base
     ingredients.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
 
+  def ingredient_summary
+    IngredientSummary.new(ingredient_list).text
+  end
+
+  def notes?
+    !notes.blank?
+  end
+
+  def time_attributes?
+    TIME_ATTRIBUTES.any? { |attr| send(attr) }
+  end
+
   def reference_list
     references.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
 
   class << self
     def search(search)
-      # not very elegant...  we can't only use a joins statement with
+      # FIXME: not very elegant...  we can't only use a joins statement with
       # recipes.name etc. because that ignores recipes without tags
+      #
+      # this also makes chaining impossible because it returns an
+      # array instead of an association
       (search_recipes(search) + search_by_tags(search)).uniq
     end
 
