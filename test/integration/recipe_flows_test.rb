@@ -36,7 +36,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? "Ingredient 1"
     assert page.has_content? "Ingredient 2"
     assert page.has_content? "www.myrecipe.com"
-    assert page.has_content? "veggie, snack, vegan"
+    assert page.has_content? "snack, vegan, veggie"
     assert page.has_content? "Active"
     assert page.has_content? "15 minutes"
     assert page.has_content? "Total"
@@ -54,7 +54,7 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert_equal "Ingredient 1\n Ingredient 2", find_field('recipe_ingredients').value
     assert_equal "Step 1\n Step 2", find_field('recipe_directions').value
     assert_equal 'www.myrecipe.com', find_field('recipe_references').value
-    assert_equal 'veggie, snack, vegan', find_field('recipe_tag_list').value
+    assert_equal 'snack, vegan, veggie', find_field('recipe_tag_list').value
     assert_equal '15', find_field('recipe_active_time').value
     assert_equal '90', find_field('recipe_total_time').value
     assert_equal 'Be careful with something', find_field('recipe_notes').value

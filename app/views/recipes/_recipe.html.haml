@@ -17,11 +17,11 @@
           %h4.card-title.recipe-title= recipe.name
           .col-md-5
             %p
-              .rating-read-only.rating.small-font{ data: { score: recipe.rating_score(current_user) } }
+              .rating-read-only.rating.small-font{ data: { score: recipe_score(recipe, @ratings) } }
             - if recipe.tags.any?
               %p.card-text
                 = glyph(:tags)
-                = recipe.tag_list
+                = recipe.sorted_tag_list
             - if recipe.time_attributes?
               %p.card-text
                 = glyph(:'clock-o')

@@ -51,6 +51,6 @@
     .card-header
       Tags(separated by commas)
     .card-block
-      = f.input :tag_list, label: false, input_html: {value: f.object.tag_list.to_s}
+      = f.input :tag_list, label: false, input_html: { value: f.object.sorted_tag_list }
     
   = f.button :submit, 'Update', title: 'Update this Recipe', data: { toggle: 'tooltip' }, class: 'btn btn-default'

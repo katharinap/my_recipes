@@ -36,7 +36,7 @@ class Recipe < ActiveRecord::Base
   has_thumb_picture_size [50, 50]
   has_mid_picture_size [152, 152]
 
-  acts_as_ordered_taggable
+  acts_as_taggable
 
   scope :for_user, ->(user) { where(user_id: user.id) }
 
@@ -77,9 +77,8 @@ class Recipe < ActiveRecord::Base
     references.to_s.split("\n").map(&:strip).reject(&:blank?)
   end
 
-  def rating_score(user)
-    rating = ratings.find_by(user: user)
-    rating ? rating.score : 0
+  def sorted_tag_list
+    tags.map(&:name).sort.join(', ')
   end
 
   class << self
