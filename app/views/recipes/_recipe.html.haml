@@ -16,6 +16,8 @@
               = destroy_link(recipe)
           %h4.card-title.recipe-title= recipe.name
           .col-md-5
+            %p
+              .rating-read-only.rating.small-font{ data: { score: recipe.rating_score(current_user) } }
             - if recipe.tags.any?
               %p.card-text
                 = glyph(:tags)

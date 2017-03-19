@@ -99,7 +99,7 @@ class RecipesController < ApplicationController
   def set_rating
     @rating = Rating.find_or_create_by(recipe: @recipe, user: current_user)
   end
-    
+
   # rubocop:disable Metrics/MethodLength
   def recipe_params
     params.require(:recipe).permit(

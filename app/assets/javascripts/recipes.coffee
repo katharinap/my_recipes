@@ -10,7 +10,6 @@ ready = ->
     return
 
   $('#rating').raty(
-    path: '/assets',
     score: -> $(this).attr('data-score'),
     starType: 'i',
     click: (score, evt) ->
@@ -19,6 +18,12 @@ ready = ->
         type: 'PATCH',
         data: { rating: { score: score } }
       )
+  )
+
+  $('.rating-read-only').raty(
+    score: -> $(this).attr('data-score'),
+    starType: 'i',
+    readOnly: true
   )
     
 $(document).ready(ready)

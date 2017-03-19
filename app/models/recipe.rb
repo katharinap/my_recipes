@@ -30,7 +30,7 @@
 class Recipe < ActiveRecord::Base
   belongs_to :user
   has_many :ratings, dependent: :destroy
-  
+
   include WithPicture
   has_default_picture_size [400, 400]
   has_thumb_picture_size [50, 50]
@@ -75,6 +75,11 @@ class Recipe < ActiveRecord::Base
 
   def reference_list
     references.to_s.split("\n").map(&:strip).reject(&:blank?)
+  end
+
+  def rating_score(user)
+    rating = ratings.find_by(user: user)
+    rating ? rating.score : 0
   end
 
   class << self
