@@ -30,17 +30,15 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
   before_action :set_rating, only: %i(show)
+  before_action :set_ratings, only: %i(index)
   before_action :authenticate_user!
   before_action :authorize_user, only: [:edit, :update, :destroy]
 
   PDF_OPTS = { layout: 'pdf', encoding: 'UTF-8' }.freeze
 
   def index
-    if params[:search]
-      @recipes = Recipe.for_user(current_user).search(params[:search])
-    else
-      @recipes = Recipe.for_user(current_user)
-    end
+    @recipes = Recipe.for_user(current_user).includes(:user, :tags)
+    @recipes = @recipes.search(params[:search]) if params[:search]
   end
 
   def show
@@ -98,6 +96,14 @@ class RecipesController < ApplicationController
 
   def set_rating
     @rating = Rating.find_or_create_by(recipe: @recipe, user: current_user)
+  end
+
+  def set_ratings
+    @ratings = Hash[
+      Rating.where(user: current_user).map do |rating|
+        [rating.recipe_id, rating]
+      end
+    ]
   end
 
   # rubocop:disable Metrics/MethodLength
