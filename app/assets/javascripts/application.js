@@ -17,4 +17,5 @@
 //= require bootstrap
 //= require bootstrap-filestyle
 //= require local_time
+//= require jquery.raty
 //= require_tree .

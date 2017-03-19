@@ -8,6 +8,8 @@
           = edit_link(@recipe)
           = destroy_link(@recipe)
         = pdf_link(@recipe)
+    %p
+      #rating.rating{ data: { score: @rating.score, rating: { id: @rating.id } } }
 
     - if @recipe.time_attributes?
       %p

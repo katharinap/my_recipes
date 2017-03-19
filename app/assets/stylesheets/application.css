@@ -13,6 +13,7 @@
  *= require tether/tether.min
  *= require bootstrap
  *= require font_awesome/font-awesome
+ *= require jquery.raty
  *= require_tree .
  *= require_self
  */

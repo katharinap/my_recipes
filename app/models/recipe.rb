@@ -29,7 +29,8 @@
 
 class Recipe < ActiveRecord::Base
   belongs_to :user
-
+  has_many :ratings, dependent: :destroy
+  
   include WithPicture
   has_default_picture_size [400, 400]
   has_thumb_picture_size [50, 50]
