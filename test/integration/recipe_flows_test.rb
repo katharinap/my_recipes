@@ -81,6 +81,15 @@ class RecipeFlowsTest < ActionDispatch::IntegrationTest
     assert page.has_content? 'Make sure to do something before something else'
   end
 
+  def do_rate_recipe
+    recipe = Recipe.last
+    visit "/recipes/#{recipe.id}/edit"
+    assert_equal 0, recipe.rating.score
+    page.execute_script %Q{ $('#rating').raty('click', 2); }
+    recipe = Recipe.last
+    assert_equal 2, recipe.rating.score
+  end
+  
   def do_destroy_recipe
     recipe = Recipe.create(name: "recipe #{rand(800000)}",
                            ingredients: "This is an ingredient",

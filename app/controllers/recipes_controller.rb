@@ -29,6 +29,7 @@
 
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
+  before_action :set_rating, only: %i(show)
   before_action :authenticate_user!
   before_action :authorize_user, only: [:edit, :update, :destroy]
 
@@ -93,6 +94,10 @@ class RecipesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_recipe
     @recipe = Recipe.find(params[:id])
+  end
+
+  def set_rating
+    @rating = Rating.find_or_create_by(recipe: @recipe, user: current_user)
   end
 
   # rubocop:disable Metrics/MethodLength
