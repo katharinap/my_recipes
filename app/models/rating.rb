@@ -21,7 +21,7 @@
 #  fk_rails_a7dfeb9f5f  (user_id => users.id)
 #
 
-class Rating < ActiveRecord::Base
+class Rating < ApplicationRecord
   belongs_to :recipe
   belongs_to :user
 end

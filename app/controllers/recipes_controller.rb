@@ -86,7 +86,7 @@ class RecipesController < ApplicationController
   private
 
   def authorize_user
-    render nothing: true, status: :forbidden if @recipe.user != current_user
+    head :forbidden if @recipe.user != current_user
   end
 
   # Use callbacks to share common setup or constraints between actions.

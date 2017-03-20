@@ -47,21 +47,21 @@ class RecipesControllerTest < ActionController::TestCase
   test 'valid token authentication' do
     sign_out @user
     recipe = create(:kale_chips, user: @user)
-    get :show, { :id => recipe.to_param, user_email: @user.email, user_token: @user.authentication_token, format: 'json' }
+    get :show, params: { id: recipe.to_param, user_email: @user.email, user_token: @user.authentication_token, format: 'json' }
     assert_response :success
   end
 
   test 'invalid token authentication' do
     sign_out @user
     recipe = create(:kale_chips, user: @user)
-    get :show, { :id => recipe.to_param, user_email: @user.email, user_token: 'invalidtoken123', format: 'json' }
+    get :show, params: { id: recipe.to_param, user_email: @user.email, user_token: 'invalidtoken123', format: 'json' }
     assert_response 401
   end
 
   test 'valid token for non-json request' do
     sign_out @user
     recipe = create(:kale_chips, user: @user)
-    get :show, { :id => recipe.to_param, user_email: @user.email, user_token: @user.authentication_token }
+    get :show, params: { id: recipe.to_param, user_email: @user.email, user_token: @user.authentication_token }
     assert_response :redirect
    end
   
@@ -78,7 +78,7 @@ class RecipesControllerTest < ActionController::TestCase
   test 'GET index with search' do
     recipe = create(:kale_chips, user: @user)
     create(:ice_cream, user: @user)
-    get :index, { search: 'kale' }
+    get :index, params: { search: 'kale' }
 
     assert_response :success
     assert_template :index
@@ -87,7 +87,7 @@ class RecipesControllerTest < ActionController::TestCase
 
   test 'GET show' do
     recipe = create(:kale_chips, user: @user)
-    get :show, {:id => recipe.to_param}
+    get :show, params: { id: recipe.to_param}
 
     assert_equal recipe,  assigns(:recipe)
     assert_template :show
@@ -96,7 +96,7 @@ class RecipesControllerTest < ActionController::TestCase
 
   test 'GET show json' do
     recipe = create(:kale_chips, user: @user)
-    get :show, {:id => recipe.to_param, format: :json}
+    get :show, params: { id: recipe.to_param, format: :json}
 
     assert_equal recipe,  assigns(:recipe)
     assert_response :success
@@ -120,7 +120,7 @@ class RecipesControllerTest < ActionController::TestCase
   context 'POST create' do
     should "create a  recipe with valid data" do
       assert_difference 'Recipe.count', 1 do
-        post :create, { recipe:
+        post :create, params: { recipe:
                           {
                             user_id: @user.id,
                             name: "my recipe",
@@ -154,7 +154,7 @@ class RecipesControllerTest < ActionController::TestCase
 
     should "redirect to 'new' with invalid data" do
       assert_no_difference 'Recipe.count' do
-        post :create, { user_id: @user.id, recipe: { ingredients: 'some ingredient' }}
+        post :create, params: { user_id: @user.id, recipe: { ingredients: 'some ingredient' }}
       end
       assert_instance_of Recipe, assigns(:recipe)
       assert assigns(:recipe).new_record?
@@ -185,7 +185,7 @@ class RecipesControllerTest < ActionController::TestCase
       should 'update name' do
         update_params = {id: @recipe.to_param, recipe:
             @original_attrs.merge({name: "Updated Name"})}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal "Updated Name", @recipe.name
         assert_redirected_to recipe_path(@recipe)
@@ -194,7 +194,7 @@ class RecipesControllerTest < ActionController::TestCase
       should 'update tag_list' do
         update_params = {id: @recipe.to_param, recipe:
             @original_attrs.merge({tag_list: "Updated Tag"})}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal ["updated tag"], @recipe.tag_list #ActsAsTaggableOn.force_lowercase is set to 'true'
         assert_redirected_to recipe_path(@recipe)
@@ -206,7 +206,7 @@ class RecipesControllerTest < ActionController::TestCase
             {id: @recipe.to_param,
              recipe: @original_attrs.merge(
                   { ingredients: new_ingredients })}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal new_ingredients, @recipe.ingredients
         assert_redirected_to recipe_path(@recipe)
@@ -217,7 +217,7 @@ class RecipesControllerTest < ActionController::TestCase
         update_params =
             {id: @recipe.to_param,
              recipe: @original_attrs.merge({ directions: new_directions })}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal new_directions, @recipe.directions
         assert_redirected_to recipe_path(@recipe)
@@ -229,7 +229,7 @@ class RecipesControllerTest < ActionController::TestCase
             {id: @recipe.to_param,
              recipe: @original_attrs.merge(
                  { references: new_reference })}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal new_reference, @recipe.references
         assert_redirected_to recipe_path(@recipe)
@@ -238,7 +238,7 @@ class RecipesControllerTest < ActionController::TestCase
       should 'update active time' do
         update_params = {id: @recipe.to_param, recipe:
             @original_attrs.merge({active_time: 15})}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal 15, @recipe.active_time
         assert_redirected_to recipe_path(@recipe)
@@ -247,16 +247,16 @@ class RecipesControllerTest < ActionController::TestCase
       should 'unset active time if field is left blank' do
         update_params = {id: @recipe.to_param, recipe:
             @original_attrs.merge({active_time: ''})}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
-        assert_equal nil, @recipe.active_time
+        assert_nil @recipe.active_time
         assert_redirected_to recipe_path(@recipe)
       end
 
       should 'update prep time' do
         update_params = {id: @recipe.to_param, recipe:
             @original_attrs.merge({prep_time: 10})}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal 10, @recipe.prep_time
         assert_redirected_to recipe_path(@recipe)
@@ -265,7 +265,7 @@ class RecipesControllerTest < ActionController::TestCase
       should 'update cook time' do
         update_params = {id: @recipe.to_param, recipe:
             @original_attrs.merge({cook_time: 60})}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal 60, @recipe.cook_time
         assert_redirected_to recipe_path(@recipe)
@@ -274,7 +274,7 @@ class RecipesControllerTest < ActionController::TestCase
       should 'update total time' do
         update_params = {id: @recipe.to_param, recipe:
             @original_attrs.merge({total_time: 60})}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal 60, @recipe.total_time
         assert_redirected_to recipe_path(@recipe)
@@ -283,7 +283,7 @@ class RecipesControllerTest < ActionController::TestCase
       should 'update notes' do
         update_params = {id: @recipe.to_param, recipe:
             @original_attrs.merge({notes: 'Updated notes'})}
-        put :update, update_params
+        put :update, params: update_params
         @recipe.reload
         assert_equal 'Updated notes', @recipe.notes
         assert_redirected_to recipe_path(@recipe)
@@ -304,10 +304,10 @@ class RecipesControllerTest < ActionController::TestCase
 
     should "redirect to 'new' with invalid data" do
       assert_no_difference 'Recipe.count' do
-        update_params = {id: @recipe.to_param,
+        update_params = { id: @recipe.to_param,
                          recipe: @original_attrs.merge({name: ""}),
-                         user_id: @user.id}
-        put :update, update_params
+                         user_id: @user.id }
+        put :update, params: update_params
       end
 
       assert @recipe, assigns(:recipe)
@@ -317,10 +317,10 @@ class RecipesControllerTest < ActionController::TestCase
 
     should "not allow editing of another user's recipe" do
       assert_no_difference 'Recipe.count' do
-        update_params = {id: @recipe.to_param,
+        update_params = { id: @recipe.to_param,
                          recipe: @original_attrs,
-                         user_id: @user.id + 1}
-        put :update, update_params
+                         user_id: @user.id + 1 }
+        put :update, params: update_params
         assert_response 302
       end
     end
@@ -329,7 +329,7 @@ class RecipesControllerTest < ActionController::TestCase
   test "DELETE destroy should delete recipe" do
     recipe = create(:kale_chips, user: @user)
     assert_difference 'Recipe.count', -1 do
-      delete :destroy, {id: recipe.to_param}
+      delete :destroy, params: { id: recipe.to_param }
     end
     assert_redirected_to recipes_path
   end

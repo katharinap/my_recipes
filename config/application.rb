@@ -21,8 +21,12 @@ module MyRecipes
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # DEPRECATION WARNING:
+    # ActiveRecord::Base.raise_in_transactional_callbacks= is
+    # deprecated, has no effect and will be removed without
+    # replacement.
     # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
+    # config.active_record.raise_in_transactional_callbacks = true
 
     ActsAsTaggableOn.force_lowercase = true
   end

@@ -4,6 +4,6 @@ class AuthenticationTokensController < ApplicationController
 
   def update
     current_user.reset_authentication_token!
-    redirect_to(:back)
+    redirect_back(fallback_location: root_path)
   end
 end

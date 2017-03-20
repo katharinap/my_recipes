@@ -27,7 +27,7 @@
 #  index_recipes_on_user_id      (user_id)
 #
 
-class Recipe < ActiveRecord::Base
+class Recipe < ApplicationRecord
   belongs_to :user
   has_many :ratings, dependent: :destroy
 

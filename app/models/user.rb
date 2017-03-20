@@ -26,7 +26,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   acts_as_token_authenticatable
 
   # Include default devise modules. Others available are:

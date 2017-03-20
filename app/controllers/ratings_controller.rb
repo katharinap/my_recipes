@@ -5,7 +5,7 @@ class RatingsController < ApplicationController
 
   def update
     @rating.update(rating_params)
-    render nothing: true
+    head :ok
   end
 
   private
@@ -15,7 +15,7 @@ class RatingsController < ApplicationController
   end
 
   def authorize_user
-    render nothing: true, status: :forbidden if @rating.user != current_user
+    head :forbidden if @rating.user != current_user
   end
 
   def rating_params
