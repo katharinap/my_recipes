@@ -24,3 +24,4 @@
 public/uploads/*
 /config/application.yml*
 /.env
+/heroku_setup.sh
