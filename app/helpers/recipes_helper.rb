@@ -134,9 +134,9 @@ module RecipesHelper
     return unless recipe.picture?
     content_tag :div, class: 'row' do
       if params[:format] == 'pdf'
-        wicked_pdf_image_tag @recipe.picture_url, class: 'center-block'
+        wicked_pdf_image_tag recipe.picture_url, class: 'center-block'
       else
-        image_tag @recipe.picture_url, class: 'center-block card-img-top'
+        image_tag recipe.picture_url, class: 'center-block card-img-top'
       end
     end
   end
