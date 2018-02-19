@@ -1,35 +1,56 @@
-.card.recipe
-  .card-block
-    .row
-      .hidden-sm-down
+-# normal view
+.hidden-sm-down
+  .card.recipe
+    .card-block
+      .row
         .col-md-2
           = link_to image_tag(recipe.picture_url(:mid), class: 'card-img center-block'), recipe_path(recipe)
-      .hidden-md-up
-        .col-sm-2
-          = link_to image_tag(recipe.picture_url(:thumb), class: 'card-img center-block'), recipe_path(recipe)
-      .col-md-9
-        .row
-          .pull-right
-            %p.card-text
-              = pdf_link(recipe)
-              = edit_link(recipe)
-              = destroy_link(recipe)
-          %h4.card-title.recipe-title= recipe.name
-          .col-md-5
-            %p
-              .rating-read-only.rating.small-font{ data: { score: recipe_score(recipe, @ratings) } }
-            - if recipe.tags.any?
+        .col-md-9
+          .row
+            .pull-right
               %p.card-text
-                = glyph(:tags)
-                = recipe.sorted_tag_list
-            - if recipe.time_attributes?
-              %p.card-text
-                = glyph(:'clock-o')
-                = short_time_attribute_description(recipe)
-          .col-md-7
-            = recipe.ingredient_summary
-        .row
-          %p.card-text{ style: 'padding-top: 5px;' }
-            = link_to recipe_path(recipe), class: 'btn btn-secondary-outline' do
-              = glyph('arrow-right')
-              Go To Recipe
+                = pdf_link(recipe)
+                = edit_link(recipe)
+                = destroy_link(recipe)
+              %p
+                .rating-read-only.rating.small-font{ data: { score: recipe_score(recipe, @ratings) } }
+            %h4.card-title.recipe-title= recipe.name
+            .col-md-5
+              - if recipe.tags.any?
+                %p.card-text
+                  = glyph(:tags)
+                  = recipe.sorted_tag_list
+              - if recipe.time_attributes?
+                %p.card-text
+                  = glyph(:'clock-o')
+                  = short_time_attribute_description(recipe)
+            .col-md-7
+              = recipe.ingredient_summary
+          .row
+            %p.card-text{ style: 'padding-top: 5px;' }
+              = link_to recipe_path(recipe), class: 'btn btn-secondary-outline' do
+                = glyph('arrow-right')
+                Go To Recipe
+
+-# mobile view
+.hidden-md-up
+  .card.recipe
+    .card-block
+      .row
+        .col-sm-3
+          = link_to image_tag(recipe.picture_url(:mid), class: 'card-img center-block'), recipe_path(recipe)
+        .col-sm-9
+          .row
+            .pull-right
+              %p
+                .rating-read-only.rating.small-font{ data: { score: recipe_score(recipe, @ratings) } }
+            %h4.card-title.recipe-title= recipe.name
+            .col-md-5
+              - if recipe.tags.any?
+                %p.card-text
+                  = glyph(:tags)
+                  = recipe.sorted_tag_list
+              - if recipe.time_attributes?
+                %p.card-text
+                  = glyph(:'clock-o')
+                  = short_time_attribute_description(recipe)
