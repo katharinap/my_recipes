@@ -13,6 +13,10 @@
       = bootstrap_flash(class: 'flash')
       %nav.navbar.navbar-light.bg-faded.hidden-print{ style: "background-color: white; border: 5px solid #e5e5e5; border-radius: 25px; margin-top: 0px; margin-bottom: 10px;" }
         %ul.nav.navbar-nav
+          .pull-right
+            - if user_signed_in?
+              = nav_link_to(edit_user_registration_path(current_user), :cog, 'Account')
+              = nav_link_to(destroy_user_session_path, 'sign-out', 'Sign-out', method: :delete)
           = link_to '#', class: 'navbar-brand' do
             = image_tag('cooking-pot-32.png')
           = nav_link_to(root_path, :home, 'Home')
@@ -21,8 +25,4 @@
             .search-form
               = form_tag recipes_path, method: 'get', class: 'form-inline' do |form|
                 = text_field_tag :search, params[:search], placeholder: "Search Recipes", class: 'form-control mr-sm-2'
-          .pull-right
-            - if user_signed_in?
-              = nav_link_to(edit_user_registration_path(current_user), :cog, 'Account')
-              = nav_link_to(destroy_user_session_path, 'sign-out', 'Sign-out', method: :delete)
       = yield
